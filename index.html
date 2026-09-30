@@ -521,6 +521,203 @@
       pointer-events: none;
     }
 
+    /* =========================================================
+       VIRAL 3D LOVE ENVELOPE + HEART-AIMING UNSEAL ANIMATION
+       ========================================================= */
+    @keyframes envelopeFloat {
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(-0.8deg); }
+      50% { transform: translate3d(0, -8px, 0) rotate(0.8deg); }
+    }
+
+    @keyframes reticleSpinPulse {
+      0% { transform: translate(-50%, -50%) scale(0.92) rotate(0deg); opacity: 0.75; }
+      50% { transform: translate(-50%, -50%) scale(1.12) rotate(90deg); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(0.92) rotate(180deg); opacity: 0.75; }
+    }
+
+    @keyframes cupidBowAim {
+      0%, 100% { transform: translate3d(-10px, 0, 0) rotate(-6deg); }
+      50% { transform: translate3d(10px, -4px, 0) rotate(6deg); }
+    }
+
+    .envelope-3d-wrapper {
+      position: relative;
+      width: 288px;
+      height: 196px;
+      perspective: 1100px;
+      animation: envelopeFloat 3.2s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .envelope-back-panel {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(180deg, #FFD6E4 0%, #FFB3C6 100%);
+      border: 2px solid #FFFFFF;
+      box-shadow:
+        0 24px 48px -12px rgba(220, 20, 60, 0.30),
+        0 0 0 2px rgba(255, 192, 203, 0.8);
+      z-index: 1;
+    }
+
+    /* Rising Mini Polaroids Inside Envelope */
+    .envelope-mini-polaroid {
+      position: absolute;
+      top: 18px;
+      width: 86px;
+      height: 104px;
+      background: #FFFFFF;
+      padding: 4px 4px 16px 4px;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(27, 42, 74, 0.18);
+      border: 1.5px solid #FFC0CB;
+      z-index: 2;
+      opacity: 0;
+      transform: translate3d(0, 30px, 0) scale(0.75);
+      transition:
+        transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1),
+        opacity 0.55s ease;
+      pointer-events: none;
+    }
+
+    .envelope-mini-polaroid-left {
+      left: 16px;
+    }
+
+    .envelope-mini-polaroid-right {
+      right: 16px;
+    }
+
+    .envelope-opened .envelope-mini-polaroid-left {
+      opacity: 1;
+      transform: translate3d(-34px, -88px, 0) rotate(-14deg) scale(1);
+      transition-delay: 0.38s;
+    }
+
+    .envelope-opened .envelope-mini-polaroid-right {
+      opacity: 1;
+      transform: translate3d(34px, -88px, 0) rotate(14deg) scale(1);
+      transition-delay: 0.46s;
+    }
+
+    /* Rising Love Letter Sheet Inside Envelope */
+    .envelope-letter-sheet {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      top: 14px;
+      height: 168px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #FFF7FA 100%);
+      border-radius: 16px;
+      border: 2px solid #FFB3C6;
+      box-shadow: 0 10px 28px -6px rgba(220, 20, 60, 0.22);
+      padding: 12px 14px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transform: translate3d(0, 18px, 0) scale(0.94);
+      transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s ease;
+      will-change: transform;
+    }
+
+    .envelope-opened .envelope-letter-sheet {
+      transform: translate3d(0, -104px, 0) scale(1.04);
+      box-shadow:
+        0 22px 44px -10px rgba(220, 20, 60, 0.32),
+        0 0 0 2px #FFFFFF;
+      transition-delay: 0.28s;
+    }
+
+    /* Front Pocket Flaps of Envelope */
+    .envelope-front-pocket {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    /* 3D Rotating Top Triangular Flap */
+    .envelope-top-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 118px;
+      z-index: 6;
+      transform-origin: top center;
+      transform-style: preserve-3d;
+      transition: transform 0.72s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.35s;
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    .envelope-opened .envelope-top-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    /* Glowing Heart Wax Seal Target + Crosshair Aim Reticle */
+    .heart-seal-target {
+      position: absolute;
+      top: 106px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 64px;
+      height: 64px;
+      z-index: 10;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+      touch-action: manipulation;
+    }
+
+    .envelope-opened .heart-seal-target {
+      transform: translate(-50%, -50%) scale(1.6);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .aim-reticle-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 74px;
+      height: 74px;
+      border-radius: 9999px;
+      border: 2px dashed #DC143C;
+      box-shadow: 0 0 18px rgba(220, 20, 60, 0.4);
+      animation: reticleSpinPulse 3s linear infinite;
+      pointer-events: none;
+    }
+
+    /* Cupid Arrow / Heart Projectile Aiming at the Heart Seal */
+    .cupid-arrow-shooter {
+      position: relative;
+      margin-top: 26px;
+      z-index: 12;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: cupidBowAim 2.2s ease-in-out infinite;
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .cupid-arrow-shooter.arrow-fired {
+      animation: none;
+      transform: translate3d(0, -148px, 0) scale(1.25);
+      opacity: 0;
+    }
+
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
@@ -739,6 +936,117 @@
         </span>
       </div>
     </div>
+
+    <!-- =========================================================
+         STEP 2.5: VIRAL 3D LOVE ENVELOPE & HEART-AIM UNSEAL STAGE
+         ========================================================= -->
+    <section
+      id="envelopeStageScreen"
+      class="screen-layer screen-hidden absolute inset-0 top-12 bottom-0 z-30 flex flex-col items-center justify-between px-6 py-4 text-center"
+    >
+      <!-- Top Prompt Header -->
+      <div class="mt-1 space-y-1.5 max-w-[320px]">
+        <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/90 border border-pastelPink text-crimson text-xs font-rounded font-bold tracking-wide shadow-sm">
+          <span>💘</span>
+          <span id="envelopeBadgeStatus">100% Match • For Miss Rena</span>
+          <span>✨</span>
+        </div>
+        <h2 id="envelopeStageTitle" class="font-rounded font-extrabold text-xl sm:text-2xl leading-snug text-navy">
+          A Sealed Love Letter Arrived For You 💌
+        </h2>
+        <p id="envelopeStageSubtitle" class="text-xs font-medium text-navy/75">
+          Aim &amp; tap the glowing <span class="text-crimson font-bold">Heart Seal</span> to shoot Cupid's arrow and unlock what's inside! 🎯❤️
+        </p>
+      </div>
+
+      <!-- Center 3D Envelope + Rising Letter + Polaroids + Cupid Arrow -->
+      <div class="my-auto pt-16 flex flex-col items-center justify-center relative">
+        <div id="loveEnvelope3D" class="envelope-3d-wrapper">
+          <!-- Back Panel -->
+          <div class="envelope-back-panel"></div>
+
+          <!-- Rising Mini Polaroids Inside Envelope -->
+          <div class="envelope-mini-polaroid envelope-mini-polaroid-left">
+            <img src="rena-anime-1.jpg" alt="Rena Polaroid 1" class="w-full h-full object-cover rounded-md" />
+          </div>
+          <div class="envelope-mini-polaroid envelope-mini-polaroid-right">
+            <img src="rena-anime-2.jpg" alt="Rena Polaroid 2" class="w-full h-full object-cover rounded-md" />
+          </div>
+
+          <!-- Rising Love Letter Sheet Inside Envelope -->
+          <div id="risingLetterSheet" class="envelope-letter-sheet cursor-pointer">
+            <span class="text-[10px] font-rounded font-bold uppercase tracking-widest text-crimson">
+              💌 Dearest Rena (@vlsια) 💌
+            </span>
+            <p class="mt-1 font-serif italic font-semibold text-xs sm:text-[13px] text-navy leading-snug">
+              “thankyou for being here and thankyou for being you.”
+            </p>
+            <div class="mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[10px] font-rounded font-bold text-crimson animate-pulse">
+              <span>✨</span>
+              <span>Unfolding Your Surprise...</span>
+            </div>
+          </div>
+
+          <!-- Front Envelope Pocket (SVG Left/Right/Bottom Flaps) -->
+          <div class="envelope-front-pocket">
+            <svg viewBox="0 0 288 196" class="w-full h-full" preserveAspectRatio="none">
+              <!-- Left & Right Fold Triangles -->
+              <polygon points="0,0 144,110 0,196" fill="#FFE5EE" stroke="#FFC0CB" stroke-width="1.5"/>
+              <polygon points="288,0 144,110 288,196" fill="#FFD9E6" stroke="#FFC0CB" stroke-width="1.5"/>
+              <!-- Bottom Pocket Triangle -->
+              <polygon points="0,196 144,96 288,196" fill="#FFF0F5" stroke="#FFB3C6" stroke-width="2"/>
+            </svg>
+            <!-- Recipient Tag on Front of Envelope -->
+            <div class="absolute bottom-3 inset-x-0 flex flex-col items-center">
+              <span class="px-3 py-0.5 rounded-full bg-white/90 border border-pastelPink text-[10px] font-rounded font-bold text-navy shadow-sm">
+                To: Sunshine • Ducky • Miss Rena 💖
+              </span>
+            </div>
+          </div>
+
+          <!-- 3D Top Triangular Flap -->
+          <div class="envelope-top-flap">
+            <svg viewBox="0 0 288 118" class="w-full h-full drop-shadow" preserveAspectRatio="none">
+              <polygon points="0,0 288,0 144,112" fill="#FFC4D6" stroke="#FFFFFF" stroke-width="2"/>
+            </svg>
+          </div>
+
+          <!-- Interactive Glowing Heart Wax Seal Target + Crosshair Aim Reticle -->
+          <button
+            id="heartSealTargetBtn"
+            type="button"
+            class="heart-seal-target group"
+            title="Tap to Shoot Heart & Unseal!"
+          >
+            <div class="aim-reticle-ring"></div>
+            <div class="w-13 h-13 p-3 rounded-full bg-gradient-to-br from-crimson via-[#E11D48] to-[#9F1239] border-2 border-white shadow-xl flex items-center justify-center animate-heartbeat group-hover:scale-110 transition">
+              <span class="text-xl leading-none">❤️</span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Swaying Cupid Arrow / Heart Launcher Aiming at the Heart Seal -->
+        <div id="cupidArrowShooter" class="cupid-arrow-shooter" title="Tap to Shoot Heart!">
+          <div class="text-3xl leading-none drop-shadow-md -rotate-45">💘</div>
+          <span class="mt-1 px-2.5 py-0.5 rounded-full bg-white/90 border border-pastelPink text-[10px] font-rounded font-bold text-crimson shadow-sm">
+            🎯 Aimed at Rena's Heart
+          </span>
+        </div>
+      </div>
+
+      <!-- Bottom Action Button -->
+      <div class="w-full max-w-[290px] mb-2 flex flex-col items-center gap-1.5">
+        <button
+          id="shootHeartOpenBtn"
+          type="button"
+          class="scan-cta-btn w-full py-3.5 px-6 rounded-full font-rounded font-bold text-sm sm:text-base tracking-wide flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <span class="scan-cta-ring"></span>
+          <span id="shootHeartBtnLabel">Tap to Shoot Heart &amp; Unseal</span>
+          <span class="text-lg leading-none">💘</span>
+        </button>
+      </div>
+    </section>
 
     <!-- =========================================================
          STEP 3: THE REVEAL CARD (RENA'S LOVELY DEDICATION CARD)
@@ -1641,22 +1949,124 @@
           if (progress < 1) {
             requestAnimationFrame(stepScan);
           } else {
-            completeReveal();
+            showEnvelopeStage();
           }
         }
 
         requestAnimationFrame(stepScan);
       }
 
-      function completeReveal() {
+      const envelopeStageScreen = document.getElementById('envelopeStageScreen');
+      const loveEnvelope3D = document.getElementById('loveEnvelope3D');
+      const heartSealTargetBtn = document.getElementById('heartSealTargetBtn');
+      const cupidArrowShooter = document.getElementById('cupidArrowShooter');
+      const shootHeartOpenBtn = document.getElementById('shootHeartOpenBtn');
+      const shootHeartBtnLabel = document.getElementById('shootHeartBtnLabel');
+      const risingLetterSheet = document.getElementById('risingLetterSheet');
+      const envelopeStageTitle = document.getElementById('envelopeStageTitle');
+      const envelopeStageSubtitle = document.getElementById('envelopeStageSubtitle');
+
+      let isEnvelopeOpening = false;
+      let unfoldTimer = null;
+
+      function showEnvelopeStage() {
         isScanning = false;
-        isRevealed = true;
 
         activeScanOverlay.classList.add('hidden');
         activeScanOverlay.classList.remove('flex');
 
         teaserScreen.classList.remove('screen-visible');
         teaserScreen.classList.add('screen-hidden');
+
+        // Reset envelope state
+        isEnvelopeOpening = false;
+        loveEnvelope3D.classList.remove('envelope-opened');
+        cupidArrowShooter.classList.remove('arrow-fired');
+        envelopeStageTitle.textContent = 'A Sealed Love Letter Arrived For You 💌';
+        envelopeStageSubtitle.innerHTML =
+          'Aim &amp; tap the glowing <span class="text-crimson font-bold">Heart Seal</span> to shoot Cupid\'s arrow and unlock what\'s inside! 🎯❤️';
+        shootHeartBtnLabel.textContent = 'Tap to Shoot Heart & Unseal';
+
+        envelopeStageScreen.classList.remove('screen-hidden');
+        envelopeStageScreen.classList.add('screen-visible');
+
+        topStatusText.textContent = 'Aim at the Heart Seal 💘';
+        replayBtn.classList.remove('hidden');
+        replayBtn.classList.add('flex');
+
+        spawnHeartBurst(width * 0.5, height * 0.45, 22, ['💌', '💘', '💖', '✨', '🌷']);
+        playPopSound();
+      }
+
+      function triggerHeartShotAndUnseal(e) {
+        if (e) e.stopPropagation();
+        if (isEnvelopeOpening || isRevealed) return;
+        isEnvelopeOpening = true;
+
+        // 1. Shoot Cupid Arrow straight into the Heart Seal
+        cupidArrowShooter.classList.add('arrow-fired');
+        shootHeartBtnLabel.textContent = 'Opening Your Secret Letter... ✨';
+
+        // Play romantic rising chime
+        [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, idx) => {
+          playTone(f, 'sine', 0.35, 0.06, idx * 0.07);
+        });
+
+        // 2. Heart Impact Burst & 3D Envelope Flap Open + Letter & Polaroids Slide Out
+        setTimeout(() => {
+          spawnHeartBurst(width * 0.5, height * 0.46, 30, ['💘', '💖', '✨', '🌷', '💝', '🌸']);
+          loveEnvelope3D.classList.add('envelope-opened');
+          envelopeStageTitle.textContent = 'Unlocked With All My Love! 💖✨';
+          envelopeStageSubtitle.textContent = 'Your secret letter & memories are rising out... 🌷💌';
+          shootHeartBtnLabel.textContent = 'Tap to Unfold Full Card Now 💌';
+        }, 340);
+
+        // 3. Smoothly unfold into the Full Reveal Card
+        if (unfoldTimer) clearTimeout(unfoldTimer);
+        unfoldTimer = setTimeout(() => {
+          if (!isRevealed) completeReveal();
+        }, 2350);
+      }
+
+      if (heartSealTargetBtn) heartSealTargetBtn.addEventListener('click', triggerHeartShotAndUnseal);
+      if (cupidArrowShooter) cupidArrowShooter.addEventListener('click', triggerHeartShotAndUnseal);
+      if (shootHeartOpenBtn) {
+        shootHeartOpenBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (isEnvelopeOpening && !isRevealed) {
+            if (unfoldTimer) clearTimeout(unfoldTimer);
+            completeReveal();
+          } else {
+            triggerHeartShotAndUnseal(e);
+          }
+        });
+      }
+      if (risingLetterSheet) {
+        risingLetterSheet.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (isEnvelopeOpening && !isRevealed) {
+            if (unfoldTimer) clearTimeout(unfoldTimer);
+            completeReveal();
+          } else {
+            triggerHeartShotAndUnseal(e);
+          }
+        });
+      }
+
+      function completeReveal() {
+        isScanning = false;
+        isEnvelopeOpening = false;
+        isRevealed = true;
+        if (unfoldTimer) clearTimeout(unfoldTimer);
+
+        activeScanOverlay.classList.add('hidden');
+        activeScanOverlay.classList.remove('flex');
+
+        teaserScreen.classList.remove('screen-visible');
+        teaserScreen.classList.add('screen-hidden');
+
+        envelopeStageScreen.classList.remove('screen-visible');
+        envelopeStageScreen.classList.add('screen-hidden');
 
         revealScreen.classList.remove('screen-hidden');
         revealScreen.classList.add('screen-visible', 'reveal-active');
@@ -1932,7 +2342,14 @@
         e.stopPropagation();
         isRevealed = false;
         isScanning = false;
+        isEnvelopeOpening = false;
+        if (unfoldTimer) clearTimeout(unfoldTimer);
         stopRomanticMusicBox();
+
+        envelopeStageScreen.classList.remove('screen-visible');
+        envelopeStageScreen.classList.add('screen-hidden');
+        loveEnvelope3D.classList.remove('envelope-opened');
+        cupidArrowShooter.classList.remove('arrow-fired');
 
         revealScreen.classList.remove('screen-visible', 'reveal-active');
         revealScreen.classList.add('screen-hidden');
