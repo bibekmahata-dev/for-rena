@@ -945,11 +945,10 @@
       class="screen-layer screen-hidden absolute inset-0 top-12 bottom-0 z-30 flex flex-col items-center justify-between px-6 py-4 text-center"
     >
       <!-- Top Prompt Header -->
-      <div class="mt-1 space-y-1.5 max-w-[320px]">
-        <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/90 border border-pastelPink text-crimson text-xs font-rounded font-bold tracking-wide shadow-sm">
-          <span>💘</span>
-          <span id="envelopeBadgeStatus">100% Match • For Miss Rena</span>
-          <span>✨</span>
+      <div class="mt-1 space-y-1.5 max-w-[330px]">
+        <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/90 border border-pastelPink text-crimson text-[11px] font-rounded font-bold tracking-wide shadow-sm">
+          <span>✈️</span>
+          <span id="envelopeBadgeStatus">Special Delivery • Across Every Mile to WIB 💖</span>
         </div>
         <h2 id="envelopeStageTitle" class="font-rounded font-extrabold text-xl sm:text-2xl leading-snug text-navy">
           A Sealed Love Letter Arrived For You 💌
@@ -974,16 +973,16 @@
           </div>
 
           <!-- Rising Love Letter Sheet Inside Envelope -->
-          <div id="risingLetterSheet" class="envelope-letter-sheet cursor-pointer">
-            <span class="text-[10px] font-rounded font-bold uppercase tracking-widest text-crimson">
-              💌 Dearest Rena (@vlsια) 💌
+          <div id="risingLetterSheet" class="envelope-letter-sheet cursor-pointer hover:scale-[1.06] transition">
+            <span class="text-[9.5px] font-rounded font-bold uppercase tracking-widest text-crimson">
+              ✈️ Across Every Mile &amp; Timezone 💖
             </span>
             <p class="mt-1 font-serif italic font-semibold text-xs sm:text-[13px] text-navy leading-snug">
               “thankyou for being here and thankyou for being you.”
             </p>
-            <div class="mt-2 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[10px] font-rounded font-bold text-crimson animate-pulse">
-              <span>✨</span>
-              <span>Unfolding Your Surprise...</span>
+            <div class="mt-2 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-crimson text-white text-[10px] font-rounded font-bold shadow animate-bounce">
+              <span>💌</span>
+              <span>Tap Letter to Open Full Card ✨</span>
             </div>
           </div>
 
@@ -996,9 +995,12 @@
               <!-- Bottom Pocket Triangle -->
               <polygon points="0,196 144,96 288,196" fill="#FFF0F5" stroke="#FFB3C6" stroke-width="2"/>
             </svg>
-            <!-- Recipient Tag on Front of Envelope -->
-            <div class="absolute bottom-3 inset-x-0 flex flex-col items-center">
-              <span class="px-3 py-0.5 rounded-full bg-white/90 border border-pastelPink text-[10px] font-rounded font-bold text-navy shadow-sm">
+            <!-- Air-Mail Stamp & Recipient Tag on Front of Envelope -->
+            <div class="absolute bottom-2.5 inset-x-0 flex flex-col items-center gap-0.5">
+              <span class="text-[9px] font-rounded font-bold uppercase tracking-widest text-crimson/80">
+                ✈️ Express To My Favorite Timezone (UTC+7)
+              </span>
+              <span class="px-3 py-0.5 rounded-full bg-white/95 border border-pastelPink text-[10px] font-rounded font-bold text-navy shadow-sm">
                 To: Sunshine • Ducky • Miss Rena 💖
               </span>
             </div>
@@ -2017,15 +2019,16 @@
           spawnHeartBurst(width * 0.5, height * 0.46, 30, ['💘', '💖', '✨', '🌷', '💝', '🌸']);
           loveEnvelope3D.classList.add('envelope-opened');
           envelopeStageTitle.textContent = 'Unlocked With All My Love! 💖✨';
-          envelopeStageSubtitle.textContent = 'Your secret letter & memories are rising out... 🌷💌';
-          shootHeartBtnLabel.textContent = 'Tap to Unfold Full Card Now 💌';
+          envelopeStageSubtitle.textContent = 'Across every mile & timezone — tap your risen letter to open! ✈️💌';
+          shootHeartBtnLabel.textContent = 'Tap to Unfold Full Surprise Card 💌';
+          showLoveToast('Delivered straight to Miss Rena’s heart! ✈️💖');
         }, 340);
 
-        // 3. Smoothly unfold into the Full Reveal Card
+        // 3. Give her plenty of time to admire the risen letter & Polaroids (or tap anytime to unfold immediately)
         if (unfoldTimer) clearTimeout(unfoldTimer);
         unfoldTimer = setTimeout(() => {
           if (!isRevealed) completeReveal();
-        }, 2350);
+        }, 5500);
       }
 
       if (heartSealTargetBtn) heartSealTargetBtn.addEventListener('click', triggerHeartShotAndUnseal);
