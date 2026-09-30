@@ -440,6 +440,87 @@
       animation: twinkleSparkle 2.6s ease-in-out infinite;
     }
 
+    /* Animated Floating 3D-Flip Polaroid Photo Cards */
+    @keyframes polaroidFloatLeft {
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(-2.5deg); }
+      50% { transform: translate3d(0, -5px, 0) rotate(-1deg); }
+    }
+
+    @keyframes polaroidFloatRight {
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(2.5deg); }
+      50% { transform: translate3d(0, -5px, 0) rotate(1deg); }
+    }
+
+    @keyframes holographicSheen {
+      0% { transform: translateX(-120%) rotate(25deg); }
+      50%, 100% { transform: translateX(220%) rotate(25deg); }
+    }
+
+    .polaroid-float-left {
+      animation: polaroidFloatLeft 3.4s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .polaroid-float-right {
+      animation: polaroidFloatRight 3.4s ease-in-out 1.5s infinite;
+      will-change: transform;
+    }
+
+    .polaroid-3d-scene {
+      perspective: 900px;
+      touch-action: manipulation;
+    }
+
+    .polaroid-3d-card {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform;
+    }
+
+    .polaroid-3d-card.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .polaroid-face {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 16px;
+      background: #FFFFFF;
+      padding: 5px 5px 22px 5px;
+      box-shadow:
+        0 10px 22px -6px rgba(220, 20, 60, 0.22),
+        0 0 0 1.5px rgba(255, 192, 203, 0.85);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .polaroid-face-back {
+      transform: rotateY(180deg);
+    }
+
+    .polaroid-shimmer::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 55%;
+      height: 200%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.55),
+        transparent
+      );
+      animation: holographicSheen 4.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
@@ -676,8 +757,8 @@
         <span class="sparkle-star absolute top-3.5 left-4 text-base pointer-events-none">🌷</span>
         <span class="sparkle-star absolute top-3.5 right-4 text-base pointer-events-none" style="animation-delay: 0.9s;">✨</span>
 
-        <!-- 1. Romantic Kitty Hugging Heart + Ducky & Pulsing Aura Rings -->
-        <div class="reveal-stagger delay-1 relative mt-1 mb-2">
+        <!-- 1. Glowing Animated Portrait Avatar + Ducky & Pulsing Aura Rings -->
+        <div class="reveal-stagger delay-1 relative mt-0.5 mb-1.5">
           <!-- Pulsing Heart Aura Rings -->
           <div class="absolute inset-0 rounded-full bg-pastelPink/60 animate-aura-1 pointer-events-none"></div>
           <div class="absolute inset-0 rounded-full bg-crimson/20 animate-aura-2 pointer-events-none"></div>
@@ -688,70 +769,161 @@
 
           <div
             id="avatarTapTrigger"
-            class="relative w-20 h-20 rounded-full bg-gradient-to-b from-white via-softBlush to-pastelPink/65 p-1 shadow-lg border-2 border-white flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition"
+            title="Tap to cycle Rena's Anime & Real Portraits!"
+            class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-b from-white via-softBlush to-pastelPink/65 p-1 shadow-lg border-2 border-white flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 transition overflow-hidden"
           >
-            <!-- Adorable Blushing Kitty Hugging a Big Crimson Heart -->
-            <svg class="w-16 h-16" viewBox="0 0 130 130" fill="none">
-              <circle cx="65" cy="65" r="60" fill="#FFF0F5"/>
-              <!-- Ears -->
-              <path d="M30 54L23 22L52 38Z" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3" stroke-linejoin="round"/>
-              <path d="M32 48L28 28L47 39Z" fill="#FFC0CB"/>
-              <path d="M100 54L107 22L78 38Z" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3" stroke-linejoin="round"/>
-              <path d="M98 48L102 28L83 39Z" fill="#FFC0CB"/>
-              <!-- Head -->
-              <rect x="24" y="36" width="82" height="60" rx="30" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3"/>
-              <!-- Crown -->
-              <path d="M51 35L56 23L65 31L74 23L79 35Z" fill="#FBBF24" stroke="#1B2A4A" stroke-width="2.3" stroke-linejoin="round"/>
-              <!-- Happy Loving Arc Eyes -->
-              <path d="M43 62C46 56 53 56 56 62" stroke="#1B2A4A" stroke-width="3.2" stroke-linecap="round"/>
-              <path d="M74 62C77 56 84 56 87 62" stroke="#1B2A4A" stroke-width="3.2" stroke-linecap="round"/>
-              <!-- Deep Rosy Blush -->
-              <ellipse cx="38" cy="69" rx="7.5" ry="4.5" fill="#FF758F"/>
-              <ellipse cx="92" cy="69" rx="7.5" ry="4.5" fill="#FF758F"/>
-              <!-- Sweet ":3" Smile -->
-              <path d="M59 69C61 72 65 71 65 68C65 71 69 72 71 69" stroke="#1B2A4A" stroke-width="2.6" stroke-linecap="round"/>
-              <!-- Big Glowing Crimson Heart Hugged by Kitty -->
-              <path d="M65 116C65 116 42 101 42 88C42 80.5 48 75.5 54.5 75.5C59 75.5 63 78 65 81.5C67 78 71 75.5 75.5 75.5C82 75.5 88 80.5 88 88C88 101 65 116 65 116Z" fill="#DC143C" stroke="#1B2A4A" stroke-width="2.8"/>
-              <!-- Little White Paws Hugging Heart -->
-              <ellipse cx="46" cy="94" rx="8" ry="6" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="2.6"/>
-              <ellipse cx="84" cy="94" rx="8" ry="6" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="2.6"/>
-            </svg>
+            <img
+              id="avatarPortraitImg"
+              src="rena-anime-1.jpg"
+              alt="Rena Animated Portrait"
+              class="w-full h-full rounded-full object-cover transition-transform duration-300"
+            />
           </div>
 
-          <!-- Floating Ducky & Sunshine Badges on Avatar -->
-          <span class="absolute -bottom-1 -right-1 w-7 h-7 rounded-full bg-white shadow-md border border-pastelPink flex items-center justify-center text-sm">
+          <!-- Floating Crown, Ducky & Heart Badges on Avatar -->
+          <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 text-sm drop-shadow pointer-events-none">
+            👑
+          </span>
+          <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white shadow-md border border-pastelPink flex items-center justify-center text-xs">
             🐥
           </span>
-          <span class="absolute -top-1 -left-1 w-7 h-7 rounded-full bg-crimson text-white shadow-md border-2 border-white flex items-center justify-center text-xs animate-heartbeat">
+          <span class="absolute -top-1 -left-1 w-6 h-6 rounded-full bg-crimson text-white shadow-md border-2 border-white flex items-center justify-center text-[10px] animate-heartbeat">
             ❤️
           </span>
         </div>
 
         <!-- 2. Header: Rena (@vlsια) + Sunshine • Ducky • Miss Rena -->
-        <div class="reveal-stagger delay-2 space-y-1.5 mb-3">
+        <div class="reveal-stagger delay-2 space-y-1 mb-2">
           <div class="flex items-center justify-center gap-1.5 flex-wrap">
-            <h2 class="font-rounded font-extrabold text-2xl text-navy tracking-tight">
+            <h2 class="font-rounded font-extrabold text-xl sm:text-2xl text-navy tracking-tight">
               Rena
             </h2>
-            <span class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-pastelPink/70 to-softBlush border border-crimson/25 text-crimson font-sans font-bold text-sm tracking-wide shadow-sm">
+            <span class="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-pastelPink/70 to-softBlush border border-crimson/25 text-crimson font-sans font-bold text-xs sm:text-sm tracking-wide shadow-sm">
               (@vlsια) 💖
             </span>
           </div>
 
           <!-- Romantic Nickname Pill -->
-          <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-gradient-to-r from-softBlush via-white to-softBlush border border-pastelPink shadow-sm">
+          <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-gradient-to-r from-softBlush via-white to-softBlush border border-pastelPink shadow-sm">
             <span class="text-xs">☀️</span>
-            <span class="font-rounded font-bold text-xs text-crimsonDeep tracking-wide">
+            <span class="font-rounded font-bold text-[11px] text-crimsonDeep tracking-wide">
               Sunshine • Ducky • Miss Rena
             </span>
             <span class="text-xs">🐥</span>
           </div>
         </div>
 
+        <!-- 2.5. Animated Floating 3D-Flip Polaroid Photo Gallery (Anime ✨ ↔ Real 💖) -->
+        <div class="reveal-stagger delay-2 w-full mb-2.5">
+          <div class="grid grid-cols-2 gap-2.5 px-1">
+            <!-- Polaroid 1: White Cap & Earphones -->
+            <div class="polaroid-float-left polaroid-3d-scene h-36 sm:h-40 cursor-pointer" data-polaroid-index="0">
+              <div id="polaroidCard0" class="polaroid-3d-card">
+                <!-- Front: Cute Anime Illustration -->
+                <div class="polaroid-face polaroid-shimmer">
+                  <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
+                    <img src="rena-anime-1.jpg" alt="Rena Anime Cap" class="w-full h-full object-cover" />
+                    <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-crimson/90 text-white text-[8.5px] font-rounded font-bold shadow">
+                      ✨ Anime
+                    </span>
+                    <button
+                      type="button"
+                      data-zoom-index="0"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      title="View Fullscreen"
+                    >
+                      🔍
+                    </button>
+                  </div>
+                  <div class="position-bottom absolute bottom-1 inset-x-0 text-center text-[9.5px] font-rounded font-bold text-navy truncate px-1">
+                    Cutest Cap &amp; Vibes 🎧💖
+                  </div>
+                </div>
+                <!-- Back: Real Photo -->
+                <div class="polaroid-face polaroid-face-back">
+                  <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
+                    <img src="rena-1.jpg" alt="Rena Real Cap" class="w-full h-full object-cover" />
+                    <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-navy/90 text-white text-[8.5px] font-rounded font-bold shadow">
+                      📸 Real
+                    </span>
+                    <button
+                      type="button"
+                      data-zoom-index="0"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      title="View Fullscreen"
+                    >
+                      🔍
+                    </button>
+                  </div>
+                  <div class="position-bottom absolute bottom-1 inset-x-0 text-center text-[9.5px] font-rounded font-bold text-crimson truncate px-1">
+                    My Favorite Pout 🐥💕
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Polaroid 2: Blue Shirt & Sparkly Choker -->
+            <div class="polaroid-float-right polaroid-3d-scene h-36 sm:h-40 cursor-pointer" data-polaroid-index="1">
+              <div id="polaroidCard1" class="polaroid-3d-card">
+                <!-- Front: Cute Anime Illustration -->
+                <div class="polaroid-face polaroid-shimmer">
+                  <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
+                    <img src="rena-anime-2.jpg" alt="Rena Anime Blue Shirt" class="w-full h-full object-cover" />
+                    <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-crimson/90 text-white text-[8.5px] font-rounded font-bold shadow">
+                      ✨ Anime
+                    </span>
+                    <button
+                      type="button"
+                      data-zoom-index="1"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      title="View Fullscreen"
+                    >
+                      🔍
+                    </button>
+                  </div>
+                  <div class="position-bottom absolute bottom-1 inset-x-0 text-center text-[9.5px] font-rounded font-bold text-navy truncate px-1">
+                    Pretty Sunshine 🌷✨
+                  </div>
+                </div>
+                <!-- Back: Real Photo -->
+                <div class="polaroid-face polaroid-face-back">
+                  <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
+                    <img src="rena-2.jpg" alt="Rena Real Blue Shirt" class="w-full h-full object-cover" />
+                    <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-navy/90 text-white text-[8.5px] font-rounded font-bold shadow">
+                      📸 Real
+                    </span>
+                    <button
+                      type="button"
+                      data-zoom-index="1"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      title="View Fullscreen"
+                    >
+                      🔍
+                    </button>
+                  </div>
+                  <div class="position-bottom absolute bottom-1 inset-x-0 text-center text-[9.5px] font-rounded font-bold text-crimson truncate px-1">
+                    Those Pretty Eyes 💖✨
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Flip All / Mode Toggle Pill -->
+          <button
+            id="flipAllPolaroidsBtn"
+            type="button"
+            class="mt-2 inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/90 border border-pastelPink text-[10px] font-rounded font-bold text-crimson shadow-sm hover:bg-softBlush active:scale-95 transition cursor-pointer"
+          >
+            <span>🔄</span>
+            <span id="flipModeLabel">Tap photos to 3D-Flip: Anime ✨ ↔ Real 📸</span>
+          </button>
+        </div>
+
         <!-- 3. Heart-Melting Interactive Love Note Box -->
         <div
           id="quoteBoxTrigger"
-          class="reveal-stagger delay-3 love-letter-box relative w-full rounded-[22px] px-4 py-3.5 mb-3 cursor-pointer group"
+          class="reveal-stagger delay-3 love-letter-box relative w-full rounded-[22px] px-4 py-3 mb-2.5 cursor-pointer group"
         >
           <!-- Top Wax-Seal Style Pill -->
           <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-crimson text-white text-[10px] font-rounded font-bold tracking-wide shadow flex items-center gap-1 whitespace-nowrap">
@@ -892,6 +1064,79 @@
         <span>🌷</span>
       </div>
     </section>
+
+    <!-- =========================================================
+         FULL-SCREEN ANIMATED PHOTO SHOWCASE LIGHTBOX MODAL
+         ========================================================= -->
+    <div
+      id="photoLightboxOverlay"
+      class="hidden absolute inset-0 z-50 bg-navy/60 backdrop-blur-md flex-col items-center justify-center p-4"
+    >
+      <div
+        id="photoLightboxCard"
+        class="glass-love-card w-full max-w-[340px] rounded-[32px] p-4 flex flex-col items-center text-center relative shadow-2xl border-2 border-white"
+      >
+        <button
+          id="closePhotoLightboxBtn"
+          type="button"
+          class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-white border border-pastelPink text-navy hover:text-crimson flex items-center justify-center text-xs font-bold shadow transition"
+        >
+          ✕
+        </button>
+
+        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pastelPink/60 border border-white text-crimson text-[11px] font-rounded font-bold mb-2">
+          <span>✨</span>
+          <span id="lightboxBadgeText">Animated Anime Portrait</span>
+        </div>
+
+        <!-- 3D Flip Large Showcase Frame -->
+        <div id="lightbox3dTrigger" class="polaroid-3d-scene w-64 h-64 sm:w-72 sm:h-72 cursor-pointer my-1">
+          <div id="lightbox3dCard" class="polaroid-3d-card">
+            <div class="polaroid-face polaroid-shimmer">
+              <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
+                <img id="lightboxAnimeImg" src="rena-anime-1.jpg" alt="Rena Anime Portrait" class="w-full h-full object-cover" />
+                <span class="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-crimson/90 text-white text-[10px] font-rounded font-bold shadow">
+                  ✨ Anime Version
+                </span>
+              </div>
+              <div id="lightboxCaptionFront" class="position-bottom absolute bottom-1 inset-x-0 text-center text-xs font-rounded font-bold text-navy">
+                My Cutest Sunshine in Her White Cap 🎧💖
+              </div>
+            </div>
+            <div class="polaroid-face polaroid-face-back">
+              <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
+                <img id="lightboxRealImg" src="rena-1.jpg" alt="Rena Real Photo" class="w-full h-full object-cover" />
+                <span class="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-navy/90 text-white text-[10px] font-rounded font-bold shadow">
+                  📸 Original Photo
+                </span>
+              </div>
+              <div id="lightboxCaptionBack" class="position-bottom absolute bottom-1 inset-x-0 text-center text-xs font-rounded font-bold text-crimson">
+                The Real Beauty That Stole My Heart 🐥💕
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls inside Lightbox: Flip Anime/Real + Switch Photo 1/2 -->
+        <div class="mt-3 w-full flex items-center justify-center gap-2">
+          <button
+            id="lightboxFlipBtn"
+            type="button"
+            class="scan-cta-btn px-4 py-2 rounded-full text-xs font-rounded font-bold flex items-center gap-1.5 cursor-pointer"
+          >
+            <span>🔄</span>
+            <span>3D Flip: Anime ↔ Real</span>
+          </button>
+          <button
+            id="lightboxNextPhotoBtn"
+            type="button"
+            class="px-3.5 py-2 rounded-full bg-softBlush border border-pastelPink text-navy font-rounded font-bold text-xs hover:bg-pastelPink/50 active:scale-95 transition cursor-pointer"
+          >
+            Next Photo (1/2) →
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- =========================================================
          SCANNABLE PHONE QR CODE GIFT CARD MODAL
@@ -1486,11 +1731,28 @@
         playPopSound();
       });
 
-      // --- Interactive Avatar Tap ---
+      // --- Interactive Avatar Tap (Cycles Anime & Real Portraits) ---
       const avatarTapTrigger = document.getElementById('avatarTapTrigger');
+      const avatarPortraitImg = document.getElementById('avatarPortraitImg');
+      const AVATAR_PORTRAITS = [
+        { src: 'rena-anime-1.jpg', msg: 'Cutest anime Sunshine in her white cap! 🎧💖' },
+        { src: 'rena-anime-2.jpg', msg: 'My pretty anime princess in pastel blue! 🌷✨' },
+        { src: 'rena-1.jpg', msg: 'The real cutie who stole my heart! 🐥💕' },
+        { src: 'rena-2.jpg', msg: 'Those gorgeous eyes I adore so much! 👑❤️' },
+      ];
+      let currentAvatarIdx = 0;
+
       avatarTapTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
-        showLoveToast('You are my favorite person, Miss Rena! 👑💖');
+        currentAvatarIdx = (currentAvatarIdx + 1) % AVATAR_PORTRAITS.length;
+        if (avatarPortraitImg) {
+          avatarPortraitImg.style.transform = 'scale(0.85)';
+          setTimeout(() => {
+            avatarPortraitImg.src = AVATAR_PORTRAITS[currentAvatarIdx].src;
+            avatarPortraitImg.style.transform = 'scale(1)';
+          }, 120);
+        }
+        showLoveToast(AVATAR_PORTRAITS[currentAvatarIdx].msg);
         const rect = avatarTapTrigger.getBoundingClientRect();
         const stageRect = stageContainer.getBoundingClientRect();
         spawnHeartBurst(
@@ -1501,6 +1763,156 @@
         );
         playPopSound();
       });
+
+      // --- Interactive 3D-Flip Polaroids & Fullscreen Animated Photo Lightbox ---
+      const PHOTO_MEMORIES = [
+        {
+          anime: 'rena-anime-1.jpg',
+          real: 'rena-1.jpg',
+          captionFront: 'My Cutest Sunshine in Her White Cap 🎧💖',
+          captionBack: 'The Real Cutie & Pout That Stole My Heart 🐥💕',
+          toastAnime: 'Anime Mode: Cutest white cap & earphones! ✨🎧',
+          toastReal: 'Real Photo: Nothing beats the real Miss Rena! 📸💖',
+        },
+        {
+          anime: 'rena-anime-2.jpg',
+          real: 'rena-2.jpg',
+          captionFront: 'Dreamy Anime Princess in Pastel Blue 🌷✨',
+          captionBack: 'Those Pretty Eyes & Sparkly Choker I Adore 💖✨',
+          toastAnime: 'Anime Mode: Soft cherry-blossom magic! 🌸✨',
+          toastReal: 'Real Photo: So effortlessly pretty, my Sunshine! 📸🌷',
+        },
+      ];
+
+      const polaroidCard0 = document.getElementById('polaroidCard0');
+      const polaroidCard1 = document.getElementById('polaroidCard1');
+      const flipAllPolaroidsBtn = document.getElementById('flipAllPolaroidsBtn');
+      const flipModeLabel = document.getElementById('flipModeLabel');
+      let allPolaroidsFlipped = false;
+
+      document.querySelectorAll('[data-polaroid-index]').forEach((sceneEl) => {
+        sceneEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = Number(sceneEl.getAttribute('data-polaroid-index') || 0);
+          const cardEl = sceneEl.querySelector('.polaroid-3d-card');
+          if (!cardEl) return;
+          const nowFlipped = cardEl.classList.toggle('is-flipped');
+          const mem = PHOTO_MEMORIES[idx];
+          showLoveToast(nowFlipped ? mem.toastReal : mem.toastAnime);
+
+          const rect = sceneEl.getBoundingClientRect();
+          const stageRect = stageContainer.getBoundingClientRect();
+          spawnHeartBurst(
+            rect.left - stageRect.left + rect.width / 2,
+            rect.top - stageRect.top + rect.height / 2,
+            18,
+            ['💖', '✨', '🌷', '📸', '💕']
+          );
+          playPopSound();
+        });
+      });
+
+      if (flipAllPolaroidsBtn) {
+        flipAllPolaroidsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          allPolaroidsFlipped = !allPolaroidsFlipped;
+          if (polaroidCard0) polaroidCard0.classList.toggle('is-flipped', allPolaroidsFlipped);
+          if (polaroidCard1) polaroidCard1.classList.toggle('is-flipped', allPolaroidsFlipped);
+          flipModeLabel.textContent = allPolaroidsFlipped
+            ? 'Showing: Real Photos 📸 (Tap to Flip to Anime ✨)'
+            : 'Showing: Anime Art ✨ (Tap to Flip to Real 📸)';
+          showLoveToast(
+            allPolaroidsFlipped
+              ? 'Flipped to Miss Rena’s Real Photos! 📸💖'
+              : 'Flipped to Miss Rena’s Cute Anime Portraits! ✨🌷'
+          );
+          spawnHeartBurst(width * 0.5, height * 0.42, 22, ['✨', '💖', '📸', '🌷', '💕']);
+          playPopSound();
+        });
+      }
+
+      // Fullscreen Lightbox Modal Logic
+      const photoLightboxOverlay = document.getElementById('photoLightboxOverlay');
+      const photoLightboxCard = document.getElementById('photoLightboxCard');
+      const closePhotoLightboxBtn = document.getElementById('closePhotoLightboxBtn');
+      const lightbox3dTrigger = document.getElementById('lightbox3dTrigger');
+      const lightbox3dCard = document.getElementById('lightbox3dCard');
+      const lightboxAnimeImg = document.getElementById('lightboxAnimeImg');
+      const lightboxRealImg = document.getElementById('lightboxRealImg');
+      const lightboxCaptionFront = document.getElementById('lightboxCaptionFront');
+      const lightboxCaptionBack = document.getElementById('lightboxCaptionBack');
+      const lightboxBadgeText = document.getElementById('lightboxBadgeText');
+      const lightboxFlipBtn = document.getElementById('lightboxFlipBtn');
+      const lightboxNextPhotoBtn = document.getElementById('lightboxNextPhotoBtn');
+
+      let activeLightboxIdx = 0;
+
+      function renderLightboxPhoto(idx, keepFlipState = false) {
+        activeLightboxIdx = idx % PHOTO_MEMORIES.length;
+        const mem = PHOTO_MEMORIES[activeLightboxIdx];
+        lightboxAnimeImg.src = mem.anime;
+        lightboxRealImg.src = mem.real;
+        lightboxCaptionFront.textContent = mem.captionFront;
+        lightboxCaptionBack.textContent = mem.captionBack;
+        lightboxNextPhotoBtn.textContent = `Next Photo (${activeLightboxIdx + 1}/${PHOTO_MEMORIES.length}) →`;
+        if (!keepFlipState) {
+          lightbox3dCard.classList.remove('is-flipped');
+          lightboxBadgeText.textContent = 'Animated Anime Portrait ✨';
+        }
+      }
+
+      document.querySelectorAll('.polaroid-zoom-btn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const idx = Number(btn.getAttribute('data-zoom-index') || 0);
+          renderLightboxPhoto(idx, false);
+          photoLightboxOverlay.classList.remove('hidden');
+          photoLightboxOverlay.classList.add('flex');
+          spawnHeartBurst(width * 0.5, height * 0.45, 24, ['💖', '✨', '🌷', '🌸']);
+          playPopSound();
+        });
+      });
+
+      function flipLightboxCard(e) {
+        if (e) e.stopPropagation();
+        const isReal = lightbox3dCard.classList.toggle('is-flipped');
+        lightboxBadgeText.textContent = isReal
+          ? 'Original Beauty Photo 📸💖'
+          : 'Animated Anime Portrait ✨';
+        spawnHeartBurst(width * 0.5, height * 0.45, 20, ['💖', '✨', '🌷', '💕']);
+        playPopSound();
+      }
+
+      if (lightbox3dTrigger) lightbox3dTrigger.addEventListener('click', flipLightboxCard);
+      if (lightboxFlipBtn) lightboxFlipBtn.addEventListener('click', flipLightboxCard);
+
+      if (lightboxNextPhotoBtn) {
+        lightboxNextPhotoBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          renderLightboxPhoto((activeLightboxIdx + 1) % PHOTO_MEMORIES.length, true);
+          spawnHeartBurst(width * 0.5, height * 0.45, 18, ['🌷', '💖', '✨']);
+          playPopSound();
+        });
+      }
+
+      if (closePhotoLightboxBtn) {
+        closePhotoLightboxBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          photoLightboxOverlay.classList.add('hidden');
+          photoLightboxOverlay.classList.remove('flex');
+        });
+      }
+
+      if (photoLightboxOverlay) {
+        photoLightboxOverlay.addEventListener('click', () => {
+          photoLightboxOverlay.classList.add('hidden');
+          photoLightboxOverlay.classList.remove('flex');
+        });
+      }
+
+      if (photoLightboxCard) {
+        photoLightboxCard.addEventListener('click', (e) => e.stopPropagation());
+      }
 
       // --- Interactive "Send Warm Hug & Flowers" Button ---
       sendHugBtn.addEventListener('click', (e) => {
