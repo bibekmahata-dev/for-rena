@@ -28,7 +28,7 @@
       --gold-sparkle: #D4AF37;
     }
 
-    /* Instant Critical Layout Utilities (renders before CDN finishes) */
+    /* Instant Critical Layout Utilities */
     .hidden { display: none !important; }
     .flex { display: flex; }
     .inline-flex { display: inline-flex; }
@@ -411,20 +411,22 @@
       animation: twinkleSparkle 2.6s ease-in-out infinite;
     }
 
-    /* Animated Floating 3D-Flip Polaroid Photo Cards */
+    /* =========================================================
+       PORTRAIT 3D-FLIP POLAROID PHOTO CARDS (PERFECT FIT)
+       ========================================================= */
     @keyframes polaroidFloatLeft {
-      0%, 100% { transform: translate3d(0, 0px, 0) rotate(-2deg); }
-      50% { transform: translate3d(0, -4px, 0) rotate(-0.8deg); }
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(-1.8deg); }
+      50% { transform: translate3d(0, -4px, 0) rotate(-0.6deg); }
     }
 
     @keyframes polaroidFloatRight {
-      0%, 100% { transform: translate3d(0, 0px, 0) rotate(2deg); }
-      50% { transform: translate3d(0, -4px, 0) rotate(0.8deg); }
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(1.8deg); }
+      50% { transform: translate3d(0, -4px, 0) rotate(0.6deg); }
     }
 
     @keyframes holographicSheen {
-      0% { transform: translateX(-120%) rotate(25deg); }
-      50%, 100% { transform: translateX(220%) rotate(25deg); }
+      0% { transform: translateX(-130%) rotate(25deg); }
+      50%, 100% { transform: translateX(230%) rotate(25deg); }
     }
 
     .polaroid-float-left {
@@ -438,7 +440,7 @@
     }
 
     .polaroid-3d-scene {
-      perspective: 900px;
+      perspective: 1000px;
       touch-action: manipulation;
     }
 
@@ -447,7 +449,7 @@
       width: 100%;
       height: 100%;
       transform-style: preserve-3d;
-      transition: transform 0.62s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
       will-change: transform;
     }
 
@@ -455,17 +457,18 @@
       transform: rotateY(180deg);
     }
 
+    /* Clean Flex-Column Polaroid Frame: Photo on top, Caption cleanly below */
     .polaroid-face {
       position: absolute;
       inset: 0;
       backface-visibility: hidden;
       -webkit-backface-visibility: hidden;
-      border-radius: 16px;
+      border-radius: 18px;
       background: #FFFFFF;
-      padding: 5px 5px 22px 5px;
+      padding: 6px 6px 7px 6px;
       box-shadow:
-        0 10px 22px -6px rgba(220, 20, 60, 0.22),
-        0 0 0 1.5px rgba(255, 192, 203, 0.85);
+        0 12px 24px -6px rgba(220, 20, 60, 0.22),
+        0 0 0 1.5px rgba(255, 192, 203, 0.9);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -473,6 +476,57 @@
 
     .polaroid-face-back {
       transform: rotateY(180deg);
+    }
+
+    /* Constrained Image Box so Portrait Photos Never Overflow Onto Caption */
+    .polaroid-img-box {
+      position: relative;
+      width: 100%;
+      flex: 1 1 0%;
+      min-height: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #FFF0F5 0%, #FFE4EC 100%);
+    }
+
+    .polaroid-img-fit {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 8%;
+      display: block;
+    }
+
+    /* Full Uncropped Portrait Fit inside Lightbox (100% of Photo Visible) */
+    .lightbox-backdrop-blur {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(16px) brightness(1.04);
+      transform: scale(1.15);
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .lightbox-img-contain {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      display: block;
+    }
+
+    /* Dedicated Static Footer Below Image (Zero Overlap Guaranteed) */
+    .polaroid-caption-bar {
+      flex-shrink: 0;
+      width: 100%;
+      padding-top: 6px;
+      text-align: center;
+      line-height: 1.25;
     }
 
     .polaroid-shimmer::after {
@@ -493,7 +547,7 @@
     }
 
     /* =========================================================
-       STEP 2: VIRAL 3D LOVE ENVELOPE + CUPID BOW HEART-AIMING
+       STEP 2: VIRAL 3D LOVE ENVELOPE + WINGED CUPID BOW & ARROW
        ========================================================= */
     @keyframes envelopeFloat {
       0%, 100% { transform: translate3d(0, 0px, 0) rotate(-0.6deg); }
@@ -501,24 +555,44 @@
     }
 
     @keyframes reticleSpinPulse {
-      0% { transform: translate(-50%, -50%) scale(0.92) rotate(0deg); opacity: 0.75; }
+      0% { transform: translate(-50%, -50%) scale(0.92) rotate(0deg); opacity: 0.8; }
       50% { transform: translate(-50%, -50%) scale(1.12) rotate(90deg); opacity: 1; }
-      100% { transform: translate(-50%, -50%) scale(0.92) rotate(180deg); opacity: 0.75; }
+      100% { transform: translate(-50%, -50%) scale(0.92) rotate(180deg); opacity: 0.8; }
     }
 
-    @keyframes cupidBowSway {
-      0%, 100% { transform: translate3d(-9px, 0, 0) rotate(-4deg); }
-      50% { transform: translate3d(9px, -4px, 0) rotate(4deg); }
+    @keyframes cupidWingFlapLeft {
+      0%, 100% { transform: rotate(-4deg) scaleY(1); }
+      50% { transform: rotate(8deg) scaleY(0.94); }
     }
 
-    @keyframes shockwaveExpand {
-      0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0.95; }
-      100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; }
+    @keyframes cupidWingFlapRight {
+      0%, 100% { transform: rotate(4deg) scaleY(1); }
+      50% { transform: rotate(-8deg) scaleY(0.94); }
+    }
+
+    @keyframes cupidBowFloatAim {
+      0%, 100% { transform: translate3d(-7px, 0px, 0) rotate(-3deg); }
+      50% { transform: translate3d(7px, -5px, 0) rotate(3deg); }
+    }
+
+    @keyframes laserSightPulse {
+      0%, 100% { opacity: 0.35; stroke-dashoffset: 0; }
+      50% { opacity: 0.85; stroke-dashoffset: -12; }
+    }
+
+    @keyframes shockwaveExpand1 {
+      0% { transform: translate(-50%, -50%) scale(0.35); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(2.9); opacity: 0; }
+    }
+
+    @keyframes shockwaveExpand2 {
+      0% { transform: translate(-50%, -50%) scale(0.35); opacity: 0.9; }
+      100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
     }
 
     .envelope-3d-wrapper {
       position: relative;
-      width: 288px;
+      width: 292px;
       height: 192px;
       perspective: 1100px;
       animation: envelopeFloat 3.2s ease-in-out infinite;
@@ -537,24 +611,26 @@
       z-index: 1;
     }
 
-    /* Rising Mini Polaroids Inside Envelope */
+    /* Rising Portrait Mini-Polaroids Inside Envelope */
     .envelope-mini-polaroid {
       position: absolute;
-      top: 16px;
-      width: 84px;
-      height: 102px;
+      top: 14px;
+      width: 82px;
+      height: 108px;
       background: #FFFFFF;
-      padding: 4px 4px 15px 4px;
-      border-radius: 10px;
-      box-shadow: 0 10px 22px rgba(27, 42, 74, 0.20);
+      padding: 4px 4px 16px 4px;
+      border-radius: 11px;
+      box-shadow: 0 10px 22px rgba(27, 42, 74, 0.22);
       border: 1.5px solid #FFC0CB;
       z-index: 2;
       opacity: 0;
       transform: translate3d(0, 28px, 0) scale(0.75);
       transition:
-        transform 0.82s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1),
         opacity 0.5s ease;
       pointer-events: none;
+      display: flex;
+      flex-direction: column;
     }
 
     .envelope-mini-polaroid-left { left: 16px; }
@@ -562,13 +638,13 @@
 
     .envelope-opened .envelope-mini-polaroid-left {
       opacity: 1;
-      transform: translate3d(-34px, -86px, 0) rotate(-14deg) scale(1);
+      transform: translate3d(-36px, -90px, 0) rotate(-14deg) scale(1);
       transition-delay: 0.34s;
     }
 
     .envelope-opened .envelope-mini-polaroid-right {
       opacity: 1;
-      transform: translate3d(34px, -86px, 0) rotate(14deg) scale(1);
+      transform: translate3d(36px, -90px, 0) rotate(14deg) scale(1);
       transition-delay: 0.42s;
     }
 
@@ -623,7 +699,7 @@
       z-index: 6;
       transform-origin: top center;
       transform-style: preserve-3d;
-      transition: transform 0.68s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.32s;
+      transition: transform 0.72s cubic-bezier(0.4, 0, 0.2, 1), z-index 0s 0.34s;
       will-change: transform;
       pointer-events: none;
     }
@@ -639,8 +715,8 @@
       top: 104px;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 64px;
-      height: 64px;
+      width: 66px;
+      height: 66px;
       z-index: 10;
       cursor: pointer;
       display: flex;
@@ -651,7 +727,7 @@
     }
 
     .envelope-opened .heart-seal-target {
-      transform: translate(-50%, -50%) scale(1.65);
+      transform: translate(-50%, -50%) scale(1.75);
       opacity: 0;
       pointer-events: none;
     }
@@ -660,65 +736,104 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 72px;
-      height: 72px;
+      width: 74px;
+      height: 74px;
       border-radius: 9999px;
       border: 2px dashed #DC143C;
-      box-shadow: 0 0 18px rgba(220, 20, 60, 0.38);
+      box-shadow: 0 0 20px rgba(220, 20, 60, 0.42);
       animation: reticleSpinPulse 3s linear infinite;
       pointer-events: none;
     }
 
-    .seal-shockwave {
+    .seal-shockwave-1,
+    .seal-shockwave-2 {
       position: absolute;
       top: 104px;
       left: 50%;
-      width: 56px;
-      height: 56px;
+      width: 58px;
+      height: 58px;
       border-radius: 9999px;
-      border: 3px solid #DC143C;
       z-index: 9;
       opacity: 0;
       pointer-events: none;
     }
 
-    .envelope-opened .seal-shockwave {
-      animation: shockwaveExpand 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    .seal-shockwave-1 { border: 3px solid #DC143C; }
+    .seal-shockwave-2 { border: 2.5px solid #D4AF37; }
+
+    .envelope-opened .seal-shockwave-1 {
+      animation: shockwaveExpand1 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* Custom SVG Cupid Bow & Heart-Tipped Arrow Aiming at the Seal */
+    .envelope-opened .seal-shockwave-2 {
+      animation: shockwaveExpand2 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
+    }
+
+    /* Ornate Winged Golden-Rose Cupid Bow & Glowing Crystal-Heart Arrow */
     .cupid-bow-shooter {
       position: relative;
-      margin-top: 18px;
+      margin-top: 10px;
       z-index: 12;
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: cupidBowSway 2.3s ease-in-out infinite;
-      transition: opacity 0.3s ease, transform 0.35s ease;
+      animation: cupidBowFloatAim 2.4s ease-in-out infinite;
       cursor: pointer;
       touch-action: manipulation;
+      will-change: transform;
+    }
+
+    .cupid-wing-left {
+      transform-origin: 48px 54px;
+      animation: cupidWingFlapLeft 1.6s ease-in-out infinite;
+    }
+
+    .cupid-wing-right {
+      transform-origin: 112px 54px;
+      animation: cupidWingFlapRight 1.6s ease-in-out infinite;
+    }
+
+    .aim-laser-line {
+      animation: laserSightPulse 1.4s linear infinite;
+    }
+
+    .cupid-bow-frame {
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
     }
 
     .cupid-arrow-projectile {
-      transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease 0.22s;
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
       will-change: transform, opacity;
     }
 
+    /* Phase 1: Pull Back Bowstring & Charge Heart Arrow */
+    .cupid-bow-shooter.bow-drawing {
+      animation: none;
+      transform: translate3d(0, 4px, 0) scale(1.04);
+    }
+
+    .cupid-bow-shooter.bow-drawing .cupid-arrow-projectile {
+      transform: translate3d(0, 14px, 0) scale(1.06);
+    }
+
+    /* Phase 2: Release Arrow Straight Into the Heart Seal */
     .cupid-bow-shooter.arrow-fired {
       animation: none;
       pointer-events: none;
     }
 
     .cupid-bow-shooter.arrow-fired .cupid-arrow-projectile {
-      transform: translate3d(0, -132px, 0) scale(1.15);
+      transition:
+        transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 0.2s ease 0.24s;
+      transform: translate3d(0, -142px, 0) scale(1.22);
       opacity: 0;
     }
 
     .cupid-bow-shooter.arrow-fired .cupid-bow-frame {
+      transition: opacity 0.32s ease 0.2s, transform 0.35s ease 0.2s;
       opacity: 0;
-      transform: scale(0.88);
-      transition: opacity 0.3s ease 0.18s, transform 0.3s ease 0.18s;
+      transform: translate3d(0, 12px, 0) scale(0.85);
     }
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -826,15 +941,12 @@
           <!-- Kawaii Bouncing Cartoon Kitty Holding Love Letter -->
           <div class="relative z-10 flex flex-col items-center">
             <svg class="w-44 h-44 animate-kitty-bounce drop-shadow-md" viewBox="0 0 220 210" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <!-- Wagging Tail -->
               <g class="animate-tail">
                 <path d="M156 164C178 162 190 142 184 128C179 118 167 125 164 136" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
                 <path d="M156 164C178 162 190 142 184 128C179 118 167 125 164 136" stroke="#F4ACB7" stroke-width="2.5" stroke-linecap="round"/>
               </g>
-              <!-- Body -->
               <rect x="66" y="122" width="88" height="62" rx="34" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3.5"/>
               <ellipse cx="110" cy="154" rx="26" ry="20" fill="#FFE4EC"/>
-              <!-- Ears -->
               <g class="animate-ear-left">
                 <path d="M56 84L44 36C43 31 48 27 53 30L92 56Z" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3.5" stroke-linejoin="round"/>
                 <path d="M58 76L51 44L80 61Z" fill="#FFC0CB"/>
@@ -843,19 +955,15 @@
                 <path d="M164 84L176 36C177 31 172 27 167 30L128 56Z" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3.5" stroke-linejoin="round"/>
                 <path d="M162 76L169 44L140 61Z" fill="#FFC0CB"/>
               </g>
-              <!-- Crimson Ribbon Bow -->
               <g transform="translate(144, 45) rotate(14)">
                 <path d="M0 10C-10 0 -18 4 -16 13C-14 21 -4 18 0 12Z" fill="#DC143C" stroke="#1B2A4A" stroke-width="2.5"/>
                 <path d="M4 10C14 0 22 4 20 13C18 21 8 18 4 12Z" fill="#DC143C" stroke="#1B2A4A" stroke-width="2.5"/>
                 <circle cx="2" cy="11" r="4.5" fill="#FFCCD5" stroke="#1B2A4A" stroke-width="2.5"/>
               </g>
-              <!-- Head -->
               <rect x="46" y="52" width="128" height="92" rx="46" fill="#FFFFFF" stroke="#1B2A4A" stroke-width="3.5"/>
               <path d="M110 55V66M98 57L101 65M122 57L119 65" stroke="#FFC0CB" stroke-width="4" stroke-linecap="round"/>
-              <!-- Deep Rosy Cheeks -->
               <ellipse cx="68" cy="112" rx="12" ry="7" fill="#FF8DA1" opacity="0.85"/>
               <ellipse cx="152" cy="112" rx="12" ry="7" fill="#FF8DA1" opacity="0.85"/>
-              <!-- Blinking Starry Anime Eyes -->
               <g class="animate-eye-blink">
                 <circle cx="80" cy="100" r="9" fill="#1B2A4A"/>
                 <circle cx="77" cy="96.5" r="3.2" fill="#FFFFFF"/>
@@ -864,12 +972,9 @@
                 <circle cx="137" cy="96.5" r="3.2" fill="#FFFFFF"/>
                 <circle cx="143" cy="103" r="1.6" fill="#FFFFFF"/>
               </g>
-              <!-- Heart Nose & Cute Smile -->
               <path d="M110 108C110 108 105 104.5 105 102C105 100.5 106.5 99.5 108 99.5C109 99.5 109.7 100.2 110 101C110.3 100.2 111 99.5 112 99.5C113.5 99.5 115 100.5 115 102C115 104.5 110 108 110 108Z" fill="#DC143C"/>
               <path d="M102 112C105 116 110 114 110 110C110 114 115 116 118 112" stroke="#1B2A4A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <!-- Whiskers -->
               <path d="M50 98L35 95M49 107L33 108M170 98L185 95M171 107L187 108" stroke="#1B2A4A" stroke-width="2.5" stroke-linecap="round"/>
-              <!-- Love Envelope -->
               <g transform="translate(77, 132)">
                 <rect x="0" y="0" width="66" height="44" rx="8" fill="#FFF0F5" stroke="#1B2A4A" stroke-width="3"/>
                 <path d="M3 4L33 25L63 4" stroke="#F4ACB7" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -925,14 +1030,14 @@
     </div>
 
     <!-- =========================================================
-         STEP 2: VIRAL 3D LOVE ENVELOPE & CUPID HEART-AIM UNSEAL
+         STEP 2: VIRAL 3D LOVE ENVELOPE & WINGED CUPID BOW UNSEAL
          ========================================================= -->
     <section
       id="envelopeStageScreen"
       class="screen-layer screen-hidden absolute inset-0 top-12 bottom-0 z-30 flex flex-col items-center justify-between px-6 py-3 text-center"
     >
       <!-- Top Prompt Header -->
-      <div class="mt-1 space-y-1 max-w-[330px]">
+      <div class="mt-1 space-y-1 max-w-[335px]">
         <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white/90 border border-pastelPink text-crimson text-[11px] font-rounded font-bold tracking-wide shadow-sm">
           <span>✈️</span>
           <span>Special Delivery • Across Every Mile to WIB 💖</span>
@@ -945,22 +1050,28 @@
         </p>
       </div>
 
-      <!-- Center 3D Envelope + Rising Letter + Polaroids + Custom SVG Cupid Bow -->
+      <!-- Center 3D Envelope + Rising Letter + Portrait Mini-Polaroids + Ornate Winged Cupid Bow -->
       <div class="my-auto pt-14 flex flex-col items-center justify-center relative">
         <div id="loveEnvelope3D" class="envelope-3d-wrapper">
           <!-- Back Panel -->
           <div class="envelope-back-panel"></div>
 
-          <!-- Rising Mini Polaroids Inside Envelope -->
+          <!-- Rising Portrait Mini-Polaroids Inside Envelope (Properly Framed) -->
           <div class="envelope-mini-polaroid envelope-mini-polaroid-left">
-            <img src="rena-anime-1.jpg" alt="Rena Polaroid 1" class="w-full h-full object-cover rounded-md" />
+            <div class="polaroid-img-box">
+              <img src="rena-anime-1.jpg" alt="Rena Polaroid 1" class="polaroid-img-fit" />
+            </div>
+            <span class="text-[8px] font-rounded font-bold text-crimson pt-1 truncate">Sunshine 🎧💖</span>
           </div>
           <div class="envelope-mini-polaroid envelope-mini-polaroid-right">
-            <img src="rena-anime-2.jpg" alt="Rena Polaroid 2" class="w-full h-full object-cover rounded-md" />
+            <div class="polaroid-img-box">
+              <img src="rena-anime-2.jpg" alt="Rena Polaroid 2" class="polaroid-img-fit" />
+            </div>
+            <span class="text-[8px] font-rounded font-bold text-crimson pt-1 truncate">Miss Rena 🌷✨</span>
           </div>
 
           <!-- Rising Love Letter Sheet Inside Envelope -->
-          <div id="risingLetterSheet" class="envelope-letter-sheet cursor-pointer hover:scale-[1.06] transition">
+          <div id="risingLetterSheet" class="envelope-letter-sheet cursor-pointer hover:scale-[1.05] transition">
             <span class="text-[9.5px] font-rounded font-bold uppercase tracking-widest text-crimson">
               ✈️ For My Sunshine • Miss Rena 💖
             </span>
@@ -975,12 +1086,11 @@
 
           <!-- Front Envelope Pocket (SVG Left/Right/Bottom Flaps) -->
           <div class="envelope-front-pocket">
-            <svg viewBox="0 0 288 192" class="w-full h-full" preserveAspectRatio="none">
-              <polygon points="0,0 144,108 0,192" fill="#FFE5EE" stroke="#FFC0CB" stroke-width="1.5"/>
-              <polygon points="288,0 144,108 288,192" fill="#FFD9E6" stroke="#FFC0CB" stroke-width="1.5"/>
-              <polygon points="0,192 144,94 288,192" fill="#FFF0F5" stroke="#FFB3C6" stroke-width="2"/>
+            <svg viewBox="0 0 292 192" class="w-full h-full" preserveAspectRatio="none">
+              <polygon points="0,0 146,108 0,192" fill="#FFE5EE" stroke="#FFC0CB" stroke-width="1.5"/>
+              <polygon points="292,0 146,108 292,192" fill="#FFD9E6" stroke="#FFC0CB" stroke-width="1.5"/>
+              <polygon points="0,192 146,94 292,192" fill="#FFF0F5" stroke="#FFB3C6" stroke-width="2"/>
             </svg>
-            <!-- Recipient Tag on Front of Envelope -->
             <div class="absolute bottom-2.5 inset-x-0 flex flex-col items-center gap-0.5">
               <span class="text-[8.5px] font-rounded font-bold uppercase tracking-widest text-crimson/75">
                 ✈️ Express To My Favorite Timezone (UTC+7)
@@ -993,13 +1103,14 @@
 
           <!-- 3D Top Triangular Flap -->
           <div class="envelope-top-flap">
-            <svg viewBox="0 0 288 116" class="w-full h-full drop-shadow" preserveAspectRatio="none">
-              <polygon points="0,0 288,0 144,110" fill="#FFC4D6" stroke="#FFFFFF" stroke-width="2"/>
+            <svg viewBox="0 0 292 116" class="w-full h-full drop-shadow" preserveAspectRatio="none">
+              <polygon points="0,0 292,0 146,110" fill="#FFC4D6" stroke="#FFFFFF" stroke-width="2"/>
             </svg>
           </div>
 
-          <!-- Heart Impact Shockwave Ring -->
-          <div class="seal-shockwave"></div>
+          <!-- Double Golden-Crimson Heart Impact Shockwave Rings -->
+          <div class="seal-shockwave-1"></div>
+          <div class="seal-shockwave-2"></div>
 
           <!-- Interactive Glowing Heart Wax Seal Target + Crosshair Aim Reticle -->
           <button
@@ -1015,35 +1126,94 @@
           </button>
         </div>
 
-        <!-- Custom SVG Golden-Rose Cupid Bow & Heart Arrow Aiming Up at the Heart Seal -->
-        <div id="cupidBowShooter" class="cupid-bow-shooter" title="Tap to Shoot Heart!">
-          <svg width="116" height="84" viewBox="0 0 116 84" fill="none" xmlns="http://www.w3.org/2000/svg" class="overflow-visible drop-shadow-md">
-            <!-- Bow String & Golden-Rose Bow Limbs -->
+        <!-- Ornate Winged Golden-Rose Cupid Bow & Glowing Crystal-Heart Arrow -->
+        <div id="cupidBowShooter" class="cupid-bow-shooter" title="Tap to Shoot Cupid's Heart Arrow!">
+          <svg width="160" height="106" viewBox="0 0 160 106" fill="none" xmlns="http://www.w3.org/2000/svg" class="overflow-visible drop-shadow-lg">
+            <defs>
+              <linearGradient id="goldRoseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#D4AF37" />
+                <stop offset="50%" stop-color="#FFF3B0" />
+                <stop offset="100%" stop-color="#C59B27" />
+              </linearGradient>
+              <linearGradient id="rubyHeartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#FF4D6D" />
+                <stop offset="55%" stop-color="#DC143C" />
+                <stop offset="100%" stop-color="#9F1239" />
+              </linearGradient>
+              <filter id="heartGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="2" stdDeviation="3.5" flood-color="#DC143C" flood-opacity="0.55" />
+              </filter>
+            </defs>
+
+            <!-- Soft Glowing Target Sight Line Up to the Heart Seal -->
+            <line
+              x1="80" y1="-26" x2="80" y2="10"
+              stroke="#DC143C" stroke-width="2" stroke-dasharray="3 4"
+              stroke-linecap="round" class="aim-laser-line"
+            />
+
+            <!-- Winged Bow Frame -->
             <g class="cupid-bow-frame">
-              <path d="M14 54 L58 68 L102 54" stroke="#A4133C" stroke-width="1.8" stroke-dasharray="2 2" opacity="0.75"/>
-              <path d="M12 54 C26 24, 44 22, 58 28 C72 22, 90 24, 104 54" stroke="#D4AF37" stroke-width="5" stroke-linecap="round"/>
-              <path d="M12 54 C26 24, 44 22, 58 28 C72 22, 90 24, 104 54" stroke="#FFF0F5" stroke-width="1.6" stroke-linecap="round"/>
-              <circle cx="12" cy="54" r="3.5" fill="#DC143C"/>
-              <circle cx="104" cy="54" r="3.5" fill="#DC143C"/>
+              <!-- Left Feathered Angel Wing -->
+              <g class="cupid-wing-left">
+                <path d="M52 46 C32 34, 14 38, 8 48 C16 52, 26 52, 34 50 C20 56, 14 62, 12 68 C24 68, 36 62, 46 54 Z" fill="#FFFFFF" stroke="#FFC0CB" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M48 48 C34 40, 22 43, 16 49" stroke="#FFD6E4" stroke-width="1.5" stroke-linecap="round"/>
+              </g>
+
+              <!-- Right Feathered Angel Wing -->
+              <g class="cupid-wing-right">
+                <path d="M108 46 C128 34, 146 38, 152 48 C144 52, 134 52, 126 50 C140 56, 146 62, 148 68 C136 68, 124 62, 114 54 Z" fill="#FFFFFF" stroke="#FFC0CB" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M112 48 C126 40, 138 43, 144 49" stroke="#FFD6E4" stroke-width="1.5" stroke-linecap="round"/>
+              </g>
+
+              <!-- Golden-Rose Bowstring -->
+              <path d="M22 64 L80 82 L138 64" stroke="#DC143C" stroke-width="2" stroke-dasharray="2.5 2.5" opacity="0.8"/>
+
+              <!-- Ornate Recurve Golden Bow Limbs -->
+              <path d="M18 66 C26 50, 42 36, 62 42 C70 44, 75 47, 80 47 C85 47, 90 44, 98 42 C118 36, 134 50, 142 66" stroke="url(#goldRoseGrad)" stroke-width="6" stroke-linecap="round"/>
+              <path d="M18 66 C26 50, 42 36, 62 42 C70 44, 75 47, 80 47 C85 47, 90 44, 98 42 C118 36, 134 50, 142 66" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
+
+              <!-- Crimson Ribbon & Gem at Bow Center Grip -->
+              <path d="M72 48 L64 58 M88 48 L96 58" stroke="#DC143C" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="20" cy="65" r="4" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
+              <circle cx="140" cy="65" r="4" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
+              <circle cx="80" cy="47" r="5" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
             </g>
-            <!-- Heart-Tipped Arrow Projectile (Shoots straight up into the Heart Seal!) -->
-            <g class="cupid-arrow-projectile">
-              <!-- Arrow Shaft -->
-              <line x1="58" y1="14" x2="58" y2="70" stroke="#D4AF37" stroke-width="3.5" stroke-linecap="round"/>
-              <!-- Pink Feather Fletching -->
-              <path d="M58 62 L49 72 L58 68 L67 72 Z" fill="#FF8DA1" stroke="#DC143C" stroke-width="1.2"/>
-              <!-- Glowing Crimson Heart Arrowhead -->
-              <path d="M58 22 C58 22 44 13 44 6.5 C44 2.5 47.5 0 51 0 C54 0 56.5 1.8 58 4 C59.5 1.8 62 0 65 0 C68.5 0 72 2.5 72 6.5 C72 13 58 22 58 22 Z" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.8"/>
+
+            <!-- Glowing Ruby-Heart Arrow Projectile -->
+            <g class="cupid-arrow-projectile" filter="url(#heartGlow)">
+              <!-- Layered Rose-Pink & Gold Feather Fletching -->
+              <path d="M80 70 L67 82 L72 90 L80 81 L88 90 L93 82 Z" fill="#FF8DA1" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+              <path d="M80 75 L70 85 M80 75 L90 85" stroke="#DC143C" stroke-width="1.3" stroke-linecap="round"/>
+
+              <!-- Shimmering Golden Arrow Shaft -->
+              <line x1="80" y1="22" x2="80" y2="85" stroke="url(#goldRoseGrad)" stroke-width="4.2" stroke-linecap="round"/>
+              <line x1="80" y1="22" x2="80" y2="85" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+
+              <!--Sparkle Crosses Around Arrowhead -->
+              <circle cx="60" cy="14" r="2" fill="#D4AF37"/>
+              <circle cx="100" cy="14" r="2" fill="#D4AF37"/>
+
+              <!-- Faceted Ruby-Crystal Heart Arrowhead -->
+              <path
+                d="M80 30 C80 30 61 18 61 9.5 C61 3.8 65.8 0 71 0 C75.2 0 78.2 2.4 80 5.5 C81.8 2.4 84.8 0 89 0 C94.2 0 99 3.8 99 9.5 C99 18 80 30 80 30 Z"
+                fill="url(#rubyHeartGrad)"
+                stroke="#FFFFFF"
+                stroke-width="2.2"
+              />
+              <!-- Inner Specular Highlight on Heart Arrowhead -->
+              <path d="M67 8.5 C67 6 69.5 4.2 72.5 4.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.85"/>
             </g>
           </svg>
-          <span id="aimStatusPill" class="px-3 py-0.5 rounded-full bg-white/90 border border-pastelPink text-[10px] font-rounded font-bold text-crimson shadow-sm">
-            🎯 Tap Heart or Bow to Shoot!
+
+          <span id="aimStatusPill" class=" -mt-1 px-3 py-0.5 rounded-full bg-white/95 border border-pastelPink text-[10px] font-rounded font-bold text-crimson shadow-sm">
+            🎯 Tap Heart Seal or Cupid's Bow to Shoot!
           </span>
         </div>
       </div>
 
       <!-- Bottom Action Button -->
-      <div class="w-full max-w-[290px] mb-2 flex flex-col items-center">
+      <div class="w-full max-w-[290px] mb-1.5 flex flex-col items-center">
         <button
           id="shootHeartOpenBtn"
           type="button"
@@ -1061,10 +1231,10 @@
          ========================================================= -->
     <section
       id="revealScreen"
-      class="screen-layer screen-hidden absolute inset-0 top-11 bottom-0 z-30 flex flex-col items-center justify-between px-4 pb-2.5 pt-0.5 overflow-y-auto no-scrollbar"
+      class="screen-layer screen-hidden absolute inset-0 top-11 bottom-0 z-30 flex flex-col items-center justify-between px-3.5 pb-2 pt-0.5 overflow-y-auto no-scrollbar"
     >
       <!-- Main Romantic Glassmorphic Card -->
-      <div class="glass-love-card w-full max-w-[368px] rounded-[34px] px-4 py-3.5 sm:p-5 my-auto flex flex-col items-center text-center relative overflow-hidden">
+      <div class="glass-love-card w-full max-w-[372px] rounded-[34px] px-4 py-3 sm:p-4.5 my-auto flex flex-col items-center text-center relative overflow-hidden">
 
         <!-- Top Shimmering Ribbon -->
         <div class="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-pastelPink via-crimson to-goldAccent"></div>
@@ -1074,7 +1244,7 @@
         <span class="sparkle-star absolute top-3 right-4 text-sm pointer-events-none" style="animation-delay: 0.9s;">✨</span>
 
         <!-- 1. Header: Rena (@vlsια) + Sunshine • Ducky • Miss Rena -->
-        <div class="reveal-stagger delay-1 space-y-1 mt-1 mb-2">
+        <div class="reveal-stagger delay-1 space-y-1 mt-0.5 mb-2">
           <div class="flex items-center justify-center gap-1.5 flex-wrap">
             <span class="text-sm drop-shadow-sm">👑</span>
             <h2 class="font-rounded font-extrabold text-xl sm:text-2xl text-navy tracking-tight">
@@ -1085,7 +1255,6 @@
             </span>
           </div>
 
-          <!-- Romantic Nickname Pill -->
           <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-gradient-to-r from-softBlush via-white to-softBlush border border-pastelPink shadow-sm">
             <span class="text-xs">☀️</span>
             <span class="font-rounded font-bold text-[11px] text-crimsonDeep tracking-wide">
@@ -1095,49 +1264,49 @@
           </div>
         </div>
 
-        <!-- 2. Hero Twin 3D-Flip Polaroid Photo Gallery (Anime ✨ ↔ Real 📸) -->
-        <div class="reveal-stagger delay-2 w-full mb-2.5">
+        <!-- 2. Portrait 3D-Flip Polaroid Photo Gallery (True Portrait Ratio + Zero Text Overlap) -->
+        <div class="reveal-stagger delay-2 w-full mb-2">
           <div class="grid grid-cols-2 gap-2.5 px-0.5">
             <!-- Polaroid 1: White Cap & Earphones -->
-            <div class="polaroid-float-left polaroid-3d-scene h-36 sm:h-40 cursor-pointer" data-polaroid-index="0">
+            <div class="polaroid-float-left polaroid-3d-scene h-48 sm:h-52 cursor-pointer" data-polaroid-index="0">
               <div id="polaroidCard0" class="polaroid-3d-card">
                 <!-- Front: Cute Anime Illustration -->
                 <div class="polaroid-face polaroid-shimmer">
-                  <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
-                    <img src="rena-anime-1.jpg" alt="Rena Anime Cap" class="w-full h-full object-cover" />
+                  <div class="polaroid-img-box">
+                    <img src="rena-anime-1.jpg" alt="Rena Anime Cap" class="polaroid-img-fit" />
                     <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-crimson/90 text-white text-[8.5px] font-rounded font-bold shadow">
                       ✨ Anime
                     </span>
                     <button
                       type="button"
                       data-zoom-index="0"
-                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
                       title="View Fullscreen"
                     >
                       🔍
                     </button>
                   </div>
-                  <div class="position-bottom absolute bottom-1 inset-x-0 text-center text-[9.5px] font-rounded font-bold text-navy truncate px-1">
+                  <div class="polaroid-caption-bar text-[9.5px] font-rounded font-bold text-navy truncate">
                     Cutest Cap &amp; Vibes 🎧💖
                   </div>
                 </div>
                 <!-- Back: Real Photo -->
                 <div class="polaroid-face polaroid-face-back">
-                  <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
-                    <img src="rena-1.jpg" alt="Rena Real Cap" class="w-full h-full object-cover" />
+                  <div class="polaroid-img-box">
+                    <img src="rena-1.jpg" alt="Rena Real Cap" class="polaroid-img-fit" />
                     <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-navy/90 text-white text-[8.5px] font-rounded font-bold shadow">
                       📸 Real
                     </span>
                     <button
                       type="button"
                       data-zoom-index="0"
-                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
                       title="View Fullscreen"
                     >
                       🔍
                     </button>
                   </div>
-                  <div class="position-bottom absolute bottom-1 inset-x-0 text-center text-[9.5px] font-rounded font-bold text-crimson truncate px-1">
+                  <div class="polaroid-caption-bar text-[9.5px] font-rounded font-bold text-crimson truncate">
                     My Favorite Pout 🐥💕
                   </div>
                 </div>
@@ -1145,45 +1314,45 @@
             </div>
 
             <!-- Polaroid 2: Blue Shirt & Sparkly Choker -->
-            <div class="polaroid-float-right polaroid-3d-scene h-36 sm:h-40 cursor-pointer" data-polaroid-index="1">
+            <div class="polaroid-float-right polaroid-3d-scene h-48 sm:h-52 cursor-pointer" data-polaroid-index="1">
               <div id="polaroidCard1" class="polaroid-3d-card">
                 <!-- Front: Cute Anime Illustration -->
                 <div class="polaroid-face polaroid-shimmer">
-                  <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
-                    <img src="rena-anime-2.jpg" alt="Rena Anime Blue Shirt" class="w-full h-full object-cover" />
+                  <div class="polaroid-img-box">
+                    <img src="rena-anime-2.jpg" alt="Rena Anime Blue Shirt" class="polaroid-img-fit" />
                     <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-crimson/90 text-white text-[8.5px] font-rounded font-bold shadow">
                       ✨ Anime
                     </span>
                     <button
                       type="button"
                       data-zoom-index="1"
-                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
                       title="View Fullscreen"
                     >
                       🔍
                     </button>
                   </div>
-                  <div class="position-bottom absolute bottom-1 inset-x-0 text-center text-[9.5px] font-rounded font-bold text-navy truncate px-1">
+                  <div class="polaroid-caption-bar text-[9.5px] font-rounded font-bold text-navy truncate">
                     Pretty Sunshine 🌷✨
                   </div>
                 </div>
                 <!-- Back: Real Photo -->
                 <div class="polaroid-face polaroid-face-back">
-                  <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
-                    <img src="rena-2.jpg" alt="Rena Real Blue Shirt" class="w-full h-full object-cover" />
+                  <div class="polaroid-img-box">
+                    <img src="rena-2.jpg" alt="Rena Real Blue Shirt" class="polaroid-img-fit" />
                     <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-navy/90 text-white text-[8.5px] font-rounded font-bold shadow">
                       📸 Real
                     </span>
                     <button
                       type="button"
                       data-zoom-index="1"
-                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/90 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
                       title="View Fullscreen"
                     >
                       🔍
                     </button>
                   </div>
-                  <div class="position-bottom absolute bottom-1 inset-x-0 text-center text-[9.5px] font-rounded font-bold text-crimson truncate px-1">
+                  <div class="polaroid-caption-bar text-[9.5px] font-rounded font-bold text-crimson truncate">
                     Those Pretty Eyes 💖✨
                   </div>
                 </div>
@@ -1205,25 +1374,21 @@
         <!-- 3. Heart-Melting Interactive Love Note Box -->
         <div
           id="quoteBoxTrigger"
-          class="reveal-stagger delay-3 love-letter-box relative w-full rounded-[20px] px-3.5 py-2.5 mb-2 cursor-pointer group"
+          class="reveal-stagger delay-3 love-letter-box relative w-full rounded-[20px] px-3.5 py-2 mb-2 cursor-pointer group"
         >
-          <!-- Top Wax-Seal Style Pill -->
           <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-crimson text-white text-[9.5px] font-rounded font-bold tracking-wide shadow flex items-center gap-1 whitespace-nowrap">
             <span>💌</span>
             <span>From My Heart to Yours</span>
           </div>
 
-          <!-- Primary Quote -->
-          <p class="font-serif italic font-semibold text-[14.5px] sm:text-[15.5px] text-navy leading-snug pt-1">
+          <p class="font-serif italic font-semibold text-[14px] sm:text-[15px] text-navy leading-snug pt-1">
             “thankyou for being here and thankyou for being you.”
           </p>
 
-          <!-- Dynamic Tender Sub-Note (Cycles through heartfelt messages on tap!) -->
-          <p id="tenderSubNote" class="mt-1 text-[11px] font-rounded font-semibold text-crimsonDeep/90 leading-relaxed transition-opacity duration-300">
+          <p id="tenderSubNote" class="mt-1 text-[10.5px] font-rounded font-semibold text-crimsonDeep/90 leading-relaxed transition-opacity duration-300">
             You turn ordinary days into something soft, warm, and unforgettable just by being yourself, my Sunshine. 🌷✨
           </p>
 
-          <!-- Interactive Tap Prompt & Page Counter -->
           <div class="mt-1.5 pt-1 border-t border-pastelPink/60 flex items-center justify-between text-[9.5px] font-rounded font-bold text-crimson">
             <span class="flex items-center gap-1">
               <span class="animate-heartbeat">💓</span>
@@ -1236,8 +1401,7 @@
         </div>
 
         <!-- 4. Affectionate Animated Micro-Stickers / Badges -->
-        <div class="w-full space-y-1.5 mb-2.5 text-left">
-          <!-- Badge 1: Nutrition & Dietetics Student -->
+        <div class="w-full space-y-1.5 mb-2 text-left">
           <button
             type="button"
             data-burst="🥗,🌷,🍓,✨,💖"
@@ -1245,7 +1409,7 @@
             class="micro-badge reveal-stagger delay-4 glass-pill w-full px-3 py-1.5 rounded-2xl flex items-center justify-between cursor-pointer"
           >
             <div class="flex items-center gap-2.5 min-w-0">
-              <span class="w-8 h-8 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-base shadow-sm">
+              <span class="w-7.5 h-7.5 p-1.5 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-sm shadow-sm">
                 🥗
               </span>
               <div class="truncate">
@@ -1262,7 +1426,6 @@
             </span>
           </button>
 
-          <!-- Badge 2: Roblox & Night-owl sessions -->
           <button
             type="button"
             data-burst="🎮,🌙,⭐,💕,✨"
@@ -1270,7 +1433,7 @@
             class="micro-badge reveal-stagger delay-5 glass-pill w-full px-3 py-1.5 rounded-2xl flex items-center justify-between cursor-pointer"
           >
             <div class="flex items-center gap-2.5 min-w-0">
-              <span class="w-8 h-8 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-base shadow-sm">
+              <span class="w-7.5 h-7.5 p-1.5 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-sm shadow-sm">
                 🎮
               </span>
               <div class="truncate">
@@ -1287,7 +1450,6 @@
             </span>
           </button>
 
-          <!-- Badge 3: WIB (UTC+7) -->
           <button
             type="button"
             data-burst="📍,☀️,🐥,🌷,💛"
@@ -1295,7 +1457,7 @@
             class="micro-badge reveal-stagger delay-6 glass-pill w-full px-3 py-1.5 rounded-2xl flex items-center justify-between cursor-pointer"
           >
             <div class="flex items-center gap-2.5 min-w-0">
-              <span class="w-8 h-8 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-base shadow-sm">
+              <span class="w-7.5 h-7.5 p-1.5 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-sm shadow-sm">
                 📍
               </span>
               <div class="truncate">
@@ -1314,11 +1476,11 @@
         </div>
 
         <!-- 5. Interactive "Send Virtual Hug / Love Shower" Button -->
-        <div class="reveal-stagger delay-7 w-full mb-2">
+        <div class="reveal-stagger delay-7 w-full mb-1.5">
           <button
             id="sendHugBtn"
             type="button"
-            class="w-full py-2 px-4 rounded-full bg-gradient-to-r from-softBlush via-pastelPink/65 to-softBlush border border-crimson/30 text-crimsonDeep font-rounded font-bold text-xs shadow-sm hover:scale-[1.02] active:scale-95 transition flex items-center justify-center gap-1.5 cursor-pointer"
+            class="w-full py-1.5 px-4 rounded-full bg-gradient-to-r from-softBlush via-pastelPink/65 to-softBlush border border-crimson/30 text-crimsonDeep font-rounded font-bold text-xs shadow-sm hover:scale-[1.02] active:scale-95 transition flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span class="animate-heartbeat text-sm">🤗</span>
             <span id="hugBtnText">Tap to Send a Warm Hug &amp; Flowers</span>
@@ -1333,14 +1495,14 @@
             <span>Forever &amp; Always In Your Corner</span>
             <span>♥</span>
           </div>
-          <p class="font-script text-[26px] sm:text-[29px] leading-tight gold-script-text">
+          <p class="font-script text-[25px] sm:text-[28px] leading-tight gold-script-text">
             Dedicated by your coding guy
           </p>
         </div>
       </div>
 
       <!-- Subtle Interactive Hint Footer -->
-      <div class="mt-1 flex items-center gap-1.5 text-[10.5px] font-rounded font-bold text-crimsonDeep/75">
+      <div class="mt-0.5 flex items-center gap-1.5 text-[10px] font-rounded font-bold text-crimsonDeep/75">
         <span>💖</span>
         <span>Tap anywhere for floating hearts &amp; petals</span>
         <span>🌷</span>
@@ -1348,15 +1510,16 @@
     </section>
 
     <!-- =========================================================
-         FULL-SCREEN ANIMATED PHOTO SHOWCASE LIGHTBOX MODAL
+         FULL-SCREEN PORTRAIT PHOTO SHOWCASE LIGHTBOX MODAL
+         (Tall 3:4 Portrait Frame + Zero Caption Overlap)
          ========================================================= -->
     <div
       id="photoLightboxOverlay"
-      class="hidden absolute inset-0 z-50 bg-navy/60 backdrop-blur-md flex-col items-center justify-center p-4"
+      class="hidden absolute inset-0 z-50 bg-navy/65 backdrop-blur-md flex-col items-center justify-center p-4"
     >
       <div
         id="photoLightboxCard"
-        class="glass-love-card w-full max-w-[340px] rounded-[32px] p-4 flex flex-col items-center text-center relative shadow-2xl border-2 border-white"
+        class="glass-love-card w-full max-w-[346px] rounded-[32px] p-4 flex flex-col items-center text-center relative shadow-2xl border-2 border-white"
       >
         <button
           id="closePhotoLightboxBtn"
@@ -1366,53 +1529,58 @@
           ✕
         </button>
 
-        <div class="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-pastelPink/60 border border-white text-crimson text-[11px] font-rounded font-bold mb-2">
+        <div class="inline-flex items-center gap-1.5 px-3.5 py-0.5 rounded-full bg-pastelPink/55 border border-white text-crimson text-[11px] font-rounded font-bold mb-2.5">
           <span>✨</span>
-          <span id="lightboxBadgeText">Animated Anime Portrait</span>
+          <span id="lightboxBadgeText">Animated Anime Portrait ✨</span>
         </div>
 
-        <!-- 3D Flip Large Showcase Frame -->
-        <div id="lightbox3dTrigger" class="polaroid-3d-scene w-64 h-64 sm:w-72 sm:h-72 cursor-pointer my-1">
+        <!-- Tall Portrait 3D-Flip Showcase Frame (Shows 100% Uncropped Photo + Soft Blurred Backdrop) -->
+        <div id="lightbox3dTrigger" class="polaroid-3d-scene w-[264px] h-[356px] sm:w-[280px] sm:h-[376px] cursor-pointer">
           <div id="lightbox3dCard" class="polaroid-3d-card">
-            <div class="polaroid-face polaroid-shimmer">
-              <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
-                <img id="lightboxAnimeImg" src="rena-anime-1.jpg" alt="Rena Anime Portrait" class="w-full h-full object-cover" />
-                <span class="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-crimson/90 text-white text-[10px] font-rounded font-bold shadow">
+            <!-- Front: Anime Portrait -->
+            <div class="polaroid-face polaroid-shimmer" style="padding: 8px 8px 10px 8px;">
+              <div class="polaroid-img-box">
+                <img id="lightboxAnimeBlurImg" src="rena-anime-1.jpg" alt="" class="lightbox-backdrop-blur" />
+                <img id="lightboxAnimeImg" src="rena-anime-1.jpg" alt="Rena Anime Portrait" class="lightbox-img-contain" />
+                <span class="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-crimson/90 text-white text-[10px] font-rounded font-bold shadow">
                   ✨ Anime Version
                 </span>
               </div>
-              <div id="lightboxCaptionFront" class="position-bottom absolute bottom-1 inset-x-0 text-center text-xs font-rounded font-bold text-navy">
+              <div id="lightboxCaptionFront" class="polaroid-caption-bar pt-2 text-[11px] font-rounded font-bold text-navy truncate">
                 My Cutest Sunshine in Her White Cap 🎧💖
               </div>
             </div>
-            <div class="polaroid-face polaroid-face-back">
-              <div class="relative w-full flex-1 rounded-xl overflow-hidden bg-softBlush">
-                <img id="lightboxRealImg" src="rena-1.jpg" alt="Rena Real Photo" class="w-full h-full object-cover" />
-                <span class="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-navy/90 text-white text-[10px] font-rounded font-bold shadow">
+
+            <!-- Back: Original Vertical Selfie Photo (100% Uncropped + Clean Bottom Caption Bar) -->
+            <div class="polaroid-face polaroid-face-back" style="padding: 8px 8px 10px 8px;">
+              <div class="polaroid-img-box">
+                <img id="lightboxRealBlurImg" src="rena-1.jpg" alt="" class="lightbox-backdrop-blur" />
+                <img id="lightboxRealImg" src="rena-1.jpg" alt="Rena Real Photo" class="lightbox-img-contain" />
+                <span class="absolute top-2.5 left-2.5 z-10 px-2.5 py-0.5 rounded-full bg-navy/90 text-white text-[10px] font-rounded font-bold shadow">
                   📸 Original Photo
                 </span>
               </div>
-              <div id="lightboxCaptionBack" class="position-bottom absolute bottom-1 inset-x-0 text-center text-xs font-rounded font-bold text-crimson">
-                The Real Beauty That Stole My Heart 🐥💕
+              <div id="lightboxCaptionBack" class="polaroid-caption-bar pt-2 text-[11px] font-rounded font-bold text-crimson truncate">
+                The Real Cutie &amp; Pout That Stole My Heart 🐥💕
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Controls inside Lightbox: Flip Anime/Real + Switch Photo 1/2 -->
-        <div class="mt-3 w-full flex items-center justify-center gap-2">
+        <!-- Single-Line Clean Action Buttons -->
+        <div class="mt-3 w-full grid grid-cols-2 gap-2">
           <button
             id="lightboxFlipBtn"
             type="button"
-            class="scan-cta-btn px-4 py-2 rounded-full text-xs font-rounded font-bold flex items-center gap-1.5 cursor-pointer"
+            class="scan-cta-btn py-2.5 px-3 rounded-full text-[11px] font-rounded font-bold flex items-center justify-center gap-1 whitespace-nowrap cursor-pointer"
           >
             <span>🔄</span>
-            <span>3D Flip: Anime ↔ Real</span>
+            <span>Flip: Anime ↔ Real</span>
           </button>
           <button
             id="lightboxNextPhotoBtn"
             type="button"
-            class="px-3.5 py-2 rounded-full bg-softBlush border border-pastelPink text-navy font-rounded font-bold text-xs hover:bg-pastelPink/50 active:scale-95 transition cursor-pointer"
+            class="py-2.5 px-3 rounded-full bg-softBlush border border-pastelPink text-navy font-rounded font-bold text-[11px] hover:bg-pastelPink/50 active:scale-95 transition whitespace-nowrap cursor-pointer"
           >
             Next Photo (1/2) →
           </button>
@@ -1671,7 +1839,7 @@
             rotation: (Math.random() - 0.5) * 0.8,
             vRot: (Math.random() - 0.5) * 0.06,
             color: HEART_PALETTE[Math.floor(Math.random() * HEART_PALETTE.length)],
-            isSparkle: Math.random() < 0.25,
+            isSparkle: Math.random() < 0.28,
             emoji: customEmojis ? customEmojis[i % customEmojis.length] : null,
           });
         }
@@ -1866,8 +2034,8 @@
         // Reset envelope state
         isEnvelopeOpening = false;
         loveEnvelope3D.classList.remove('envelope-opened');
-        cupidBowShooter.classList.remove('arrow-fired');
-        aimStatusPill.textContent = '🎯 Tap Heart or Bow to Shoot!';
+        cupidBowShooter.classList.remove('bow-drawing', 'arrow-fired');
+        aimStatusPill.textContent = '🎯 Tap Heart Seal or Cupid\'s Bow to Shoot!';
         envelopeStageTitle.textContent = 'A Sealed Love Letter For You 💌';
         envelopeStageSubtitle.innerHTML =
           'Aim &amp; tap the glowing <span class="text-crimson font-bold">Heart Seal</span> to shoot Cupid\'s arrow and unlock your surprise! 🎯❤️';
@@ -1884,35 +2052,53 @@
         playPopSound();
       }
 
+      // --- Cinematic 4-Phase Winged Cupid Bow & Arrow Unseal Sequence ---
       function triggerHeartShotAndUnseal(e) {
         if (e) e.stopPropagation();
         if (isEnvelopeOpening || isRevealed) return;
         isEnvelopeOpening = true;
 
-        // 1. Shoot Custom SVG Cupid Arrow straight into the Heart Seal
-        cupidBowShooter.classList.add('arrow-fired');
-        aimStatusPill.textContent = '💘 Bullseye! Unsealing...';
-        shootHeartBtnLabel.textContent = 'Opening Your Secret Letter... ✨';
+        // Phase 1 (0ms - 210ms): Draw back bowstring & charge the Ruby Heart Arrow
+        cupidBowShooter.classList.add('bow-drawing');
+        aimStatusPill.textContent = '✨ Drawing Cupid\'s Bow...';
+        shootHeartBtnLabel.textContent = 'Shooting Straight to Your Heart... 💘';
+        playTone(392.0, 'triangle', 0.18, 0.05, 0);
+        spawnHeartBurst(width * 0.5, height * 0.65, 10, ['✨', '💖']);
 
-        [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach((f, idx) => {
-          playTone(f, 'sine', 0.35, 0.06, idx * 0.07);
-        });
-
-        // 2. Heart Impact Shockwave + 3D Flap Opens + Love Letter & Polaroids Rise Out
+        // Phase 2 (210ms): Launch Arrow Upward + Spawn Stardust Trail Along Flight Path
         setTimeout(() => {
-          spawnHeartBurst(width * 0.5, height * 0.44, 30, ['💘', '💖', '✨', '🌷', '💝', '🌸']);
+          cupidBowShooter.classList.remove('bow-drawing');
+          cupidBowShooter.classList.add('arrow-fired');
+
+          // Rising harp glissando as arrow flies
+          [523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98].forEach((f, idx) => {
+            playTone(f, 'sine', 0.35, 0.06, idx * 0.055);
+          });
+
+          // Particle trail following the arrow up to the seal
+          for (let step = 0; step < 5; step++) {
+            setTimeout(() => {
+              const trailY = height * (0.64 - step * 0.045);
+              spawnHeartBurst(width * 0.5 + (Math.random() - 0.5) * 18, trailY, 5, ['✨', '💖', '💕']);
+            }, step * 45);
+          }
+        }, 210);
+
+        // Phase 3 & 4 (480ms): Arrow Pierces Heart Seal -> Double Shockwave + 3D Flap Opens + Letter & Portrait Polaroids Rise
+        setTimeout(() => {
+          spawnHeartBurst(width * 0.5, height * 0.44, 34, ['💘', '💖', '✨', '🌷', '💝', '🌸']);
           loveEnvelope3D.classList.add('envelope-opened');
           envelopeStageTitle.textContent = 'Unlocked With All My Love! 💖✨';
           envelopeStageSubtitle.textContent = 'Tap your risen love letter below (or wait a moment) to open your full card! 💌';
           shootHeartBtnLabel.textContent = 'Open Full Surprise Card Now 💌';
-          showLoveToast('Delivered straight to Miss Rena’s heart! ✈️💖');
-        }, 300);
+          showLoveToast('Cupid’s arrow unlocked Miss Rena’s letter! 💘✨');
+        }, 480);
 
-        // 3. Smoothly transition to the full card after she sees the letter & Polaroids rise (or tap anytime for instant open)
+        // Auto-transition after she admires the risen letter & Polaroids (or tap anytime for instant open)
         if (unfoldTimer) clearTimeout(unfoldTimer);
         unfoldTimer = setTimeout(() => {
           if (!isRevealed) completeReveal();
-        }, 3800);
+        }, 4000);
       }
 
       heartSealTargetBtn.addEventListener('click', triggerHeartShotAndUnseal);
@@ -2026,7 +2212,7 @@
         playPopSound();
       });
 
-      // --- Interactive 3D-Flip Polaroids & Fullscreen Photo Lightbox ---
+      // --- Interactive 3D-Flip Portrait Polaroids & Fullscreen Lightbox ---
       const PHOTO_MEMORIES = [
         {
           anime: 'rena-anime-1.jpg',
@@ -2091,14 +2277,16 @@
         playPopSound();
       });
 
-      // Fullscreen Lightbox Modal
+      // Fullscreen Portrait Lightbox Modal
       const photoLightboxOverlay = document.getElementById('photoLightboxOverlay');
       const photoLightboxCard = document.getElementById('photoLightboxCard');
       const closePhotoLightboxBtn = document.getElementById('closePhotoLightboxBtn');
       const lightbox3dTrigger = document.getElementById('lightbox3dTrigger');
       const lightbox3dCard = document.getElementById('lightbox3dCard');
       const lightboxAnimeImg = document.getElementById('lightboxAnimeImg');
+      const lightboxAnimeBlurImg = document.getElementById('lightboxAnimeBlurImg');
       const lightboxRealImg = document.getElementById('lightboxRealImg');
+      const lightboxRealBlurImg = document.getElementById('lightboxRealBlurImg');
       const lightboxCaptionFront = document.getElementById('lightboxCaptionFront');
       const lightboxCaptionBack = document.getElementById('lightboxCaptionBack');
       const lightboxBadgeText = document.getElementById('lightboxBadgeText');
@@ -2111,7 +2299,9 @@
         activeLightboxIdx = idx % PHOTO_MEMORIES.length;
         const mem = PHOTO_MEMORIES[activeLightboxIdx];
         lightboxAnimeImg.src = mem.anime;
+        if (lightboxAnimeBlurImg) lightboxAnimeBlurImg.src = mem.anime;
         lightboxRealImg.src = mem.real;
+        if (lightboxRealBlurImg) lightboxRealBlurImg.src = mem.real;
         lightboxCaptionFront.textContent = mem.captionFront;
         lightboxCaptionBack.textContent = mem.captionBack;
         lightboxNextPhotoBtn.textContent = `Next Photo (${activeLightboxIdx + 1}/${PHOTO_MEMORIES.length}) →`;
@@ -2191,7 +2381,7 @@
         envelopeStageScreen.classList.remove('screen-visible');
         envelopeStageScreen.classList.add('screen-hidden');
         loveEnvelope3D.classList.remove('envelope-opened');
-        cupidBowShooter.classList.remove('arrow-fired');
+        cupidBowShooter.classList.remove('bow-drawing', 'arrow-fired');
 
         revealScreen.classList.remove('screen-visible', 'reveal-active');
         revealScreen.classList.add('screen-hidden');
