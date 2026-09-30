@@ -11,8 +11,24 @@
   <link rel="preload" as="image" href="rena-1.jpg" />
   <link rel="preload" as="image" href="rena-2.jpg" />
 
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS CDN + Custom Romantic Palette Config -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pastelPink: '#FFC0CB',
+            softBlush: '#FFF0F5',
+            crimson: '#DC143C',
+            crimsonDeep: '#A4133C',
+            navy: '#1B2A4A',
+            goldAccent: '#D4AF37',
+          }
+        }
+      }
+    };
+  </script>
 
   <!-- Google Fonts: Quicksand, Plus Jakarta Sans, Great Vibes, Playfair Display -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,20 +63,22 @@
     .overflow-hidden { overflow: hidden; }
     .rounded-full { border-radius: 9999px; }
 
-    /* Theme Color & Font Utilities */
+    /* Theme Color & Font Utilities (Guaranteed Instant Render) */
     .text-crimson { color: #DC143C !important; }
     .text-crimson\/75 { color: rgba(220, 20, 60, 0.75) !important; }
     .text-crimson\/70 { color: rgba(220, 20, 60, 0.7) !important; }
     .text-crimsonDeep { color: #A4133C !important; }
     .text-crimsonDeep\/90 { color: rgba(164, 19, 60, 0.9) !important; }
-    .text-crimsonDeep\/75 { color: rgba(164, 19, 60, 0.75) !important; }
+    .text-crimsonDeep\/80 { color: rgba(164, 19, 60, 0.8) !important; }
     .text-navy { color: #1B2A4A !important; }
     .text-navy\/85 { color: rgba(27, 42, 74, 0.85) !important; }
     .text-navy\/75 { color: rgba(27, 42, 74, 0.75) !important; }
     .text-navy\/70 { color: rgba(27, 42, 74, 0.7) !important; }
     .text-navy\/60 { color: rgba(27, 42, 74, 0.6) !important; }
     .bg-crimson { background-color: #DC143C !important; }
+    .bg-crimson\/90 { background-color: rgba(220, 20, 60, 0.92) !important; }
     .bg-crimson\/15 { background-color: rgba(220, 20, 60, 0.15) !important; }
+    .bg-navy\/90 { background-color: rgba(27, 42, 74, 0.92) !important; }
     .bg-softBlush { background-color: #FFF0F5 !important; }
     .bg-pastelPink\/80 { background-color: rgba(255, 192, 203, 0.8) !important; }
     .bg-pastelPink\/60 { background-color: rgba(255, 192, 203, 0.6) !important; }
@@ -87,7 +105,7 @@
       box-sizing: border-box;
     }
 
-    button, #kittyCardTrigger, #quoteBoxTrigger, [data-polaroid-index] {
+    button, #kittyCardTrigger, #quoteBoxTrigger, [data-polaroid-index], .micro-badge {
       touch-action: manipulation;
     }
 
@@ -167,27 +185,64 @@
     }
 
     .love-letter-box:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
     }
 
-    /* Affectionate Micro-Sticker Pills */
+    /* Interactive Expandable Point Cards (Badges) */
     .glass-pill {
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 244, 247, 0.95) 100%);
-      border: 1.5px solid rgba(255, 192, 203, 0.75);
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 244, 247, 0.96) 100%);
+      border: 1.5px solid rgba(255, 192, 203, 0.8);
       box-shadow:
-        0 8px 18px -6px rgba(220, 20, 60, 0.12),
-        0 2px 6px -1px rgba(255, 192, 203, 0.28);
-      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.25s ease;
+        0 6px 16px -6px rgba(220, 20, 60, 0.12),
+        0 2px 5px -1px rgba(255, 192, 203, 0.25);
+      transition:
+        transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
       transform: translate3d(0, 0, 0);
     }
 
     .glass-pill:hover {
-      transform: translate3d(0, -1.5px, 0) scale(1.01);
       border-color: rgba(220, 20, 60, 0.45);
     }
 
-    .glass-pill:active {
-      transform: scale(0.96);
+    .glass-pill.point-expanded {
+      background: linear-gradient(135deg, #FFFFFF 0%, #FFF0F5 100%);
+      border-color: #DC143C;
+      box-shadow:
+        0 12px 26px -8px rgba(220, 20, 60, 0.24),
+        inset 0 0 14px rgba(255, 192, 203, 0.22);
+    }
+
+    /* Smooth Accordion Drawer inside each Point */
+    .point-secret-drawer {
+      display: grid;
+      grid-template-rows: 0fr;
+      opacity: 0;
+      transition:
+        grid-template-rows 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.28s ease,
+        margin-top 0.28s ease;
+      margin-top: 0;
+    }
+
+    .point-expanded .point-secret-drawer {
+      grid-template-rows: 1fr;
+      opacity: 1;
+      margin-top: 8px;
+    }
+
+    .point-drawer-inner {
+      overflow: hidden;
+    }
+
+    .point-chevron {
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .point-expanded .point-chevron {
+      transform: rotate(180deg);
     }
 
     /* 60fps Hardware-Accelerated Keyframe Animations */
@@ -415,13 +470,13 @@
        PORTRAIT 3D-FLIP POLAROID PHOTO CARDS (PERFECT FIT)
        ========================================================= */
     @keyframes polaroidFloatLeft {
-      0%, 100% { transform: translate3d(0, 0px, 0) rotate(-1.8deg); }
-      50% { transform: translate3d(0, -4px, 0) rotate(-0.6deg); }
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(-1.6deg); }
+      50% { transform: translate3d(0, -3.5px, 0) rotate(-0.5deg); }
     }
 
     @keyframes polaroidFloatRight {
-      0%, 100% { transform: translate3d(0, 0px, 0) rotate(1.8deg); }
-      50% { transform: translate3d(0, -4px, 0) rotate(0.6deg); }
+      0%, 100% { transform: translate3d(0, 0px, 0) rotate(1.6deg); }
+      50% { transform: translate3d(0, -3.5px, 0) rotate(0.5deg); }
     }
 
     @keyframes holographicSheen {
@@ -457,7 +512,6 @@
       transform: rotateY(180deg);
     }
 
-    /* Clean Flex-Column Polaroid Frame: Photo on top, Caption cleanly below */
     .polaroid-face {
       position: absolute;
       inset: 0;
@@ -465,7 +519,7 @@
       -webkit-backface-visibility: hidden;
       border-radius: 18px;
       background: #FFFFFF;
-      padding: 6px 6px 7px 6px;
+      padding: 5.5px 5.5px 6px 5.5px;
       box-shadow:
         0 12px 24px -6px rgba(220, 20, 60, 0.22),
         0 0 0 1.5px rgba(255, 192, 203, 0.9);
@@ -478,7 +532,6 @@
       transform: rotateY(180deg);
     }
 
-    /* Constrained Image Box so Portrait Photos Never Overflow Onto Caption */
     .polaroid-img-box {
       position: relative;
       width: 100%;
@@ -497,7 +550,6 @@
       display: block;
     }
 
-    /* Full Uncropped Portrait Fit inside Lightbox (100% of Photo Visible) */
     .lightbox-backdrop-blur {
       position: absolute;
       inset: 0;
@@ -520,13 +572,12 @@
       display: block;
     }
 
-    /* Dedicated Static Footer Below Image (Zero Overlap Guaranteed) */
     .polaroid-caption-bar {
       flex-shrink: 0;
       width: 100%;
-      padding-top: 6px;
+      padding-top: 5px;
       text-align: center;
-      line-height: 1.25;
+      line-height: 1.2;
     }
 
     .polaroid-shimmer::after {
@@ -611,7 +662,6 @@
       z-index: 1;
     }
 
-    /* Rising Portrait Mini-Polaroids Inside Envelope */
     .envelope-mini-polaroid {
       position: absolute;
       top: 14px;
@@ -648,7 +698,6 @@
       transition-delay: 0.42s;
     }
 
-    /* Rising Love Letter Sheet Inside Envelope */
     .envelope-letter-sheet {
       position: absolute;
       left: 18px;
@@ -679,7 +728,6 @@
       transition-delay: 0.24s;
     }
 
-    /* Front Pocket Flaps of Envelope */
     .envelope-front-pocket {
       position: absolute;
       inset: 0;
@@ -689,7 +737,6 @@
       overflow: hidden;
     }
 
-    /* 3D Rotating Top Triangular Flap */
     .envelope-top-flap {
       position: absolute;
       top: 0;
@@ -709,7 +756,6 @@
       z-index: 1;
     }
 
-    /* Glowing Heart Wax Seal Target + Crosshair Aim Reticle */
     .heart-seal-target {
       position: absolute;
       top: 104px;
@@ -769,7 +815,6 @@
       animation: shockwaveExpand2 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards;
     }
 
-    /* Ornate Winged Golden-Rose Cupid Bow & Glowing Crystal-Heart Arrow */
     .cupid-bow-shooter {
       position: relative;
       margin-top: 10px;
@@ -806,7 +851,6 @@
       will-change: transform, opacity;
     }
 
-    /* Phase 1: Pull Back Bowstring & Charge Heart Arrow */
     .cupid-bow-shooter.bow-drawing {
       animation: none;
       transform: translate3d(0, 4px, 0) scale(1.04);
@@ -816,7 +860,6 @@
       transform: translate3d(0, 14px, 0) scale(1.06);
     }
 
-    /* Phase 2: Release Arrow Straight Into the Heart Seal */
     .cupid-bow-shooter.arrow-fired {
       animation: none;
       pointer-events: none;
@@ -853,17 +896,17 @@
     <div class="absolute top-1/4 -right-20 w-72 h-72 rounded-full bg-pastelPink/80 blur-3xl pointer-events-none"></div>
     <div class="absolute -bottom-16 left-1/4 w-72 h-72 rounded-full bg-crimson/15 blur-3xl pointer-events-none"></div>
 
-    <!-- Floating Sweet Toast Notification -->
+    <!-- Sleek Contained Toast Pill (Never overflows screen or blocks Rena's name!) -->
     <div
       id="loveToast"
-      class="pointer-events-none fixed sm:absolute top-14 left-1/2 -translate-x-1/2 z-50 px-4 py-1.5 rounded-full bg-crimson text-white font-rounded font-bold text-xs shadow-lg opacity-0 scale-90 transition-all duration-300 whitespace-nowrap flex items-center gap-1.5"
+      class="pointer-events-none absolute bottom-9 left-1/2 -translate-x-1/2 z-50 w-max max-w-[88%] px-3.5 py-1.5 rounded-full bg-crimson/90 backdrop-blur-md text-white font-rounded font-bold text-[11px] shadow-lg border border-white/60 opacity-0 scale-90 transition-all duration-300 text-center leading-tight flex items-center justify-center gap-1.5"
     >
-      <span>💖</span>
-      <span id="loveToastText">Sent with all my heart!</span>
+      <span class="shrink-0">💖</span>
+      <span id="loveToastText" class="truncate">Sent with all my heart!</span>
     </div>
 
     <!-- Top Romantic Bar -->
-    <header class="relative z-30 flex items-center justify-between px-4 pt-3.5 pb-1">
+    <header class="relative z-30 flex items-center justify-between px-4 pt-3 pb-1">
       <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/85 backdrop-blur-md border border-pastelPink shadow-sm">
         <span class="text-xs animate-heartbeat inline-block">💓</span>
         <span id="topStatusText" class="text-[11px] font-rounded font-bold tracking-wide text-crimson">
@@ -1056,7 +1099,7 @@
           <!-- Back Panel -->
           <div class="envelope-back-panel"></div>
 
-          <!-- Rising Portrait Mini-Polaroids Inside Envelope (Properly Framed) -->
+          <!-- Rising Portrait Mini-Polaroids Inside Envelope -->
           <div class="envelope-mini-polaroid envelope-mini-polaroid-left">
             <div class="polaroid-img-box">
               <img src="rena-anime-1.jpg" alt="Rena Polaroid 1" class="polaroid-img-fit" />
@@ -1154,26 +1197,21 @@
 
             <!-- Winged Bow Frame -->
             <g class="cupid-bow-frame">
-              <!-- Left Feathered Angel Wing -->
               <g class="cupid-wing-left">
                 <path d="M52 46 C32 34, 14 38, 8 48 C16 52, 26 52, 34 50 C20 56, 14 62, 12 68 C24 68, 36 62, 46 54 Z" fill="#FFFFFF" stroke="#FFC0CB" stroke-width="1.6" stroke-linejoin="round"/>
                 <path d="M48 48 C34 40, 22 43, 16 49" stroke="#FFD6E4" stroke-width="1.5" stroke-linecap="round"/>
               </g>
 
-              <!-- Right Feathered Angel Wing -->
               <g class="cupid-wing-right">
                 <path d="M108 46 C128 34, 146 38, 152 48 C144 52, 134 52, 126 50 C140 56, 146 62, 148 68 C136 68, 124 62, 114 54 Z" fill="#FFFFFF" stroke="#FFC0CB" stroke-width="1.6" stroke-linejoin="round"/>
                 <path d="M112 48 C126 40, 138 43, 144 49" stroke="#FFD6E4" stroke-width="1.5" stroke-linecap="round"/>
               </g>
 
-              <!-- Golden-Rose Bowstring -->
               <path d="M22 64 L80 82 L138 64" stroke="#DC143C" stroke-width="2" stroke-dasharray="2.5 2.5" opacity="0.8"/>
 
-              <!-- Ornate Recurve Golden Bow Limbs -->
               <path d="M18 66 C26 50, 42 36, 62 42 C70 44, 75 47, 80 47 C85 47, 90 44, 98 42 C118 36, 134 50, 142 66" stroke="url(#goldRoseGrad)" stroke-width="6" stroke-linecap="round"/>
               <path d="M18 66 C26 50, 42 36, 62 42 C70 44, 75 47, 80 47 C85 47, 90 44, 98 42 C118 36, 134 50, 142 66" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
 
-              <!-- Crimson Ribbon & Gem at Bow Center Grip -->
               <path d="M72 48 L64 58 M88 48 L96 58" stroke="#DC143C" stroke-width="2.5" stroke-linecap="round"/>
               <circle cx="20" cy="65" r="4" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
               <circle cx="140" cy="65" r="4" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
@@ -1182,31 +1220,26 @@
 
             <!-- Glowing Ruby-Heart Arrow Projectile -->
             <g class="cupid-arrow-projectile" filter="url(#heartGlow)">
-              <!-- Layered Rose-Pink & Gold Feather Fletching -->
               <path d="M80 70 L67 82 L72 90 L80 81 L88 90 L93 82 Z" fill="#FF8DA1" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
               <path d="M80 75 L70 85 M80 75 L90 85" stroke="#DC143C" stroke-width="1.3" stroke-linecap="round"/>
 
-              <!-- Shimmering Golden Arrow Shaft -->
               <line x1="80" y1="22" x2="80" y2="85" stroke="url(#goldRoseGrad)" stroke-width="4.2" stroke-linecap="round"/>
               <line x1="80" y1="22" x2="80" y2="85" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
 
-              <!--Sparkle Crosses Around Arrowhead -->
               <circle cx="60" cy="14" r="2" fill="#D4AF37"/>
               <circle cx="100" cy="14" r="2" fill="#D4AF37"/>
 
-              <!-- Faceted Ruby-Crystal Heart Arrowhead -->
               <path
                 d="M80 30 C80 30 61 18 61 9.5 C61 3.8 65.8 0 71 0 C75.2 0 78.2 2.4 80 5.5 C81.8 2.4 84.8 0 89 0 C94.2 0 99 3.8 99 9.5 C99 18 80 30 80 30 Z"
                 fill="url(#rubyHeartGrad)"
                 stroke="#FFFFFF"
                 stroke-width="2.2"
               />
-              <!-- Inner Specular Highlight on Heart Arrowhead -->
               <path d="M67 8.5 C67 6 69.5 4.2 72.5 4.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.85"/>
             </g>
           </svg>
 
-          <span id="aimStatusPill" class=" -mt-1 px-3 py-0.5 rounded-full bg-white/95 border border-pastelPink text-[10px] font-rounded font-bold text-crimson shadow-sm">
+          <span id="aimStatusPill" class="-mt-1 px-3 py-0.5 rounded-full bg-white/95 border border-pastelPink text-[10px] font-rounded font-bold text-crimson shadow-sm">
             🎯 Tap Heart Seal or Cupid's Bow to Shoot!
           </span>
         </div>
@@ -1234,7 +1267,7 @@
       class="screen-layer screen-hidden absolute inset-0 top-11 bottom-0 z-30 flex flex-col items-center justify-between px-3.5 pb-2 pt-0.5 overflow-y-auto no-scrollbar"
     >
       <!-- Main Romantic Glassmorphic Card -->
-      <div class="glass-love-card w-full max-w-[372px] rounded-[34px] px-4 py-3 sm:p-4.5 my-auto flex flex-col items-center text-center relative overflow-hidden">
+      <div class="glass-love-card w-full max-w-[374px] rounded-[32px] px-3.5 py-3 sm:p-4 my-auto flex flex-col items-center text-center relative overflow-hidden">
 
         <!-- Top Shimmering Ribbon -->
         <div class="absolute top-0 inset-x-0 h-2 bg-gradient-to-r from-pastelPink via-crimson to-goldAccent"></div>
@@ -1244,7 +1277,7 @@
         <span class="sparkle-star absolute top-3 right-4 text-sm pointer-events-none" style="animation-delay: 0.9s;">✨</span>
 
         <!-- 1. Header: Rena (@vlsια) + Sunshine • Ducky • Miss Rena -->
-        <div class="reveal-stagger delay-1 space-y-1 mt-0.5 mb-2">
+        <div class="reveal-stagger delay-1 space-y-0.5 mt-0.5 mb-1.5">
           <div class="flex items-center justify-center gap-1.5 flex-wrap">
             <span class="text-sm drop-shadow-sm">👑</span>
             <h2 class="font-rounded font-extrabold text-xl sm:text-2xl text-navy tracking-tight">
@@ -1264,23 +1297,23 @@
           </div>
         </div>
 
-        <!-- 2. Portrait 3D-Flip Polaroid Photo Gallery (True Portrait Ratio + Zero Text Overlap) -->
+        <!-- 2. Portrait 3D-Flip Polaroid Photo Gallery (Crisp Badges + Portrait Fit) -->
         <div class="reveal-stagger delay-2 w-full mb-2">
           <div class="grid grid-cols-2 gap-2.5 px-0.5">
             <!-- Polaroid 1: White Cap & Earphones -->
-            <div class="polaroid-float-left polaroid-3d-scene h-48 sm:h-52 cursor-pointer" data-polaroid-index="0">
+            <div class="polaroid-float-left polaroid-3d-scene h-44 sm:h-48 cursor-pointer" data-polaroid-index="0">
               <div id="polaroidCard0" class="polaroid-3d-card">
                 <!-- Front: Cute Anime Illustration -->
                 <div class="polaroid-face polaroid-shimmer">
                   <div class="polaroid-img-box">
                     <img src="rena-anime-1.jpg" alt="Rena Anime Cap" class="polaroid-img-fit" />
-                    <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-crimson/90 text-white text-[8.5px] font-rounded font-bold shadow">
+                    <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-crimson/90 text-white text-[8.5px] font-rounded font-bold shadow-md border border-white/50">
                       ✨ Anime
                     </span>
                     <button
                       type="button"
                       data-zoom-index="0"
-                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow-md hover:bg-crimson hover:text-white transition"
                       title="View Fullscreen"
                     >
                       🔍
@@ -1294,13 +1327,13 @@
                 <div class="polaroid-face polaroid-face-back">
                   <div class="polaroid-img-box">
                     <img src="rena-1.jpg" alt="Rena Real Cap" class="polaroid-img-fit" />
-                    <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-navy/90 text-white text-[8.5px] font-rounded font-bold shadow">
+                    <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-navy/90 text-white text-[8.5px] font-rounded font-bold shadow-md border border-white/50">
                       📸 Real
                     </span>
                     <button
                       type="button"
                       data-zoom-index="0"
-                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow-md hover:bg-crimson hover:text-white transition"
                       title="View Fullscreen"
                     >
                       🔍
@@ -1314,19 +1347,19 @@
             </div>
 
             <!-- Polaroid 2: Blue Shirt & Sparkly Choker -->
-            <div class="polaroid-float-right polaroid-3d-scene h-48 sm:h-52 cursor-pointer" data-polaroid-index="1">
+            <div class="polaroid-float-right polaroid-3d-scene h-44 sm:h-48 cursor-pointer" data-polaroid-index="1">
               <div id="polaroidCard1" class="polaroid-3d-card">
                 <!-- Front: Cute Anime Illustration -->
                 <div class="polaroid-face polaroid-shimmer">
                   <div class="polaroid-img-box">
                     <img src="rena-anime-2.jpg" alt="Rena Anime Blue Shirt" class="polaroid-img-fit" />
-                    <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-crimson/90 text-white text-[8.5px] font-rounded font-bold shadow">
+                    <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-crimson/90 text-white text-[8.5px] font-rounded font-bold shadow-md border border-white/50">
                       ✨ Anime
                     </span>
                     <button
                       type="button"
                       data-zoom-index="1"
-                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow-md hover:bg-crimson hover:text-white transition"
                       title="View Fullscreen"
                     >
                       🔍
@@ -1340,13 +1373,13 @@
                 <div class="polaroid-face polaroid-face-back">
                   <div class="polaroid-img-box">
                     <img src="rena-2.jpg" alt="Rena Real Blue Shirt" class="polaroid-img-fit" />
-                    <span class="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded-full bg-navy/90 text-white text-[8.5px] font-rounded font-bold shadow">
+                    <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-full bg-navy/90 text-white text-[8.5px] font-rounded font-bold shadow-md border border-white/50">
                       📸 Real
                     </span>
                     <button
                       type="button"
                       data-zoom-index="1"
-                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow hover:bg-crimson hover:text-white transition"
+                      class="polaroid-zoom-btn absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-white/95 text-navy text-[10px] flex items-center justify-center shadow-md hover:bg-crimson hover:text-white transition"
                       title="View Fullscreen"
                     >
                       🔍
@@ -1371,7 +1404,7 @@
           </button>
         </div>
 
-        <!-- 3. Heart-Melting Interactive Love Note Box -->
+        <!-- 3. Heart-Melting Interactive Love Note Box + Clickable Dot Points -->
         <div
           id="quoteBoxTrigger"
           class="reveal-stagger delay-3 love-letter-box relative w-full rounded-[20px] px-3.5 py-2 mb-2 cursor-pointer group"
@@ -1389,90 +1422,165 @@
             You turn ordinary days into something soft, warm, and unforgettable just by being yourself, my Sunshine. 🌷✨
           </p>
 
+          <!-- Interactive Tap Prompt + Clickable Note Points (1..4) -->
           <div class="mt-1.5 pt-1 border-t border-pastelPink/60 flex items-center justify-between text-[9.5px] font-rounded font-bold text-crimson">
             <span class="flex items-center gap-1">
               <span class="animate-heartbeat">💓</span>
-              <span>Tap note to read more secret lines</span>
+              <span>Tap note or points:</span>
             </span>
-            <span id="noteCounterPill" class="px-2 py-0.5 rounded-full bg-white border border-pastelPink text-[9px]">
-              1 / 4 💕
-            </span>
+
+            <div class="flex items-center gap-1.5">
+              <div id="noteDotsContainer" class="flex items-center gap-1">
+                <button type="button" data-note-dot="0" class="w-2.5 h-2.5 rounded-full bg-crimson transition-all scale-110 cursor-pointer" title="Secret Line 1"></button>
+                <button type="button" data-note-dot="1" class="w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer" title="Secret Line 2"></button>
+                <button type="button" data-note-dot="2" class="w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer" title="Secret Line 3"></button>
+                <button type="button" data-note-dot="3" class="w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer" title="Secret Line 4"></button>
+              </div>
+              <span id="noteCounterPill" class="px-2 py-0.5 rounded-full bg-white border border-pastelPink text-[9px]">
+                1 / 4 💕
+              </span>
+            </div>
           </div>
         </div>
 
-        <!-- 4. Affectionate Animated Micro-Stickers / Badges -->
+        <!-- 4. Interactive Clickable Points (Tap any point to expand its secret message & tags! Zero "..." truncation) -->
         <div class="w-full space-y-1.5 mb-2 text-left">
-          <button
-            type="button"
+          <div class="flex items-center justify-between px-1 text-[9.5px] font-rounded font-bold text-crimson/80">
+            <span>✨ Tap any point below to open secret details:</span>
+            <span>👇</span>
+          </div>
+
+          <!-- Point 1: Nutrition & Dietetics Student -->
+          <div
+            data-point-index="0"
             data-burst="🥗,🌷,🍓,✨,💖"
             data-toast="So proud of how hard you study, my future Dietitian! 🌷💖"
-            class="micro-badge reveal-stagger delay-4 glass-pill w-full px-3 py-1.5 rounded-2xl flex items-center justify-between cursor-pointer"
+            class="micro-badge reveal-stagger delay-4 glass-pill w-full px-3 py-2 rounded-2xl cursor-pointer"
           >
-            <div class="flex items-center gap-2.5 min-w-0">
-              <span class="w-7.5 h-7.5 p-1.5 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-sm shadow-sm">
-                🥗
-              </span>
-              <div class="truncate">
-                <div class="font-rounded font-bold text-xs text-navy truncate">
-                  Nutrition &amp; Dietetics Student
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="w-8 h-8 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-base shadow-sm">
+                  🥗
+                </span>
+                <div class="leading-tight">
+                  <div class="font-rounded font-bold text-[11.5px] sm:text-xs text-navy">
+                    Nutrition &amp; Dietetics Student
+                  </div>
+                  <div class="text-[10px] font-medium text-crimsonDeep/80">
+                    Healing the world &amp; stealing my heart ✨
+                  </div>
                 </div>
-                <div class="text-[10px] font-medium text-crimsonDeep/75 truncate">
-                  Healing the world &amp; stealing my heart ✨
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <span class="text-[9px] font-rounded font-bold text-crimson bg-softBlush px-2 py-0.5 rounded-full border border-pastelPink">
+                  Future RD 💖
+                </span>
+                <span class="point-chevron text-[10px] text-crimson font-bold">▾</span>
+              </div>
+            </div>
+
+            <!-- Expandable Secret Drawer for Point 1 -->
+            <div class="point-secret-drawer">
+              <div class="point-drawer-inner">
+                <div class="pt-2 border-t border-pastelPink/60 text-[10.5px] font-rounded font-semibold text-navy/85 leading-relaxed">
+                  Watching you work so hard toward your dreams inspires me every single day. You're going to be the sweetest, smartest Dietitian—and I'll always be your #1 fan cheering for you! 🥗🌷🍓
+                </div>
+                <div class="mt-1.5 flex flex-wrap gap-1">
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-crimson">✨ Future RD Queen</span>
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-navy">🍓 Smart &amp; Caring</span>
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-crimson">💖 #1 Proud of You</span>
                 </div>
               </div>
             </div>
-            <span class="shrink-0 ml-1.5 text-[9.5px] font-rounded font-bold text-crimson bg-softBlush px-2 py-0.5 rounded-full border border-pastelPink">
-              My Future RD 💖
-            </span>
-          </button>
+          </div>
 
-          <button
-            type="button"
+          <!-- Point 2: Roblox & Night-owl sessions -->
+          <div
+            data-point-index="1"
             data-burst="🎮,🌙,⭐,💕,✨"
             data-toast="My favorite late-night duo & cozy 2 AM memories! 🌙🎮💕"
-            class="micro-badge reveal-stagger delay-5 glass-pill w-full px-3 py-1.5 rounded-2xl flex items-center justify-between cursor-pointer"
+            class="micro-badge reveal-stagger delay-5 glass-pill w-full px-3 py-2 rounded-2xl cursor-pointer"
           >
-            <div class="flex items-center gap-2.5 min-w-0">
-              <span class="w-7.5 h-7.5 p-1.5 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-sm shadow-sm">
-                🎮
-              </span>
-              <div class="truncate">
-                <div class="font-rounded font-bold text-xs text-navy truncate">
-                  Roblox &amp; Night-owl sessions
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="w-8 h-8 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-base shadow-sm">
+                  🎮
+                </span>
+                <div class="leading-tight">
+                  <div class="font-rounded font-bold text-[11.5px] sm:text-xs text-navy">
+                    Roblox &amp; Night-owl sessions
+                  </div>
+                  <div class="text-[10px] font-medium text-crimsonDeep/80">
+                    My favorite late-night vibe &amp; Player 1 🌙
+                  </div>
                 </div>
-                <div class="text-[10px] font-medium text-crimsonDeep/75 truncate">
-                  My favorite late-night vibe &amp; Player 1 🌙
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <span class="text-[9px] font-rounded font-bold text-navy bg-softBlush px-2 py-0.5 rounded-full border border-pastelPink">
+                  Lv. ∞ Cute 💕
+                </span>
+                <span class="point-chevron text-[10px] text-crimson font-bold">▾</span>
+              </div>
+            </div>
+
+            <!-- Expandable Secret Drawer for Point 2 -->
+            <div class="point-secret-drawer">
+              <div class="point-drawer-inner">
+                <div class="pt-2 border-t border-pastelPink/60 text-[10.5px] font-rounded font-semibold text-navy/85 leading-relaxed">
+                  Every late-night Roblox session, every random laugh, and every sleepy 2 AM conversation with you is my favorite memory. Forever my favorite Player 1 &amp; night-owl partner! 🎮🌙✨
+                </div>
+                <div class="mt-1.5 flex flex-wrap gap-1">
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-navy">🌙 Best 2 AM Vibes</span>
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-crimson">🎮 Forever Player 1</span>
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-crimson">🐥 Cutest Duo</span>
                 </div>
               </div>
             </div>
-            <span class="shrink-0 ml-1.5 text-[9.5px] font-rounded font-bold text-navy bg-softBlush px-2 py-0.5 rounded-full border border-pastelPink">
-              Lv. ∞ Cute 💕
-            </span>
-          </button>
+          </div>
 
-          <button
-            type="button"
+          <!-- Point 3: WIB (UTC+7) -->
+          <div
+            data-point-index="2"
             data-burst="📍,☀️,🐥,🌷,💛"
             data-toast="Every second & mile in your timezone is worth the wait ☀️💛"
-            class="micro-badge reveal-stagger delay-6 glass-pill w-full px-3 py-1.5 rounded-2xl flex items-center justify-between cursor-pointer"
+            class="micro-badge reveal-stagger delay-6 glass-pill w-full px-3 py-2 rounded-2xl cursor-pointer"
           >
-            <div class="flex items-center gap-2.5 min-w-0">
-              <span class="w-7.5 h-7.5 p-1.5 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-sm shadow-sm">
-                📍
-              </span>
-              <div class="truncate">
-                <div class="font-rounded font-bold text-xs text-navy truncate">
-                  WIB (UTC+7)
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="w-8 h-8 shrink-0 rounded-xl bg-gradient-to-br from-pastelPink/60 to-softBlush border border-white flex items-center justify-center text-base shadow-sm">
+                  📍
+                </span>
+                <div class="leading-tight">
+                  <div class="font-rounded font-bold text-[11.5px] sm:text-xs text-navy">
+                    WIB (UTC+7)
+                  </div>
+                  <div class="text-[10px] font-medium text-crimsonDeep/80">
+                    My favorite timezone • Always worth it ☀️
+                  </div>
                 </div>
-                <div class="text-[10px] font-medium text-crimsonDeep/75 truncate">
-                  My favorite timezone • Always worth it ☀️
+              </div>
+              <div class="flex items-center gap-1 shrink-0">
+                <span id="wibClockBadge" class="text-[9px] font-rounded font-bold text-crimson bg-softBlush px-2 py-0.5 rounded-full border border-pastelPink tabular-nums">
+                  UTC+7 ❤️
+                </span>
+                <span class="point-chevron text-[10px] text-crimson font-bold">▾</span>
+              </div>
+            </div>
+
+            <!-- Expandable Secret Drawer for Point 3 -->
+            <div class="point-secret-drawer">
+              <div class="point-drawer-inner">
+                <div class="pt-2 border-t border-pastelPink/60 text-[10.5px] font-rounded font-semibold text-navy/85 leading-relaxed">
+                  No matter the distance or the clock, every single second in your WIB timezone is my favorite time of day. Across every mile, my heart is always right there with you, my Sunshine! ✈️☀️💛
+                </div>
+                <div class="mt-1.5 flex flex-wrap gap-1">
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-crimson">✈️ Across Every Mile</span>
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-navy">☀️ Favorite Timezone</span>
+                  <span class="px-2 py-0.5 rounded-full bg-softBlush border border-pastelPink text-[9px] font-rounded font-bold text-crimson">❤️ Worth Every Second</span>
                 </div>
               </div>
             </div>
-            <span id="wibClockBadge" class="shrink-0 ml-1.5 text-[9.5px] font-rounded font-bold text-crimson bg-softBlush px-2 py-0.5 rounded-full border border-pastelPink tabular-nums">
-              UTC+7 ❤️
-            </span>
-          </button>
+          </div>
         </div>
 
         <!-- 5. Interactive "Send Virtual Hug / Love Shower" Button -->
@@ -1511,7 +1619,6 @@
 
     <!-- =========================================================
          FULL-SCREEN PORTRAIT PHOTO SHOWCASE LIGHTBOX MODAL
-         (Tall 3:4 Portrait Frame + Zero Caption Overlap)
          ========================================================= -->
     <div
       id="photoLightboxOverlay"
@@ -1661,7 +1768,7 @@
         toastTimeout = setTimeout(() => {
           loveToast.classList.remove('opacity-100', 'scale-100');
           loveToast.classList.add('opacity-0', 'scale-90');
-        }, 2500);
+        }, 2300);
       }
 
       // --- Live WIB (UTC+7) Clock ---
@@ -2070,12 +2177,10 @@
           cupidBowShooter.classList.remove('bow-drawing');
           cupidBowShooter.classList.add('arrow-fired');
 
-          // Rising harp glissando as arrow flies
           [523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98].forEach((f, idx) => {
             playTone(f, 'sine', 0.35, 0.06, idx * 0.055);
           });
 
-          // Particle trail following the arrow up to the seal
           for (let step = 0; step < 5; step++) {
             setTimeout(() => {
               const trailY = height * (0.64 - step * 0.045);
@@ -2094,7 +2199,6 @@
           showLoveToast('Cupid’s arrow unlocked Miss Rena’s letter! 💘✨');
         }, 480);
 
-        // Auto-transition after she admires the risen letter & Polaroids (or tap anytime for instant open)
         if (unfoldTimer) clearTimeout(unfoldTimer);
         unfoldTimer = setTimeout(() => {
           if (!isRevealed) completeReveal();
@@ -2169,10 +2273,19 @@
         triggerScanAndReveal();
       });
 
-      // --- Interactive Badges with Sweet Personal Toasts ---
-      document.querySelectorAll('.micro-badge').forEach((badge) => {
+      // --- Interactive Clickable Points (Expand Secret Drawer + Burst Stickers) ---
+      const allMicroBadges = document.querySelectorAll('.micro-badge');
+      allMicroBadges.forEach((badge) => {
         badge.addEventListener('click', (e) => {
           e.stopPropagation();
+          const isAlreadyOpen = badge.classList.contains('point-expanded');
+
+          // Close other points so the card stays sleek & compact, then toggle clicked point
+          allMicroBadges.forEach((b) => b.classList.remove('point-expanded'));
+          if (!isAlreadyOpen) {
+            badge.classList.add('point-expanded');
+          }
+
           const rect = badge.getBoundingClientRect();
           const stageRect = stageContainer.getBoundingClientRect();
           const emojis = (badge.getAttribute('data-burst') || '💖,✨').split(',');
@@ -2181,25 +2294,40 @@
 
           spawnHeartBurst(
             rect.left - stageRect.left + rect.width * 0.5,
-            rect.top - stageRect.top + rect.height * 0.5,
-            16,
+            rect.top - stageRect.top + rect.height * 0.4,
+            18,
             emojis
           );
           playPopSound();
         });
       });
 
-      // --- Interactive Cycling Love Note Box ---
+      // --- Interactive Cycling Love Note Box + Clickable Note Dot Points ---
       const quoteBoxTrigger = document.getElementById('quoteBoxTrigger');
-      quoteBoxTrigger.addEventListener('click', (e) => {
-        e.stopPropagation();
-        currentNoteIndex = (currentNoteIndex + 1) % LOVE_NOTES.length;
+      const noteDotButtons = document.querySelectorAll('[data-note-dot]');
+
+      function setLoveNoteByIndex(index) {
+        currentNoteIndex = (index + LOVE_NOTES.length) % LOVE_NOTES.length;
         tenderSubNote.style.opacity = '0';
+
+        noteDotButtons.forEach((dot, idx) => {
+          if (idx === currentNoteIndex) {
+            dot.className = 'w-2.5 h-2.5 rounded-full bg-crimson transition-all scale-110 cursor-pointer';
+          } else {
+            dot.className = 'w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer';
+          }
+        });
+
         setTimeout(() => {
           tenderSubNote.textContent = LOVE_NOTES[currentNoteIndex];
           noteCounterPill.textContent = `${currentNoteIndex + 1} / ${LOVE_NOTES.length} 💕`;
           tenderSubNote.style.opacity = '1';
-        }, 150);
+        }, 140);
+      }
+
+      quoteBoxTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        setLoveNoteByIndex(currentNoteIndex + 1);
 
         const rect = quoteBoxTrigger.getBoundingClientRect();
         const stageRect = stageContainer.getBoundingClientRect();
@@ -2210,6 +2338,24 @@
           ['💖', '🌷', '💌', '🐥', '☀️', '💕']
         );
         playPopSound();
+      });
+
+      noteDotButtons.forEach((dotBtn) => {
+        dotBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const targetIdx = Number(dotBtn.getAttribute('data-note-dot') || 0);
+          setLoveNoteByIndex(targetIdx);
+
+          const rect = dotBtn.getBoundingClientRect();
+          const stageRect = stageContainer.getBoundingClientRect();
+          spawnHeartBurst(
+            rect.left - stageRect.left + rect.width / 2,
+            rect.top - stageRect.top + rect.height / 2,
+            14,
+            ['💖', '✨', '💌', '🌷']
+          );
+          playPopSound();
+        });
       });
 
       // --- Interactive 3D-Flip Portrait Polaroids & Fullscreen Lightbox ---
@@ -2377,6 +2523,8 @@
         isEnvelopeOpening = false;
         if (unfoldTimer) clearTimeout(unfoldTimer);
         stopRomanticMusicBox();
+
+        allMicroBadges.forEach((b) => b.classList.remove('point-expanded'));
 
         envelopeStageScreen.classList.remove('screen-visible');
         envelopeStageScreen.classList.add('screen-hidden');
