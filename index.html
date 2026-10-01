@@ -621,14 +621,29 @@
       50% { transform: rotate(-8deg) scaleY(0.94); }
     }
 
-    @keyframes cupidBowFloatAim {
-      0%, 100% { transform: translate3d(-7px, 0px, 0) rotate(-3deg); }
-      50% { transform: translate3d(7px, -5px, 0) rotate(3deg); }
+    @keyframes cupidBowBreathingFloat {
+      0%, 100% { transform: translate3d(0, 0px, 0); }
+      50% { transform: translate3d(0, -6px, 0); }
     }
 
     @keyframes laserSightPulse {
-      0%, 100% { opacity: 0.35; stroke-dashoffset: 0; }
-      50% { opacity: 0.85; stroke-dashoffset: -12; }
+      0%, 100% { opacity: 0.65; stroke-dashoffset: 0; filter: drop-shadow(0 0 3px #DC143C); }
+      50% { opacity: 1; stroke-dashoffset: -24; filter: drop-shadow(0 0 8px #FF4D6D); }
+    }
+
+    @keyframes laserDotPulse {
+      0%, 100% { transform: scale(0.9); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 6px #FF4D6D); }
+    }
+
+    @keyframes hudBracketPulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; }
+      50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 4px #D4AF37); }
+    }
+
+    @keyframes lockBadgeBlink {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.05); }
     }
 
     @keyframes shockwaveExpand1 {
@@ -782,13 +797,71 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 74px;
-      height: 74px;
+      width: 76px;
+      height: 76px;
       border-radius: 9999px;
       border: 2px dashed #DC143C;
       box-shadow: 0 0 20px rgba(220, 20, 60, 0.42);
-      animation: reticleSpinPulse 3s linear infinite;
+      animation: reticleSpinPulse 4s linear infinite;
       pointer-events: none;
+    }
+
+    .reticle-bracket {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid #D4AF37;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      animation: hudBracketPulse 2s ease-in-out infinite;
+    }
+    .reticle-bracket-tl { top: -6px; left: -6px; border-right: none; border-bottom: none; border-top-left-radius: 4px; }
+    .reticle-bracket-tr { top: -6px; right: -6px; border-left: none; border-bottom: none; border-top-right-radius: 4px; }
+    .reticle-bracket-bl { bottom: -6px; left: -6px; border-right: none; border-top: none; border-bottom-left-radius: 4px; }
+    .reticle-bracket-br { bottom: -6px; right: -6px; border-left: none; border-top: none; border-bottom-right-radius: 4px; }
+
+    .reticle-crosshair-h {
+      position: absolute;
+      top: 50%;
+      left: -14px;
+      right: -14px;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, #DC143C 25%, transparent 45%, transparent 55%, #DC143C 75%, transparent);
+      pointer-events: none;
+    }
+
+    .reticle-crosshair-v {
+      position: absolute;
+      left: 50%;
+      top: -14px;
+      bottom: -14px;
+      width: 1.5px;
+      background: linear-gradient(180deg, transparent, #DC143C 25%, transparent 45%, transparent 55%, #DC143C 75%, transparent);
+      pointer-events: none;
+    }
+
+    .reticle-lock-badge {
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      padding: 2px 9px;
+      border-radius: 9999px;
+      background: rgba(220, 20, 60, 0.95);
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      color: #FFFFFF;
+      font-size: 8.5px;
+      font-family: inherit;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 14px rgba(220, 20, 60, 0.45);
+      animation: lockBadgeBlink 2s ease-in-out infinite;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      z-index: 12;
     }
 
     .seal-shockwave-1,
@@ -822,24 +895,24 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      animation: cupidBowFloatAim 2.4s ease-in-out infinite;
+      animation: cupidBowBreathingFloat 2.6s ease-in-out infinite;
       cursor: pointer;
       touch-action: manipulation;
       will-change: transform;
     }
 
     .cupid-wing-left {
-      transform-origin: 48px 54px;
+      transform-origin: 52px 54px;
       animation: cupidWingFlapLeft 1.6s ease-in-out infinite;
     }
 
     .cupid-wing-right {
-      transform-origin: 112px 54px;
+      transform-origin: 118px 54px;
       animation: cupidWingFlapRight 1.6s ease-in-out infinite;
     }
 
-    .aim-laser-line {
-      animation: laserSightPulse 1.4s linear infinite;
+    .aim-laser-beam {
+      animation: laserSightPulse 1.2s linear infinite;
     }
 
     .cupid-bow-frame {
@@ -853,11 +926,11 @@
 
     .cupid-bow-shooter.bow-drawing {
       animation: none;
-      transform: translate3d(0, 4px, 0) scale(1.04);
+      transform: translate3d(0, 3px, 0) scale(1.03);
     }
 
     .cupid-bow-shooter.bow-drawing .cupid-arrow-projectile {
-      transform: translate3d(0, 14px, 0) scale(1.06);
+      transform: translate3d(0, 16px, 0) scale(1.04);
     }
 
     .cupid-bow-shooter.arrow-fired {
@@ -865,18 +938,10 @@
       pointer-events: none;
     }
 
-    .cupid-bow-shooter.arrow-fired .cupid-arrow-projectile {
-      transition:
-        transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.2s ease 0.24s;
-      transform: translate3d(0, -142px, 0) scale(1.22);
-      opacity: 0;
-    }
-
     .cupid-bow-shooter.arrow-fired .cupid-bow-frame {
-      transition: opacity 0.32s ease 0.2s, transform 0.35s ease 0.2s;
+      transition: opacity 0.28s ease 0.16s, transform 0.32s ease 0.16s;
       opacity: 0;
-      transform: translate3d(0, 12px, 0) scale(0.85);
+      transform: translate3d(0, 14px, 0) scale(0.85);
     }
 
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -1094,7 +1159,7 @@
       </div>
 
       <!-- Center 3D Envelope + Rising Letter + Portrait Mini-Polaroids + Ornate Winged Cupid Bow -->
-      <div class="my-auto pt-14 flex flex-col items-center justify-center relative">
+      <div id="envelopeBowContainer" class="my-auto pt-14 flex flex-col items-center justify-center relative">
         <div id="loveEnvelope3D" class="envelope-3d-wrapper">
           <!-- Back Panel -->
           <div class="envelope-back-panel"></div>
@@ -1162,16 +1227,58 @@
             class="heart-seal-target group"
             title="Tap to Shoot Heart & Unseal!"
           >
+            <!-- Tactical-Romantic HUD Corner Brackets -->
+            <div class="reticle-bracket reticle-bracket-tl"></div>
+            <div class="reticle-bracket reticle-bracket-tr"></div>
+            <div class="reticle-bracket reticle-bracket-bl"></div>
+            <div class="reticle-bracket reticle-bracket-br"></div>
+
+            <!-- Tactical HUD Crosshair Axes -->
+            <div class="reticle-crosshair-h"></div>
+            <div class="reticle-crosshair-v"></div>
+
+            <!-- Rotating Dashed Target Ring -->
             <div class="aim-reticle-ring"></div>
-            <div class="w-13 h-13 p-3 rounded-full bg-gradient-to-br from-crimson via-[#E11D48] to-[#9F1239] border-2 border-white shadow-xl flex items-center justify-center animate-heartbeat group-hover:scale-110 transition">
+
+            <!-- Target Locked HUD Badge -->
+            <div class="reticle-lock-badge">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-ping inline-block"></span>
+              <span>LOCKED 100% ❤️</span>
+            </div>
+
+            <!-- Crimson Wax Seal Button -->
+            <div class="w-13 h-13 p-3 rounded-full bg-gradient-to-br from-crimson via-[#E11D48] to-[#9F1239] border-2 border-white shadow-xl flex items-center justify-center animate-heartbeat group-hover:scale-110 transition relative">
               <span class="text-xl leading-none">❤️</span>
+              <span class="absolute w-2 h-2 rounded-full bg-white/90 shadow-sm animate-ping pointer-events-none"></span>
             </div>
           </button>
         </div>
 
+        <!-- Real Continuous Cupid Aiming Laser Guide SVG Overlay -->
+        <svg id="cupidAimLaserSvg" class="absolute inset-0 w-full h-full pointer-events-none z-15 overflow-visible" style="transition: opacity 0.3s ease;">
+          <defs>
+            <linearGradient id="laserBeamGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+              <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.9" />
+              <stop offset="25%" stop-color="#FF4D6D" stop-opacity="1" />
+              <stop offset="75%" stop-color="#DC143C" stop-opacity="1" />
+              <stop offset="100%" stop-color="#FFF0F5" stop-opacity="0.95" />
+            </linearGradient>
+            <filter id="laserBeamGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feDropShadow dx="0" dy="0" stdDeviation="3.5" flood-color="#DC143C" flood-opacity="0.8" />
+              <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FF4D6D" flood-opacity="0.5" />
+            </filter>
+          </defs>
+          <!-- Outer Pulsing Glow Line -->
+          <line id="laserBeamGlowLine" x1="0" y1="0" x2="0" y2="0" stroke="#FF4D6D" stroke-width="5" stroke-linecap="round" opacity="0.45" filter="url(#laserBeamGlow)"/>
+          <!-- Animated Flowing Dashed Laser Beam -->
+          <line id="laserBeamLine" x1="0" y1="0" x2="0" y2="0" stroke="url(#laserBeamGrad)" stroke-width="2.5" stroke-dasharray="5 5" stroke-linecap="round" class="aim-laser-beam" />
+          <!-- Inner Bright Core Line -->
+          <line id="laserBeamCore" x1="0" y1="0" x2="0" y2="0" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.9" />
+        </svg>
+
         <!-- Ornate Winged Golden-Rose Cupid Bow & Glowing Crystal-Heart Arrow -->
         <div id="cupidBowShooter" class="cupid-bow-shooter" title="Tap to Shoot Cupid's Heart Arrow!">
-          <svg width="160" height="106" viewBox="0 0 160 106" fill="none" xmlns="http://www.w3.org/2000/svg" class="overflow-visible drop-shadow-lg">
+          <svg width="170" height="110" viewBox="0 0 170 110" fill="none" xmlns="http://www.w3.org/2000/svg" class="overflow-visible drop-shadow-lg">
             <defs>
               <linearGradient id="goldRoseGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stop-color="#D4AF37" />
@@ -1181,61 +1288,74 @@
               <linearGradient id="rubyHeartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stop-color="#FF4D6D" />
                 <stop offset="55%" stop-color="#DC143C" />
-                <stop offset="100%" stop-color="#9F1239" />
+                <stop offset="100%" stop-color="#880824" />
               </linearGradient>
-              <filter id="heartGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feDropShadow dx="0" dy="2" stdDeviation="3.5" flood-color="#DC143C" flood-opacity="0.55" />
+              <filter id="heartGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feDropShadow dx="0" dy="0" stdDeviation="4.5" flood-color="#DC143C" flood-opacity="0.75" />
+                <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#D4AF37" flood-opacity="0.4" />
               </filter>
             </defs>
 
-            <!-- Soft Glowing Target Sight Line Up to the Heart Seal -->
-            <line
-              x1="80" y1="-26" x2="80" y2="10"
-              stroke="#DC143C" stroke-width="2" stroke-dasharray="3 4"
-              stroke-linecap="round" class="aim-laser-line"
-            />
-
             <!-- Winged Bow Frame -->
             <g class="cupid-bow-frame">
+              <!-- Left Angel Wing (Feathered Seraph Wings) -->
               <g class="cupid-wing-left">
-                <path d="M52 46 C32 34, 14 38, 8 48 C16 52, 26 52, 34 50 C20 56, 14 62, 12 68 C24 68, 36 62, 46 54 Z" fill="#FFFFFF" stroke="#FFC0CB" stroke-width="1.6" stroke-linejoin="round"/>
-                <path d="M48 48 C34 40, 22 43, 16 49" stroke="#FFD6E4" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M54 48 C32 32, 12 36, 4 48 C14 52, 26 53, 36 50 C20 57, 12 65, 10 72 C24 72, 38 65, 48 56 Z" fill="#FFFFFF" stroke="#FFC0CB" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M50 50 C34 40, 20 44, 14 50" stroke="#FFD6E4" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M44 54 C30 48, 22 52, 18 58" stroke="#D4AF37" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
               </g>
 
+              <!-- Right Angel Wing (Feathered Seraph Wings) -->
               <g class="cupid-wing-right">
-                <path d="M108 46 C128 34, 146 38, 152 48 C144 52, 134 52, 126 50 C140 56, 146 62, 148 68 C136 68, 124 62, 114 54 Z" fill="#FFFFFF" stroke="#FFC0CB" stroke-width="1.6" stroke-linejoin="round"/>
-                <path d="M112 48 C126 40, 138 43, 144 49" stroke="#FFD6E4" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M116 48 C138 32, 158 36, 166 48 C156 52, 144 53, 134 50 C150 57, 158 65, 160 72 C146 72, 132 65, 122 56 Z" fill="#FFFFFF" stroke="#FFC0CB" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M120 50 C136 40, 150 44, 156 50" stroke="#FFD6E4" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M126 54 C140 48, 148 52, 152 58" stroke="#D4AF37" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
               </g>
 
-              <path d="M22 64 L80 82 L138 64" stroke="#DC143C" stroke-width="2" stroke-dasharray="2.5 2.5" opacity="0.8"/>
+              <!-- Elastic Bowstring -->
+              <path id="bowstringPath" d="M 22 66 Q 85 84 148 66" stroke="#DC143C" stroke-width="2" stroke-linecap="round" opacity="0.85"/>
 
-              <path d="M18 66 C26 50, 42 36, 62 42 C70 44, 75 47, 80 47 C85 47, 90 44, 98 42 C118 36, 134 50, 142 66" stroke="url(#goldRoseGrad)" stroke-width="6" stroke-linecap="round"/>
-              <path d="M18 66 C26 50, 42 36, 62 42 C70 44, 75 47, 80 47 C85 47, 90 44, 98 42 C118 36, 134 50, 142 66" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
+              <!-- Golden Recurve Bow Body -->
+              <path d="M18 68 C28 50, 46 36, 68 42 C76 44, 80 47, 85 47 C90 47, 94 44, 102 42 C124 36, 142 50, 152 68" stroke="url(#goldRoseGrad)" stroke-width="6.5" stroke-linecap="round"/>
+              <path d="M18 68 C28 50, 46 36, 68 42 C76 44, 80 47, 85 47 C90 47, 94 44, 102 42 C124 36, 142 50, 152 68" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/>
 
-              <path d="M72 48 L64 58 M88 48 L96 58" stroke="#DC143C" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="20" cy="65" r="4" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
-              <circle cx="140" cy="65" r="4" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
-              <circle cx="80" cy="47" r="5" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
+              <!-- Bow Ornaments: Ruby Jewels & Gold Limbs -->
+              <circle cx="20" cy="67" r="4.5" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
+              <circle cx="150" cy="67" r="4.5" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.5"/>
+              <circle cx="85" cy="47" r="5.5" fill="#DC143C" stroke="#FFFFFF" stroke-width="1.8"/>
+              <circle cx="85" cy="47" r="2" fill="#FFF3B0"/>
             </g>
 
-            <!-- Glowing Ruby-Heart Arrow Projectile -->
-            <g class="cupid-arrow-projectile" filter="url(#heartGlow)">
-              <path d="M80 70 L67 82 L72 90 L80 81 L88 90 L93 82 Z" fill="#FF8DA1" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
-              <path d="M80 75 L70 85 M80 75 L90 85" stroke="#DC143C" stroke-width="1.3" stroke-linecap="round"/>
+            <!-- Glowing 3D Faceted Crystal-Ruby Heart Arrow -->
+            <g id="cupidArrowProjectile" class="cupid-arrow-projectile" filter="url(#heartGlow)">
+              <!-- Arrow Fletching (Angel Feathers at Nock) -->
+              <path d="M85 72 L71 85 L76 93 L85 84 L94 93 L99 85 Z" fill="#FF8DA1" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+              <path d="M85 77 L74 88 M85 77 L96 88" stroke="#DC143C" stroke-width="1.3" stroke-linecap="round"/>
+              <path d="M85 74 L85 91" stroke="#D4AF37" stroke-width="1.2"/>
 
-              <line x1="80" y1="22" x2="80" y2="85" stroke="url(#goldRoseGrad)" stroke-width="4.2" stroke-linecap="round"/>
-              <line x1="80" y1="22" x2="80" y2="85" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/>
+              <!-- Arrow Golden Shaft with White Gleam -->
+              <line x1="85" y1="20" x2="85" y2="86" stroke="url(#goldRoseGrad)" stroke-width="4.2" stroke-linecap="round"/>
+              <line x1="85" y1="20" x2="85" y2="86" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" opacity="0.8"/>
 
-              <circle cx="60" cy="14" r="2" fill="#D4AF37"/>
-              <circle cx="100" cy="14" r="2" fill="#D4AF37"/>
+              <!-- Arrowhead Collar & Sparkle Rings -->
+              <ellipse cx="85" cy="24" rx="4.5" ry="2" fill="#D4AF37" stroke="#FFFFFF" stroke-width="1"/>
+              <circle cx="63" cy="14" r="2.2" fill="#D4AF37" opacity="0.75"/>
+              <circle cx="107" cy="14" r="2.2" fill="#D4AF37" opacity="0.75"/>
 
+              <!-- 3D Faceted Ruby Heart Arrowhead Tip -->
               <path
-                d="M80 30 C80 30 61 18 61 9.5 C61 3.8 65.8 0 71 0 C75.2 0 78.2 2.4 80 5.5 C81.8 2.4 84.8 0 89 0 C94.2 0 99 3.8 99 9.5 C99 18 80 30 80 30 Z"
+                d="M85 30 C85 30 63 18 63 9 C63 3.5 68 0 74 0 C78.5 0 82.5 2.5 85 6 C87.5 2.5 91.5 0 96 0 C102 0 107 3.5 107 9 C107 18 85 30 85 30 Z"
                 fill="url(#rubyHeartGrad)"
                 stroke="#FFFFFF"
-                stroke-width="2.2"
+                stroke-width="2"
               />
-              <path d="M67 8.5 C67 6 69.5 4.2 72.5 4.5" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" opacity="0.85"/>
+              <!-- Facet Facets & Specular Glint -->
+              <path d="M85 6 L85 28 L74 8 Z" fill="#FFFFFF" opacity="0.22"/>
+              <path d="M85 6 L85 28 L96 8 Z" fill="#880824" opacity="0.3"/>
+              <!-- Crystal Specular Light Arc -->
+              <path d="M70 7.5 C70 4.8 73 3 76.5 3.5" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" opacity="0.9"/>
+              <!-- Diamond Sparkle Star at Heart Tip -->
+              <circle cx="85" cy="2" r="1.5" fill="#FFFFFF" class="animate-ping"/>
             </g>
           </svg>
 
@@ -1718,9 +1838,16 @@
       const scanPercentText = document.getElementById('scanPercentText');
       const scanProgressTitle = document.getElementById('scanProgressTitle');
 
+      const envelopeBowContainer = document.getElementById('envelopeBowContainer');
       const loveEnvelope3D = document.getElementById('loveEnvelope3D');
       const heartSealTargetBtn = document.getElementById('heartSealTargetBtn');
       const cupidBowShooter = document.getElementById('cupidBowShooter');
+      const cupidAimLaserSvg = document.getElementById('cupidAimLaserSvg');
+      const laserBeamLine = document.getElementById('laserBeamLine');
+      const laserBeamCore = document.getElementById('laserBeamCore');
+      const laserBeamGlowLine = document.getElementById('laserBeamGlowLine');
+      const bowstringPath = document.getElementById('bowstringPath');
+      const cupidArrowProjectile = document.getElementById('cupidArrowProjectile');
       const aimStatusPill = document.getElementById('aimStatusPill');
       const shootHeartOpenBtn = document.getElementById('shootHeartOpenBtn');
       const shootHeartBtnLabel = document.getElementById('shootHeartBtnLabel');
@@ -2060,9 +2187,51 @@
           }
         }
 
+        if (!isEnvelopeOpening && !isRevealed && envelopeStageScreen && envelopeStageScreen.classList.contains('screen-visible')) {
+          updateAimLaser();
+        }
+
         requestAnimationFrame(animateCanvas);
       }
       requestAnimationFrame(animateCanvas);
+
+      // --- Real-time Continuous Cupid Aiming Laser & HUD Reticle Alignment ---
+      function updateAimLaser() {
+        if (!cupidAimLaserSvg || !heartSealTargetBtn || !cupidArrowProjectile || !envelopeBowContainer) return;
+        if (isEnvelopeOpening || isRevealed) {
+          cupidAimLaserSvg.style.opacity = '0';
+          return;
+        }
+
+        const containerRect = envelopeBowContainer.getBoundingClientRect();
+        const sealRect = heartSealTargetBtn.getBoundingClientRect();
+        const arrowRect = cupidArrowProjectile.getBoundingClientRect();
+
+        // Target: Center of Heart Seal button
+        const targetX = (sealRect.left + sealRect.width / 2) - containerRect.left;
+        const targetY = (sealRect.top + sealRect.height / 2) - containerRect.top;
+
+        // Source: Tip of Cupid Arrowhead
+        const sourceX = (arrowRect.left + arrowRect.width / 2) - containerRect.left;
+        const sourceY = arrowRect.top - containerRect.top + 2;
+
+        laserBeamGlowLine.setAttribute('x1', sourceX);
+        laserBeamGlowLine.setAttribute('y1', sourceY);
+        laserBeamGlowLine.setAttribute('x2', targetX);
+        laserBeamGlowLine.setAttribute('y2', targetY);
+
+        laserBeamLine.setAttribute('x1', sourceX);
+        laserBeamLine.setAttribute('y1', sourceY);
+        laserBeamLine.setAttribute('x2', targetX);
+        laserBeamLine.setAttribute('y2', targetY);
+
+        laserBeamCore.setAttribute('x1', sourceX);
+        laserBeamCore.setAttribute('y1', sourceY);
+        laserBeamCore.setAttribute('x2', targetX);
+        laserBeamCore.setAttribute('y2', targetY);
+
+        cupidAimLaserSvg.style.opacity = '1';
+      }
 
       stageContainer.addEventListener('pointerdown', (e) => {
         const rect = stageContainer.getBoundingClientRect();
@@ -2142,6 +2311,23 @@
         isEnvelopeOpening = false;
         loveEnvelope3D.classList.remove('envelope-opened');
         cupidBowShooter.classList.remove('bow-drawing', 'arrow-fired');
+        if (cupidArrowProjectile) {
+          cupidArrowProjectile.style.transform = '';
+          cupidArrowProjectile.style.transition = '';
+          cupidArrowProjectile.style.opacity = '';
+        }
+        if (bowstringPath) {
+          bowstringPath.setAttribute('d', 'M 22 66 Q 85 84 148 66');
+        }
+        const bowFrame = cupidBowShooter.querySelector('.cupid-bow-frame');
+        if (bowFrame) {
+          bowFrame.style.opacity = '';
+          bowFrame.style.transform = '';
+        }
+        if (cupidAimLaserSvg) {
+          cupidAimLaserSvg.style.opacity = '1';
+        }
+
         aimStatusPill.textContent = '🎯 Tap Heart Seal or Cupid\'s Bow to Shoot!';
         envelopeStageTitle.textContent = 'A Sealed Love Letter For You 💌';
         envelopeStageSubtitle.innerHTML =
@@ -2155,6 +2341,8 @@
         replayBtn.classList.remove('hidden');
         replayBtn.classList.add('flex');
 
+        setTimeout(updateAimLaser, 50);
+
         spawnHeartBurst(width * 0.5, height * 0.45, 22, ['💌', '💘', '💖', '✨', '🌷']);
         playPopSound();
       }
@@ -2165,39 +2353,74 @@
         if (isEnvelopeOpening || isRevealed) return;
         isEnvelopeOpening = true;
 
-        // Phase 1 (0ms - 210ms): Draw back bowstring & charge the Ruby Heart Arrow
+        // Phase 1 (0ms - 220ms): Realistic Elastic Drawback + Chime
         cupidBowShooter.classList.add('bow-drawing');
-        aimStatusPill.textContent = '✨ Drawing Cupid\'s Bow...';
-        shootHeartBtnLabel.textContent = 'Shooting Straight to Your Heart... 💘';
-        playTone(392.0, 'triangle', 0.18, 0.05, 0);
-        spawnHeartBurst(width * 0.5, height * 0.65, 10, ['✨', '💖']);
+        if (bowstringPath) {
+          bowstringPath.setAttribute('d', 'M 22 66 Q 85 96 148 66');
+        }
+        aimStatusPill.textContent = '✨ Drawing Cupid\'s Bow with 100% Aim... 🏹';
+        shootHeartBtnLabel.textContent = 'Shooting Straight to Miss Rena\'s Heart... 💘';
+        playTone(392.0, 'triangle', 0.20, 0.06, 0);
+        playTone(523.25, 'sine', 0.16, 0.04, 0.06);
+        spawnHeartBurst(width * 0.5, height * 0.65, 12, ['✨', '💖', '💫']);
 
-        // Phase 2 (210ms): Launch Arrow Upward + Spawn Stardust Trail Along Flight Path
+        // Phase 2 (220ms): Release String + Exact Pixel Delta Trajectory + Stardust Flow
         setTimeout(() => {
           cupidBowShooter.classList.remove('bow-drawing');
           cupidBowShooter.classList.add('arrow-fired');
+          if (bowstringPath) {
+            bowstringPath.setAttribute('d', 'M 22 66 Q 85 84 148 66');
+          }
+          if (cupidAimLaserSvg) {
+            cupidAimLaserSvg.style.opacity = '0';
+          }
 
+          // Exact mathematical flight calculation between arrowhead tip and heart seal center
+          const sealRect = heartSealTargetBtn.getBoundingClientRect();
+          const arrowRect = cupidArrowProjectile.getBoundingClientRect();
+          const deltaX = (sealRect.left + sealRect.width / 2) - (arrowRect.left + arrowRect.width / 2);
+          const deltaY = (sealRect.top + sealRect.height / 2) - (arrowRect.top + arrowRect.height / 2);
+
+          // Flight animation: fast, crisp, landing with 100% pinpoint accuracy
+          cupidArrowProjectile.style.transition =
+            'transform 0.28s cubic-bezier(0.2, 0.9, 0.3, 1), opacity 0.1s ease 0.26s';
+          cupidArrowProjectile.style.transform = `translate3d(${deltaX}px, ${deltaY}px, 0) scale(1.15)`;
+
+          // Celestial harp flight arpeggio
           [523.25, 659.25, 783.99, 1046.5, 1318.5, 1567.98].forEach((f, idx) => {
-            playTone(f, 'sine', 0.35, 0.06, idx * 0.055);
+            playTone(f, 'sine', 0.35, 0.06, idx * 0.05);
           });
 
-          for (let step = 0; step < 5; step++) {
+          // Stardust trail along the calculated flight vector
+          const arrowCenterX = arrowRect.left + arrowRect.width / 2;
+          const arrowCenterY = arrowRect.top + arrowRect.height / 2;
+          for (let step = 0; step < 6; step++) {
             setTimeout(() => {
-              const trailY = height * (0.64 - step * 0.045);
-              spawnHeartBurst(width * 0.5 + (Math.random() - 0.5) * 18, trailY, 5, ['✨', '💖', '💕']);
-            }, step * 45);
+              const t = (step + 1) / 7;
+              const trailX = arrowCenterX + deltaX * t + (Math.random() - 0.5) * 14;
+              const trailY = arrowCenterY + deltaY * t;
+              spawnHeartBurst(trailX, trailY, 6, ['✨', '💖', '💕']);
+            }, step * 40);
           }
-        }, 210);
+        }, 220);
 
-        // Phase 3 & 4 (480ms): Arrow Pierces Heart Seal -> Double Shockwave + 3D Flap Opens + Letter & Portrait Polaroids Rise
+        // Phase 3 & 4 (500ms): Arrow Hits Heart Seal Dead-Center -> Explosion of 42+ Particles + Double Shockwave + Envelope Opens
         setTimeout(() => {
-          spawnHeartBurst(width * 0.5, height * 0.44, 34, ['💘', '💖', '✨', '🌷', '💝', '🌸']);
+          const sealRect = heartSealTargetBtn.getBoundingClientRect();
+          const impactX = sealRect.left + sealRect.width / 2;
+          const impactY = sealRect.top + sealRect.height / 2;
+
+          spawnHeartBurst(impactX, impactY, 42, ['💘', '💖', '✨', '🌷', '💝', '🌸', '💎']);
           loveEnvelope3D.classList.add('envelope-opened');
+          aimStatusPill.textContent = '🎯 Bullseye! Unlocked With All My Love 💖';
           envelopeStageTitle.textContent = 'Unlocked With All My Love! 💖✨';
           envelopeStageSubtitle.textContent = 'Tap your risen love letter below (or wait a moment) to open your full card! 💌';
           shootHeartBtnLabel.textContent = 'Open Full Surprise Card Now 💌';
-          showLoveToast('Cupid’s arrow unlocked Miss Rena’s letter! 💘✨');
-        }, 480);
+          showLoveToast('Bullseye! Cupid’s arrow unlocked Miss Rena’s letter! 💘✨');
+          playPopSound();
+          playTone(880, 'triangle', 0.25, 0.08, 0);
+          playTone(1174.66, 'sine', 0.35, 0.06, 0.08);
+        }, 500);
 
         if (unfoldTimer) clearTimeout(unfoldTimer);
         unfoldTimer = setTimeout(() => {
@@ -2530,6 +2753,22 @@
         envelopeStageScreen.classList.add('screen-hidden');
         loveEnvelope3D.classList.remove('envelope-opened');
         cupidBowShooter.classList.remove('bow-drawing', 'arrow-fired');
+        if (cupidArrowProjectile) {
+          cupidArrowProjectile.style.transform = '';
+          cupidArrowProjectile.style.transition = '';
+          cupidArrowProjectile.style.opacity = '';
+        }
+        if (bowstringPath) {
+          bowstringPath.setAttribute('d', 'M 22 66 Q 85 84 148 66');
+        }
+        const bowFrame = cupidBowShooter.querySelector('.cupid-bow-frame');
+        if (bowFrame) {
+          bowFrame.style.opacity = '';
+          bowFrame.style.transform = '';
+        }
+        if (cupidAimLaserSvg) {
+          cupidAimLaserSvg.style.opacity = '1';
+        }
 
         revealScreen.classList.remove('screen-visible', 'reveal-active');
         revealScreen.classList.add('screen-hidden');
