@@ -1266,7 +1266,7 @@
         </div>
 
         <!-- Real Continuous Cupid Stardust Guidance Trail SVG Overlay -->
-        <svg id="cupidAimLaserSvg" class="absolute inset-0 w-full h-full pointer-events-none z-15 overflow-visible" style="transition: opacity 0.35s ease;">
+        <svg id="cupidAimLaserSvg" class="absolute inset-0 w-full h-full pointer-events-none z-20 overflow-visible" style="transition: opacity 0.35s ease;">
           <defs>
             <linearGradient id="stardustBeamGrad" x1="0%" y1="100%" x2="0%" y2="0%">
               <stop offset="0%" stop-color="#D4AF37" stop-opacity="0.9" />
@@ -1376,7 +1376,8 @@
               <!-- Crystal Specular Light Arc -->
               <path d="M 79 7.5 C 79 4.5, 83 2.5, 87 3" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" opacity="0.95"/>
               <!-- Diamond Sparkle Star at Heart Tip -->
-              <circle cx="90" cy="1" r="1.5" fill="#FFFFFF" class="animate-ping"/>
+              <circle cx="90" cy="1" r="1.8" fill="#FFFFFF" opacity="0.95"/>
+              <circle cx="90" cy="1" r="3.2" fill="#FFFFFF" opacity="0.4" class="animate-pulse"/>
             </g>
           </svg>
 
@@ -2292,9 +2293,9 @@
       }
       requestAnimationFrame(animateCanvas);
 
-      // --- Real-time Continuous Cupid Aiming Laser & HUD Reticle Alignment ---
+      // --- Real-time Continuous Cupid Aiming Guidance Alignment ---
       function updateAimLaser() {
-        if (!cupidAimLaserSvg || !heartSealTargetBtn || !cupidArrowProjectile || !envelopeBowContainer) return;
+        if (!cupidAimLaserSvg || !heartSealTargetBtn || !cupidBowShooter || !envelopeBowContainer) return;
         if (isEnvelopeOpening || isRevealed) {
           cupidAimLaserSvg.style.opacity = '0';
           return;
@@ -2302,29 +2303,30 @@
 
         const containerRect = envelopeBowContainer.getBoundingClientRect();
         const sealRect = heartSealTargetBtn.getBoundingClientRect();
-        const arrowRect = cupidArrowProjectile.getBoundingClientRect();
+        const bowRect = cupidBowShooter.getBoundingClientRect();
+
+        // Exact horizontal center: strictly aligned along vertical axis connecting seal and bow
+        const aimX = (sealRect.left + sealRect.width / 2) - containerRect.left;
 
         // Target: Center of Heart Seal button
-        const targetX = (sealRect.left + sealRect.width / 2) - containerRect.left;
         const targetY = (sealRect.top + sealRect.height / 2) - containerRect.top;
 
-        // Source: Tip of Cupid Arrowhead
-        const sourceX = (arrowRect.left + arrowRect.width / 2) - containerRect.left;
-        const sourceY = arrowRect.top - containerRect.top + 2;
+        // Source: Tip of crystalline ruby arrowhead on Cupid's bow
+        const sourceY = (bowRect.top + 6) - containerRect.top;
 
-        laserBeamGlowLine.setAttribute('x1', sourceX);
+        laserBeamGlowLine.setAttribute('x1', aimX);
         laserBeamGlowLine.setAttribute('y1', sourceY);
-        laserBeamGlowLine.setAttribute('x2', targetX);
+        laserBeamGlowLine.setAttribute('x2', aimX);
         laserBeamGlowLine.setAttribute('y2', targetY);
 
-        laserBeamLine.setAttribute('x1', sourceX);
+        laserBeamLine.setAttribute('x1', aimX);
         laserBeamLine.setAttribute('y1', sourceY);
-        laserBeamLine.setAttribute('x2', targetX);
+        laserBeamLine.setAttribute('x2', aimX);
         laserBeamLine.setAttribute('y2', targetY);
 
-        laserBeamCore.setAttribute('x1', sourceX);
+        laserBeamCore.setAttribute('x1', aimX);
         laserBeamCore.setAttribute('y1', sourceY);
-        laserBeamCore.setAttribute('x2', targetX);
+        laserBeamCore.setAttribute('x2', aimX);
         laserBeamCore.setAttribute('y2', targetY);
 
         cupidAimLaserSvg.style.opacity = '1';
@@ -2479,12 +2481,16 @@
 
           // Exact mathematical flight calculation between arrowhead tip and heart seal center
           const sealRect = heartSealTargetBtn.getBoundingClientRect();
-          const arrowRect = cupidArrowProjectile.getBoundingClientRect();
-          const arrowTipX = arrowRect.left + arrowRect.width / 2;
-          const arrowTipY = arrowRect.top + 6; // Tip of ruby arrowhead
+          const bowRect = cupidBowShooter.getBoundingClientRect();
 
-          const deltaX = (sealRect.left + sealRect.width / 2) - arrowTipX;
-          const deltaY = (sealRect.top + sealRect.height / 2) - arrowTipY;
+          const sealCenterX = sealRect.left + sealRect.width / 2;
+          const sealCenterY = sealRect.top + sealRect.height / 2;
+
+          const bowCenterX = bowRect.left + bowRect.width / 2;
+          const arrowTipY = bowRect.top + 6; // Tip of ruby arrowhead
+
+          const deltaX = sealCenterX - bowCenterX;
+          const deltaY = sealCenterY - arrowTipY;
 
           // Flight animation: fast, crisp, landing with 100% pinpoint accuracy
           cupidArrowProjectile.style.transition =
@@ -2500,7 +2506,7 @@
           for (let step = 0; step < 6; step++) {
             setTimeout(() => {
               const t = (step + 1) / 7;
-              const trailX = arrowTipX + deltaX * t + (Math.random() - 0.5) * 12;
+              const trailX = bowCenterX + deltaX * t + (Math.random() - 0.5) * 8;
               const trailY = arrowTipY + deltaY * t;
               spawnHeartBurst(trailX, trailY, 6, ['✨', '💖', '💕']);
             }, step * 40);
