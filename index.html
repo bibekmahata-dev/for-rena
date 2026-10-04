@@ -919,6 +919,20 @@
       transform: translate3d(0, 14px, 0) scale(0.85);
     }
 
+    .album-tab-btn {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1.5px solid #FFCCD8;
+      color: #700018;
+      box-shadow: 0 2px 8px rgba(220, 20, 60, 0.08);
+      cursor: pointer;
+    }
+    .album-tab-btn.active {
+      background: linear-gradient(135deg, #DC143C 0%, #E11D48 100%);
+      color: #FFFFFF;
+      border-color: #DC143C;
+      box-shadow: 0 4px 14px rgba(220, 20, 60, 0.35);
+    }
+
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
   </style>
@@ -1439,8 +1453,29 @@
           </div>
         </div>
 
-        <!-- 2. Portrait 3D-Flip Polaroid Photo Gallery (Crisp Badges + Portrait Fit) -->
-        <div class="reveal-stagger delay-2 w-full mb-2">
+        <!-- 2. Interactive Memory Album Mode Tabs -->
+        <div class="reveal-stagger delay-2 w-full flex items-center justify-center gap-1.5 mb-1.5">
+          <button
+            id="tabPortraitsBtn"
+            type="button"
+            class="album-tab-btn active px-3 py-1 rounded-full text-[10px] font-rounded font-bold transition flex items-center gap-1.5"
+          >
+            <span>👑</span>
+            <span>Miss Rena (2)</span>
+          </button>
+          <button
+            id="tabGamingBtn"
+            type="button"
+            class="album-tab-btn px-3 py-1 rounded-full text-[10px] font-rounded font-bold transition flex items-center gap-1.5"
+          >
+            <span>🎮</span>
+            <span>Roblox Memories (5)</span>
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-crimson animate-ping"></span>
+          </button>
+        </div>
+
+        <!-- 2A. Portrait 3D-Flip Polaroid Photo Gallery (Crisp Badges + Portrait Fit) -->
+        <div id="portraitsGalleryView" class="reveal-stagger delay-2 w-full mb-2">
           <div class="grid grid-cols-2 gap-2.5 px-0.5">
             <!-- Polaroid 1: White Cap & Earphones -->
             <div class="polaroid-float-left polaroid-3d-scene h-44 sm:h-48 cursor-pointer" data-polaroid-index="0">
@@ -1544,6 +1579,103 @@
             <span>🔄</span>
             <span id="flipModeLabel">Tap photos to 3D-Flip: Anime ✨ ↔ Real 📸</span>
           </button>
+        </div>
+
+        <!-- 2B. Interactive Roblox Gaming Memories Showcase -->
+        <div id="gamingGalleryView" class="hidden reveal-stagger delay-2 w-full mb-2 flex flex-col items-center">
+          <!-- Main Gaming Polaroid Display Card -->
+          <div
+            id="gamePolaroidCard"
+            class="relative w-full rounded-[22px] bg-white p-2.5 shadow-xl border-2 border-pastelPink/70 cursor-pointer group transition-all duration-300"
+          >
+            <!-- Washi Tape Decorative Badge at Top -->
+            <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-gradient-to-r from-crimson to-[#E11D48] text-white text-[9.5px] font-rounded font-bold tracking-wide shadow flex items-center gap-1 whitespace-nowrap z-10">
+              <span id="gameMemoryBadgeIcon">🐥</span>
+              <span id="gameMemoryBadgeTitle">The Little Baby Duck</span>
+            </div>
+
+            <!-- Image Container with Subtle Ambient Blurred Background -->
+            <div class="relative w-full h-44 sm:h-48 rounded-[16px] overflow-hidden bg-navy/5 flex items-center justify-center border border-pastelPink/40">
+              <img
+                id="gamePolaroidBlurImg"
+                src="game-1.jpg"
+                alt="Memory Blur"
+                class="absolute inset-0 w-full h-full object-cover blur-md opacity-40 scale-110 pointer-events-none"
+              />
+              <img
+                id="gamePolaroidImg"
+                src="game-1.jpg"
+                alt="Roblox Memory"
+                class="relative z-1 max-w-full max-h-full object-contain p-1 drop-shadow-md transition-transform duration-300 group-hover:scale-[1.02]"
+              />
+
+              <!-- Fullscreen Zoom Button -->
+              <button
+                id="gameZoomBtn"
+                type="button"
+                class="polaroid-zoom-btn absolute top-2 right-2 w-7 h-7 rounded-full bg-white/95 text-navy text-[11px] flex items-center justify-center shadow-md hover:bg-crimson hover:text-white transition z-10 cursor-pointer"
+                title="View Fullscreen"
+              >
+                🔍
+              </button>
+
+              <!-- In-Game Chat Floating Pill Tag -->
+              <div
+                id="gameChatTag"
+                class="absolute bottom-2 left-2 right-2 px-2.5 py-1 rounded-xl bg-black/75 backdrop-blur-sm border border-white/20 text-white text-[9px] font-rounded font-medium text-left truncate flex items-center gap-1.5 z-10"
+              >
+                <span>💬</span>
+                <span id="gameChatTagText" class="truncate font-semibold">“omgg im little babyyy duckkkk” 🐥</span>
+              </div>
+            </div>
+
+            <!-- Memory Story Caption -->
+            <div class="mt-2 text-center px-1">
+              <p id="gameMemoryTitle" class="text-[12px] font-rounded font-bold text-crimson truncate">
+                Carrying My Favorite Baby Duck 🐥💕
+              </p>
+              <p id="gameMemoryStory" class="text-[10px] font-rounded font-medium text-navy/75 leading-tight mt-0.5 line-clamp-2">
+                The unforgettable moment Rena said she's little baby duck while carried on my back! 💖
+              </p>
+            </div>
+          </div>
+
+          <!-- Carousel Controls: Prev, Dots, Next -->
+          <div class="mt-2 flex items-center justify-between w-full max-w-[280px] px-1">
+            <button
+              id="prevGameMemoryBtn"
+              type="button"
+              class="w-7 h-7 rounded-full bg-white/90 border border-pastelPink text-crimson text-xs flex items-center justify-center shadow hover:bg-softBlush active:scale-95 transition cursor-pointer"
+              title="Previous Memory"
+            >
+              ◀
+            </button>
+
+            <!-- 5 Interactive Dot Buttons -->
+            <div id="gameDotsContainer" class="flex items-center gap-1.5">
+              <button type="button" data-game-dot="0" class="w-2.5 h-2.5 rounded-full bg-crimson transition-all scale-110 cursor-pointer"></button>
+              <button type="button" data-game-dot="1" class="w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer"></button>
+              <button type="button" data-game-dot="2" class="w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer"></button>
+              <button type="button" data-game-dot="3" class="w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer"></button>
+              <button type="button" data-game-dot="4" class="w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer"></button>
+            </div>
+
+            <button
+              id="nextGameMemoryBtn"
+              type="button"
+              class="w-7 h-7 rounded-full bg-white/90 border border-pastelPink text-crimson text-xs flex items-center justify-center shadow hover:bg-softBlush active:scale-95 transition cursor-pointer"
+              title="Next Memory"
+            >
+              ▶
+            </button>
+          </div>
+
+          <!-- Memory Counter & Hint -->
+          <div class="mt-1 flex items-center gap-2 text-[9px] font-rounded font-bold text-navy/60">
+            <span id="gameMemoryCounterPill">Memory 1 of 5 🎮</span>
+            <span>•</span>
+            <span class="text-crimson/80">Tap photo to zoom &amp; burst hearts 💖</span>
+          </div>
         </div>
 
         <!-- 3. Heart-Melting Interactive Love Note Box + Clickable Dot Points -->
@@ -2710,6 +2842,86 @@
         },
       ];
 
+      // --- 5 Roblox Gaming Memories ---
+      const GAMING_MEMORIES = [
+        {
+          img: 'game-1.jpg',
+          badgeIcon: '🐥',
+          badgeTitle: 'The Little Baby Duck',
+          title: '“omgg im little babyyy duckkkk” 🐥💕',
+          chatTag: '“omgg im little babyyy duckkkk” 🐥',
+          story: 'Carrying Rena on my back — the origin of my favorite baby duck nickname! 💖',
+          toast: 'Baby Duck Memory: Cutest moment ever on my back! 🐥💖',
+        },
+        {
+          img: 'game-2.jpg',
+          badgeIcon: '🎤',
+          badgeTitle: 'Singing For Rena',
+          title: '“Should I sing you a song to cheer you up?” 🎶',
+          chatTag: 'Bibek: “Should I sing or do you wanna sing for me? hehe”',
+          story: 'Cheering Rena up when the weekend wifi was lagging and being sad! 📶✨',
+          toast: 'Wifi Cheer-Up: I will always cheer you up when wifi lags! 🎤💕',
+        },
+        {
+          img: 'game-3.jpg',
+          badgeIcon: '🐉',
+          badgeTitle: 'Dragon Adventures',
+          title: '“HOW TO GET OFF THIS DRAGON” 🐉✨',
+          chatTag: 'Bibek: “HOW TO GET OFF THIS DRAGON” • Finding Eggs',
+          story: 'Exploring fantasy realms, collecting dragon eggs, and stargazing together! 🌌🥚',
+          toast: 'Dragon Adventures: Getting lost in dragon skies with you! 🐉💖',
+        },
+        {
+          img: 'game-4.jpg',
+          badgeIcon: '🌹',
+          badgeTitle: 'Sweet Scoops Standoff',
+          title: 'Rose & Handcuffs vs Sniper Rifle 🌹🔫',
+          chatTag: 'Bibek offering a rose while Rena aims her sniper! 😂',
+          story: 'Outside Sweet Scoops: I brought flowers & love, she brought a giant sniper! 🍦💘',
+          toast: 'Sweet Scoops: The funniest standoff outside the ice cream shop! 🍦🌹',
+        },
+        {
+          img: 'game-5.jpg',
+          badgeIcon: '🎬',
+          badgeTitle: 'Cinema Date Night',
+          title: '“i ❤️ my gf” Headband & Princess Carry 🎬🍿',
+          chatTag: 'Bibek carrying sleeping Rena in the movie theater seats 💖',
+          story: 'Watching movies together in Roblox while holding her in my arms like a princess! 🍿✨',
+          toast: 'Cinema Date: Carrying you in the cinema seats forever! 🎬💖',
+        },
+      ];
+
+      // --- Interactive Album Mode Switcher (Portraits vs Roblox Memories) ---
+      const tabPortraitsBtn = document.getElementById('tabPortraitsBtn');
+      const tabGamingBtn = document.getElementById('tabGamingBtn');
+      const portraitsGalleryView = document.getElementById('portraitsGalleryView');
+      const gamingGalleryView = document.getElementById('gamingGalleryView');
+
+      if (tabPortraitsBtn && tabGamingBtn) {
+        tabPortraitsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          tabPortraitsBtn.classList.add('active');
+          tabGamingBtn.classList.remove('active');
+          portraitsGalleryView.classList.remove('hidden');
+          gamingGalleryView.classList.add('hidden');
+          showLoveToast('Viewing: Miss Rena’s Beauty Portraits 👑💖');
+          spawnHeartBurst(width * 0.5, height * 0.35, 14, ['👑', '💖', '✨']);
+          playPopSound();
+        });
+
+        tabGamingBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          tabGamingBtn.classList.add('active');
+          tabPortraitsBtn.classList.remove('active');
+          gamingGalleryView.classList.remove('hidden');
+          portraitsGalleryView.classList.add('hidden');
+          showLoveToast('Viewing: Our Roblox Gaming Memories! 🎮✨');
+          spawnHeartBurst(width * 0.5, height * 0.35, 18, ['🎮', '🐥', '✨', '💖']);
+          playPopSound();
+        });
+      }
+
+      // --- Portraits 3D-Flip Logic ---
       const polaroidCard0 = document.getElementById('polaroidCard0');
       const polaroidCard1 = document.getElementById('polaroidCard1');
       const flipAllPolaroidsBtn = document.getElementById('flipAllPolaroidsBtn');
@@ -2738,24 +2950,109 @@
         });
       });
 
-      flipAllPolaroidsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        allPolaroidsFlipped = !allPolaroidsFlipped;
-        polaroidCard0.classList.toggle('is-flipped', allPolaroidsFlipped);
-        polaroidCard1.classList.toggle('is-flipped', allPolaroidsFlipped);
-        flipModeLabel.textContent = allPolaroidsFlipped
-          ? 'Showing: Real Photos 📸 (Tap to Flip to Anime ✨)'
-          : 'Showing: Anime Art ✨ (Tap to Flip to Real 📸)';
-        showLoveToast(
-          allPolaroidsFlipped
-            ? 'Flipped to Miss Rena’s Real Photos! 📸💖'
-            : 'Flipped to Miss Rena’s Cute Anime Portraits! ✨🌷'
-        );
-        spawnHeartBurst(width * 0.5, height * 0.35, 22, ['✨', '💖', '📸', '🌷', '💕']);
-        playPopSound();
+      if (flipAllPolaroidsBtn) {
+        flipAllPolaroidsBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          allPolaroidsFlipped = !allPolaroidsFlipped;
+          if (polaroidCard0) polaroidCard0.classList.toggle('is-flipped', allPolaroidsFlipped);
+          if (polaroidCard1) polaroidCard1.classList.toggle('is-flipped', allPolaroidsFlipped);
+          if (flipModeLabel) {
+            flipModeLabel.textContent = allPolaroidsFlipped
+              ? 'Showing: Real Photos 📸 (Tap to Flip to Anime ✨)'
+              : 'Showing: Anime Art ✨ (Tap to Flip to Real 📸)';
+          }
+          showLoveToast(
+            allPolaroidsFlipped
+              ? 'Flipped to Miss Rena’s Real Photos! 📸💖'
+              : 'Flipped to Miss Rena’s Cute Anime Portraits! ✨🌷'
+          );
+          spawnHeartBurst(width * 0.5, height * 0.35, 22, ['✨', '💖', '📸', '🌷', '💕']);
+          playPopSound();
+        });
+      }
+
+      // --- Gaming Carousel State & Handlers ---
+      let currentGameMemoryIdx = 0;
+      const gamePolaroidCard = document.getElementById('gamePolaroidCard');
+      const gamePolaroidImg = document.getElementById('gamePolaroidImg');
+      const gamePolaroidBlurImg = document.getElementById('gamePolaroidBlurImg');
+      const gameMemoryBadgeIcon = document.getElementById('gameMemoryBadgeIcon');
+      const gameMemoryBadgeTitle = document.getElementById('gameMemoryBadgeTitle');
+      const gameChatTagText = document.getElementById('gameChatTagText');
+      const gameMemoryTitle = document.getElementById('gameMemoryTitle');
+      const gameMemoryStory = document.getElementById('gameMemoryStory');
+      const gameMemoryCounterPill = document.getElementById('gameMemoryCounterPill');
+      const prevGameMemoryBtn = document.getElementById('prevGameMemoryBtn');
+      const nextGameMemoryBtn = document.getElementById('nextGameMemoryBtn');
+      const gameDotButtons = document.querySelectorAll('[data-game-dot]');
+      const gameZoomBtn = document.getElementById('gameZoomBtn');
+
+      function setGameMemoryIndex(index, triggerBurst = false) {
+        currentGameMemoryIdx = (index + GAMING_MEMORIES.length) % GAMING_MEMORIES.length;
+        const mem = GAMING_MEMORIES[currentGameMemoryIdx];
+
+        if (gamePolaroidImg) gamePolaroidImg.src = mem.img;
+        if (gamePolaroidBlurImg) gamePolaroidBlurImg.src = mem.img;
+        if (gameMemoryBadgeIcon) gameMemoryBadgeIcon.textContent = mem.badgeIcon;
+        if (gameMemoryBadgeTitle) gameMemoryBadgeTitle.textContent = mem.badgeTitle;
+        if (gameChatTagText) gameChatTagText.textContent = mem.chatTag;
+        if (gameMemoryTitle) gameMemoryTitle.textContent = mem.title;
+        if (gameMemoryStory) gameMemoryStory.textContent = mem.story;
+        if (gameMemoryCounterPill) gameMemoryCounterPill.textContent = `Memory ${currentGameMemoryIdx + 1} of ${GAMING_MEMORIES.length} 🎮`;
+
+        gameDotButtons.forEach((dot, idx) => {
+          if (idx === currentGameMemoryIdx) {
+            dot.className = 'w-2.5 h-2.5 rounded-full bg-crimson transition-all scale-110 cursor-pointer';
+          } else {
+            dot.className = 'w-2 h-2 rounded-full bg-pastelPink hover:bg-crimson/60 transition-all cursor-pointer';
+          }
+        });
+
+        if (triggerBurst) {
+          showLoveToast(mem.toast);
+          const rect = gamePolaroidCard.getBoundingClientRect();
+          const stageRect = stageContainer.getBoundingClientRect();
+          spawnHeartBurst(
+            rect.left - stageRect.left + rect.width / 2,
+            rect.top - stageRect.top + rect.height / 2,
+            16,
+            ['🎮', '✨', '💖', '🐥', '🌷']
+          );
+          playPopSound();
+        }
+      }
+
+      if (prevGameMemoryBtn) {
+        prevGameMemoryBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setGameMemoryIndex(currentGameMemoryIdx - 1, true);
+        });
+      }
+
+      if (nextGameMemoryBtn) {
+        nextGameMemoryBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          setGameMemoryIndex(currentGameMemoryIdx + 1, true);
+        });
+      }
+
+      gameDotButtons.forEach((dot) => {
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const target = Number(dot.getAttribute('data-game-dot') || 0);
+          setGameMemoryIndex(target, true);
+        });
       });
 
-      // Fullscreen Portrait Lightbox Modal
+      if (gamePolaroidCard) {
+        gamePolaroidCard.addEventListener('click', (e) => {
+          if (e.target.closest('#gameZoomBtn')) return;
+          e.stopPropagation();
+          setGameMemoryIndex(currentGameMemoryIdx + 1, true);
+        });
+      }
+
+      // --- Universal Fullscreen Lightbox Modal (Portraits & Gaming Moments) ---
       const photoLightboxOverlay = document.getElementById('photoLightboxOverlay');
       const photoLightboxCard = document.getElementById('photoLightboxCard');
       const closePhotoLightboxBtn = document.getElementById('closePhotoLightboxBtn');
@@ -2772,8 +3069,10 @@
       const lightboxNextPhotoBtn = document.getElementById('lightboxNextPhotoBtn');
 
       let activeLightboxIdx = 0;
+      let lightboxMode = 'portrait';
 
       function renderLightboxPhoto(idx, keepFlipState = false) {
+        lightboxMode = 'portrait';
         activeLightboxIdx = idx % PHOTO_MEMORIES.length;
         const mem = PHOTO_MEMORIES[activeLightboxIdx];
         lightboxAnimeImg.src = mem.anime;
@@ -2782,6 +3081,7 @@
         if (lightboxRealBlurImg) lightboxRealBlurImg.src = mem.real;
         lightboxCaptionFront.textContent = mem.captionFront;
         lightboxCaptionBack.textContent = mem.captionBack;
+        lightboxFlipBtn.innerHTML = '<span>🔄</span><span>Flip: Anime ↔ Real</span>';
         lightboxNextPhotoBtn.textContent = `Next Photo (${activeLightboxIdx + 1}/${PHOTO_MEMORIES.length}) →`;
         if (!keepFlipState) {
           lightbox3dCard.classList.remove('is-flipped');
@@ -2789,7 +3089,23 @@
         }
       }
 
-      document.querySelectorAll('.polaroid-zoom-btn').forEach((btn) => {
+      function renderLightboxGamePhoto(idx) {
+        lightboxMode = 'game';
+        activeLightboxIdx = (idx + GAMING_MEMORIES.length) % GAMING_MEMORIES.length;
+        const mem = GAMING_MEMORIES[activeLightboxIdx];
+        lightboxAnimeImg.src = mem.img;
+        if (lightboxAnimeBlurImg) lightboxAnimeBlurImg.src = mem.img;
+        lightboxRealImg.src = mem.img;
+        if (lightboxRealBlurImg) lightboxRealBlurImg.src = mem.img;
+        lightboxCaptionFront.textContent = mem.title;
+        lightboxCaptionBack.textContent = mem.story;
+        lightboxBadgeText.textContent = `Roblox Memory (${activeLightboxIdx + 1}/${GAMING_MEMORIES.length}) 🎮`;
+        lightboxFlipBtn.innerHTML = '<span>◀</span><span>Prev Memory</span>';
+        lightboxNextPhotoBtn.textContent = `Next Memory (${activeLightboxIdx + 1}/${GAMING_MEMORIES.length}) ▶`;
+        lightbox3dCard.classList.remove('is-flipped');
+      }
+
+      document.querySelectorAll('.polaroid-zoom-btn:not(#gameZoomBtn)').forEach((btn) => {
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
           const idx = Number(btn.getAttribute('data-zoom-index') || 0);
@@ -2801,23 +3117,45 @@
         });
       });
 
-      function flipLightboxCard(e) {
-        if (e) e.stopPropagation();
-        const isReal = lightbox3dCard.classList.toggle('is-flipped');
-        lightboxBadgeText.textContent = isReal
-          ? 'Original Beauty Photo 📸💖'
-          : 'Animated Anime Portrait ✨';
-        spawnHeartBurst(width * 0.5, height * 0.45, 18, ['💖', '✨', '🌷', '💕']);
-        playPopSound();
+      if (gameZoomBtn) {
+        gameZoomBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          renderLightboxGamePhoto(currentGameMemoryIdx);
+          photoLightboxOverlay.classList.remove('hidden');
+          photoLightboxOverlay.classList.add('flex');
+          spawnHeartBurst(width * 0.5, height * 0.45, 22, ['🎮', '✨', '💖', '🐥']);
+          playPopSound();
+        });
       }
 
-      lightbox3dTrigger.addEventListener('click', flipLightboxCard);
-      lightboxFlipBtn.addEventListener('click', flipLightboxCard);
+      function handleLightboxFlipOrPrev(e) {
+        if (e) e.stopPropagation();
+        if (lightboxMode === 'game') {
+          renderLightboxGamePhoto(activeLightboxIdx - 1);
+          spawnHeartBurst(width * 0.5, height * 0.45, 14, ['🎮', '✨', '💖']);
+          playPopSound();
+        } else {
+          const isReal = lightbox3dCard.classList.toggle('is-flipped');
+          lightboxBadgeText.textContent = isReal
+            ? 'Original Beauty Photo 📸💖'
+            : 'Animated Anime Portrait ✨';
+          spawnHeartBurst(width * 0.5, height * 0.45, 18, ['💖', '✨', '🌷', '💕']);
+          playPopSound();
+        }
+      }
+
+      lightbox3dTrigger.addEventListener('click', handleLightboxFlipOrPrev);
+      lightboxFlipBtn.addEventListener('click', handleLightboxFlipOrPrev);
 
       lightboxNextPhotoBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        renderLightboxPhoto((activeLightboxIdx + 1) % PHOTO_MEMORIES.length, true);
-        spawnHeartBurst(width * 0.5, height * 0.45, 16, ['🌷', '💖', '✨']);
+        if (lightboxMode === 'game') {
+          renderLightboxGamePhoto(activeLightboxIdx + 1);
+          spawnHeartBurst(width * 0.5, height * 0.45, 14, ['🎮', '✨', '💖']);
+        } else {
+          renderLightboxPhoto((activeLightboxIdx + 1) % PHOTO_MEMORIES.length, true);
+          spawnHeartBurst(width * 0.5, height * 0.45, 16, ['🌷', '💖', '✨']);
+        }
         playPopSound();
       });
 
