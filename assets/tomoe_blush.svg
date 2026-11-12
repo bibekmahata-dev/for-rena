@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <radialGradient id="bgGradBlush" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fff0f5"/>
+      <stop offset="100%" stop-color="#ffd6e0"/>
+    </radialGradient>
+    <linearGradient id="fanBlush" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff758f"/>
+      <stop offset="50%" stop-color="#ff4d6d"/>
+      <stop offset="100%" stop-color="#c9184a"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" rx="40" fill="url(#bgGradBlush)"/>
+
+  <!-- Fluffy Tail curled around -->
+  <path d="M 260,260 C 350,240 370,150 320,110 C 290,90 270,160 250,220 Z" fill="#f8f9fa" stroke="#dee2e6" stroke-width="3"/>
+
+  <!-- Kimono -->
+  <path d="M 140,260 L 260,260 L 280,380 L 120,380 Z" fill="#3a0ca3"/>
+  <path d="M 170,260 L 200,310 L 230,260" stroke="#ffffff" stroke-width="8" fill="none" stroke-linecap="round"/>
+
+  <!-- Head -->
+  <rect x="185" y="225" width="30" height="35" fill="#ffdfd3"/>
+  <ellipse cx="200" cy="175" rx="66" ry="60" fill="#ffdfd3"/>
+
+  <!-- Slightly Flattened Fox Ears (Embarrassed) -->
+  <polygon points="145,145 95,85 160,115" fill="#f8f9fa" stroke="#dee2e6" stroke-width="3"/>
+  <polygon points="142,135 105,95 150,118" fill="#ff758f"/>
+  
+  <polygon points="255,145 305,85 240,115" fill="#f8f9fa" stroke="#dee2e6" stroke-width="3"/>
+  <polygon points="258,135 295,95 250,118" fill="#ff758f"/>
+
+  <!-- Silver Hair -->
+  <path d="M 135,165 C 130,115 160,105 200,105 C 240,105 270,115 265,165 C 265,180 260,200 255,210 C 245,165 230,145 200,145 C 170,145 155,165 145,210 C 140,200 135,180 135,165 Z" fill="#f8f9fa"/>
+
+  <!-- Embarrassed Blushing Eyes looking away -->
+  <ellipse cx="170" cy="168" rx="10" ry="13" fill="#5a189a"/>
+  <circle cx="166" cy="164" r="4.5" fill="#ffffff"/>
+  <path d="M 156,155 Q 170,150 184,158" stroke="#240046" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <ellipse cx="230" cy="168" rx="10" ry="13" fill="#5a189a"/>
+  <circle cx="226" cy="164" r="4.5" fill="#ffffff"/>
+  <path d="M 216,158 Q 230,150 244,155" stroke="#240046" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Heavy Glowing Blush Lines -->
+  <ellipse cx="160" cy="185" rx="16" ry="9" fill="#ff4d6d" opacity="0.6"/>
+  <line x1="150" y1="182" x2="158" y2="192" stroke="#c9184a" stroke-width="2" stroke-linecap="round"/>
+  <line x1="158" y1="182" x2="166" y2="192" stroke="#c9184a" stroke-width="2" stroke-linecap="round"/>
+
+  <ellipse cx="240" cy="185" rx="16" ry="9" fill="#ff4d6d" opacity="0.6"/>
+  <line x1="232" y1="182" x2="240" y2="192" stroke="#c9184a" stroke-width="2" stroke-linecap="round"/>
+  <line x1="240" y1="182" x2="248" y2="192" stroke="#c9184a" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Big Elegant Fan Hiding Lower Half of Face -->
+  <path d="M 130,225 C 150,185 250,185 270,225 L 200,285 Z" fill="url(#fanBlush)" stroke="#ffd166" stroke-width="3"/>
+  <path d="M 200,285 L 150,210 M 200,285 L 180,200 M 200,285 L 200,195 M 200,285 L 220,200 M 200,285 L 250,210" stroke="#ffffff" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- Banner -->
+  <rect x="90" y="350" width="220" height="32" rx="16" fill="#c9184a"/>
+  <text x="200" y="372" font-family="sans-serif" font-weight="bold" font-size="14" fill="#ffffff" text-anchor="middle">💕 "B-baka... of course you are!"</text>
+</svg>

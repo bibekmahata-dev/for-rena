@@ -1,0 +1,4 @@
+# Ignore temporary inspection scripts and dumps
+*.py
+*.txt
+extracted_*.html
